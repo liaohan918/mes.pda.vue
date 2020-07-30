@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>飞达更换</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<style>
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：黎锋
+        	时间：2019-05-26
+        	描述：更换飞达
+        -->
+		<div id="infos" class="mui-content">
+			<div id="filtra" class="mui-input-group">
+				<div class="mui-input-row">
+					<label style="width: 40%;">旧飞达条码</label>
+					<input id="txtOldFeederCode" type="text" class="mui-input-clear " placeholder="输入旧飞达条码" style="width: 60%;">
+				</div>
+				<div class="mui-input-row" ><!--style="display:none;"-->
+					<label style="width: 40%;">新飞达条码</label>
+					<input id="txtNewFeederCode" type="text" class="mui-input-clear " placeholder="输入新飞达条码" style="width: 60%;"
+						   data-linktype="newpage" data-pageid="CheckPosition" 
+					       data-pageurl="CheckPositionHtml.html" data-pagetitle="站位核对">
+				</div>
+				<div class="mui-input-row">
+					<div class="mui-checkbox mui-left float_right">
+						<label>仅核对</label>
+						<input id="OnlyCheck" type="checkbox">
+					</div>
+				</div>
+				
+			</div>
+			<div class="mui-input-row" style="height: 360px; margin-top: 10px;">
+				<div class="link-area">
+					<h4 style="color: #008000;">绑定信息</h4>
+				</div>
+				<textarea readonly="readonly" id='info' style="height: 100%;background-color:#FFE48D;"></textarea>
+			</div>
+		</div>
+
+
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<script type="text/javascript" src="../../js/FeiDaManage_js/SMTFDAChange.js"></script>
+	</body>
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../js/BaoGongManager_js/GongXuBaoGong.js"></script>
+		<style>
+			.mui-card .mui-control-content {
+				padding: 10px;
+			}
+			
+			.app .mui-input-row {
+				padding: 3px;
+				height: 50px !important;
+			}
+			
+			.pad .mui-input-row {
+				padding: 20px;
+				height: 80px !important;
+			}
+			
+			.mui-input-row label {
+				width: 30%;
+				margin: 5px 2px;
+				padding: 11px 2px;
+			}
+			
+			.mui-checkbox.mui-left label,
+			.mui-radio.mui-left label {
+				padding-right: 15px;
+				padding-left: 30px;
+			}
+			
+			.mui-checkbox.mui-left input[type=checkbox],
+			.mui-radio.mui-left input[type=radio] {
+				left: 0px;
+			}
+			/*	/*	/*	/*
+			.mui-input-row input {
+				margin: 5px 2px;
+				padding: 11px 2px;
+			}*/
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：黄邦文
+        	时间：2019-02-20
+        	描述：工序报工--工序选择
+        -->
+		<div class="mui-content">
+			<div style="padding: 0px 10px;">
+				<div id="item1" class="mui-control-content mui-active">
+					<div class="mui-content-padded oauth-area">
+						<span class="mui-badge" style="background-color: red; border: 1px solid black;">选择工序</span>
+					</div>
+					<div id='infos' class="mui-input-group">
+						<div class="mui-input-row">
+							<label style="width: 25%;margin-right: 2px;">当前工序</label>
+							<div style="width: 70%; float: left; margin-left: 2px;">
+								<input type="text" style="width: 80px; float: left;padding: 11px 2px;" id="txtGongXuID" readonly="true" class="" placeholder="请选工序">
+								<input type="text" style="width: 100px;float: left;padding: 11px 2px;" id="txtGongXuMC" readonly="true" class="" placeholder="工序名称">
+							</div>
+						</div>
+						<div class="mui-input-row">
+							<label style="width: 25%;margin-right: 2px;">作业人员</label>
+							<div style="width: 35%; float: left; margin-left: 2px;">
+								<input type="text" id="txtZuoYeRenYuan" style="padding: 11px 2px;" class="mui-input-clear text-color" placeholder="扫描人员工号">
+							</div>
+							<div style="width: 35%;float: left;" class="mui-checkbox mui-left">
+								<label style="width: 95%;float: left;">默认</label>
+								<input id="checkZYRY" name="checkbox" value="Item1" type="checkbox">
+							</div>
+						</div>
+						<div class="mui-input-row">
+							<label style="width: 25%;margin-right: 2px;">设备编码</label>
+							<div style="width: 35%; float: left; margin-left: 2px;">
+								<input type="text" id="txtSheBeiBianMa" style="padding: 11px 2px;" class="mui-input-clear text-color" placeholder="请扫描设备码">
+							</div>
+							<div style="width: 35%;float: left;" class="mui-checkbox mui-left">
+								<label style="width: 95%;float: left;">默认</label>
+								<input id="checkSBBM" name="checkbox" value="Item1" type="checkbox">
+							</div>
+						</div>
+						<div class="mui-input-row">
+							<label style="width: 15%;margin-right: 2px;">产线</label>
+							<div style="width: 45%; float: left; margin-left: 2px;">
+								<input type="text" style="width: 75px; float: left;padding: 11px 2px;" id="txtLineID" readonly="true" class="" placeholder="请选产线">
+								<input type="text" style="width: 75px;float: left;padding: 11px 2px;" id="txtLineName" readonly="true" class="" placeholder="产线名称">
+							</div>
+							<div style="width: 35%;float: left;" class="mui-checkbox mui-left">
+								<label style="width: 95%;float: left;">默认</label>
+								<input id="checkCXBM" name="checkbox" value="Item1" type="checkbox">
+							</div>
+						</div>
+						<div class="mui-content-padded oauth-area">
+							<button type="button" id="btn_ToBaoGong" data-linktype="newpage" data-pageid="GongXuBaoGong" data-pageurl="GongXuBaoGongMainHtml.html" data-pagetitle="工序报工主界面" style="width: 100px; float: right;" class="mui-btn mui-btn-green">进   入</button>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />	
+		<!--<script type="text/javascript" src="../../lib/base_js/js/PageCommonQuote.js"></script>-->
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../js/XianChangManage_js/OnlineDismantling.js"></script>
+		<style>
+			.mui-input-row .mui-btn{
+				float: none;
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="head" class="mui-content">
+			<div class="mui-input-group">
+				<div class="mui-input-row">					
+					<label>生产备料单</label>
+					<input id="edtDAF015" type="text" class="mui-input-clear" placeholder="请扫描生产指令">
+				</div>
+				<div class="mui-input-row">
+					<label>条码</label>
+					<input id="edtDAH005" type="text" class="mui-input-clear" placeholder="请扫描条码">
+				</div>
+				<div class="mui-input-row">
+					<label style="width: 35%;float:left;">拆分数量</label>	
+					<div style="width: 65%;float:left;">
+						<div class="mui-row">
+							<div class="mui-col-sm-6 mui-col-xs-6">
+								<input id="edtSplitNum" type="text" class="mui-input-clear" placeholder="拆分的数量">
+							</div>
+							<div class="mui-col-sm-6 mui-col-xs-6">
+								<button id="btnSplit" type="button" class="mui-btn mui-btn-success">拆分</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="tabsid" class="easyui-tabs" style="width:100%; ">
+			<div title="盘点明细" data-options="tools:'#dataGrid1-tools'">
+				<table id='dataGrid1' class="easyui-datagrid" style="height: 100%;" data-options = "fitColumns:false">
+					<thead>
+						<tr>
+							<th field="DAH003" width="50">序号</th>		
+							<th field="DAH005" width="75">条码</th>
+							<th field="DAH006" width="75">物料编码</th>
+							<th field="DAH008" width="75">物料名称</th>
+							<th field="DAH023" width="50">使用数量</th>
+							<th field="DAH025" width="40">剩余数量</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		<!-- 数量标签 -->
+		<div id="dataGrid1-tools">
+			<span id="dataGrid1-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title> 
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<script type="text/javascript" src="../../lib/base_js/js/PageCommonQuote.js"></script>
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" /> 
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script src="../../lib/mui/js/mui.picker.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script src="../../lib/mui/js/mui.dtpicker.js"></script>
+		<style>
+			.row-title{
+				color: blue;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+        	作者：胡丁文
+        	时间： 
+        	描述：产品首末检验单
+        -->
+		<form class="mui-input-group" action="#" method="post" id="formSub">
+		<div class="mui-content">
+			<div style="padding: 10px 10px;">
+				<div id="item1" class="mui-control-content mui-active">
+					<div id='info2' style="margin-top: 3px;" class="mui-input-group">
+						<div class="mui-input-row  ">
+							 
+							<div style="float: left;width: 50%;" class="mui-radio mui-left">
+								<label style="width: 100%;">首件检验</label>
+								<input id="txtWenTiLevel1" name="txtCheckType" type="radio" value="首件" checked>
+							</div>
+							<div style="float: left;width: 50%; " class="mui-radio mui-left">
+								<label style="width: 100%;">末件检验</label>
+								<input id="txtWenTiLevel2" name="txtCheckType" type="radio" value="末件">
+							</div> 
+						</div> 
+					</div>
+					<div id='info1' class="mui-input-group">
+						<div class="mui-inline mui-input-row">
+							<label class="row-title"  >单据编号</label>
+							<input type="text" style=" float: left;" name="txtBillNo" id="txtBillNo" readonly="readonly" class="text-color" placeholder="自动产生检验单号">
+						</div>
+						<div class="mui-input-row"> 
+								<label class="row-title" >单据时间</label>
+								<input class="row-content-split" type="text" name="txtCheckTime" id="txtCheckTime" placeholder="检验时间"  readonly="readonly">
+						</div>
+						<div class="mui-input-row">  
+								<label class="row-title">检验人员</label>
+								<input class="row-content-split" type="text" name="txtCheckWorker" id="txtCheckWorker" placeholder="检验人员" readonly="readonly" >
+						</div>
+						
+						<div class="mui-input-row"> 
+								<label class="row-title">生产线别</label>
+								<input class="row-content-split"  type="text"  name="txtLineID" id="txtLineID" placeholder="请输入产线" readonly="readonly">
+						</div>
+						<div class="mui-input-row">
+							<label class="row-title">生产指令</label>
+							<input type="text" class="row-content"  name="txtOrderID" id="txtOrderID"  class="" placeholder="请选择生产指令" readonly="readonly"> 
+						</div>
+						<div class="mui-input-row">
+							<label class="row-title">产品编码</label>
+							<input type="text" class="row-content" name="txtPdNum" id="txtPdNum" class="mui-input-clear text-color"  placeholder="(自动带出)" readonly="readonly">
+						</div>
+						<div class="mui-input-row">
+							<label class="row-title">产品名称</label>
+							<input type="text"  class="row-content" name="txtPdName" id="txtPdName" class="mui-input-clear text-color"  placeholder="(自动带出)" readonly="readonly">
+							 
+						</div>
+						<div class="mui-input-row">
+							<label class="row-title">产品规格</label>
+							<input type="text" class="row-content" name="txtPdSpec" id="txtPdSpec" class="mui-input-clear text-color"  placeholder="(自动带出)" readonly="readonly">
+						</div>
+						
+						<div class="mui-input-row">
+							<label class="row-title">客户订单</label>
+							<input type="text"  class="row-content" name="txtCusOrder" id="txtCusOrder"  placeholder="(自动带出)" readonly="readonly"> 
+						</div>
+						<div class="mui-input-row">
+								<label class="row-title">客户编号</label>
+								<input class="row-content-split"  type="text"  name="txtCusID" id="txtCusID" placeholder="(自动带出)" readonly="readonly">
+						</div>
+						<div class="mui-input-row">
+							<label class="row-title">特殊要求</label>
+							<input type="text" class="row-content" name="txtSpecial" id="txtSpecial"  placeholder="请输入特殊要求"> 
+						</div>
+					</div>
+					
+
+				</div> 
+				<div id='info3' style="margin-top: 3px;" class="mui-input-group">
+					<div class="mui-input-row">
+						<label class="row-title">上传照片</label> 
+					</div>
+					<div id="insert" style="padding: 5px 15px;">
+						<img id='photodefault' src="../../fonts/PhotoDefault.jpg"  />
+					</div>
+				</div> 
+				<div id='info4' style="margin-top: 3px;" class="mui-input-group">
+					<div class="mui-input-row">
+						<label class="row-title">判定结果</label>
+						<input type="text" class="row-content" name="txtResult" id="txtResult"  placeholder="请输入判定结果" readonly="readonly"> 
+					</div> 
+				</div> 
+				<div id='info5' style="margin-top: 3px;" class="mui-input-group">
+					<div class="mui-input-row">
+						<button id="btnCancel" class=" mui-btn-warning" style="float: left; width: 100px; margin-left: 20px; margin-top: 5px; ">重置</button>
+						<button id="btnSubmit" class=" mui-btn-green" style="float: right; width: 100px; margin-right: 20px; margin-top: 5px; ">提交</button>
+					</div> 
+				</div> 
+				
+			</div>
+			<div id="dialog_large_image" class="m-pic-cover" data-scale="1" style="padding: 5px 5px; display: none; " onclick="ClearImg()">
+			</div>
+		</div>
+		</form>
+		<script type="text/javascript" src="../../js/XianChangManage_js/IQCPBA.js"></script>
+	</body> 
+</html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />	
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/Ajax.js"></script>
+		<script type="text/javascript" src="../../js/EquipmentManage_js/MCSCAHHtml.js"></script>
+		<style>
+			
+			.fixed{ 
+		        position: fixed; 
+		        left: 0px; 
+		        bottom: -20px; 
+		        width: 100%; 
+		        height: 60px; 
+		        /*最顶层*/
+		        z-index: 9999;
+		    }
+		    /*只读颜色*/
+		    #form .readonly{
+		    	background-color:gainsboro;
+		    }
+		    /*去掉按钮的内边距*/
+		    .mui-button-row, .mui-input-group{
+		    	padding: 0px;
+		    }		
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：G98139
+        	时间：2020-04-27
+       -->
+		<div class="mui-content">
+			<form id="form">
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>保养编码</label>
+						<input id="edtCAH001" type="text" class="mui-input-clear" placeholder="请扫描保养编码">
+					</div>
+					<div class="mui-input-row">			
+						<label>设备编号</label>
+						<input id="edtCAH002" type="text" class="mui-input-clear readonly">
+					</div>	
+					<div class="mui-input-row">
+						<label>设备名称</label>
+						<input id="edtCAH003" type="text" class="mui-input-clear readonly">
+					</div>
+					<div class="mui-input-row">
+						<label>设备型号</label>
+						<input id="edtCAH004" type="text" class="mui-input-clear readonly">
+					</div>
+					<div class="mui-input-row">			
+						<label>保养类别</label>
+						<input id="edtCAH011" type="text" class="mui-input-clear readonly">
+					</div>	
+					<div class="mui-input-row">			
+						<label>产线编号</label>
+						<input id="edtCAC011" type="text" class="mui-input-clear readonly">
+					</div>	
+					<div class="mui-input-row">			
+						<label>保养周期</label>
+						<input id="edtCAH006" type="text" class="mui-input-clear readonly">
+					</div>	
+					<div class="mui-input-row">			
+						<label>保养项目</label>
+						<input id="edtCAH005" type="text" class="mui-input-clear readonly">
+					</div>	
+					<div class="mui-input-row">			
+						<label>保养要求</label>
+						<input id="edtCAH007" type="text" class="mui-input-clear readonly">
+					</div>	
+					<div class="mui-input-row">			
+						<label>发生现象</label>
+						<input id="edtCAH012" type="text" class="mui-input-clear">
+					</div>	
+					<div class="mui-input-row">			
+						<label>处理方法</label>
+						<input id="edtCAH013" type="text" class="mui-input-clear">
+					</div>
+					<div class="mui-input-row">		
+						<label style="width: 35%;float:left;">保养结果</label>	
+						<div style="width: 65%;float:left;">
+							<div class="mui-row">
+								<div class="mui-col-sm-6">
+									<div class="mui-input-row mui-radio mui-left">
+										<label>OK</label>
+										<input id="okCAH008" value="OK" name="CAH008" type="radio" checked="checked">
+									</div> 
+								</div>
+								<div class="mui-col-sm-6">
+									<div class="mui-input-row mui-radio mui-left">
+										<label>NG</label>
+										<input id="ngCAH008" value="NG" name="CAH008" type="radio">
+									</div> 
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="mui-button-row">
+						<div style="width: 50%;float:left;" class="mui-btn mui-btn-primary" id="btnCommit" onclick="commit()">
+							提交							
+						</div>
+						<div style="width: 50%;float:right;" class="mui-btn mui-btn-danger" id="btnCancel" onclick="formReset()">
+							清除
+						</div>
+					</div>										
+				</div>
+			</form>				
+		</div>
+	</body>
+
+</html>

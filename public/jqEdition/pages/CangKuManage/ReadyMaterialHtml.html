@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<style>
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：2068901091@qq.com
+        	时间：2018-09-13
+        	描述：前加工备料
+        -->
+		<div id="infos" class="mui-content">
+			<div class="mui-input-group">
+				<div class="mui-input-row">
+					<label>物料分类</label>
+					<input id="wuLiaoType" readonly="readonly" hiddenVal="" type="text" placeholder="选择物料分类">
+				</div>
+			</div>
+			<div id="filtra" class="mui-input-group">
+				<div class="mui-input-row">
+					<label>指令单号</label>
+					<input id="workBill" readonly="readonly" type="text" placeholder="选择指令单号">
+				</div>
+				<div class="mui-input-row">
+					<label>材料条码</label>
+					<input id="tiaoMa" type="text" class="mui-input-clear " placeholder="输入材料条码">
+				</div>
+				<div class="mui-input-row">
+					<div class="mui-checkbox mui-left float_right">
+						<label>取消备料</label>
+						<input id="quXiao" type="checkbox">
+					</div>
+					<div class="mui-checkbox mui-left float_left">
+						<label>前加工</label>
+						<input id="IsMachining" type="checkbox">
+					</div>
+				</div>
+				<div class="mui-input-row" ><!--style="display:none;"-->
+					<label>备料单号</label>
+					<input id="prepareBill" readonly="readonly" type="text" style="background-color: #CCCCCC;">
+				</div>
+			</div>
+		</div>
+
+		<div id="tabsid" class="easyui-tabs" style="width:100%; margin-top: 3px;">
+			<div title="材料列表" data-options="tools:'#dgWOMDAG-tools'">
+				<table id='dgWOMDAG' class="easyui-datagrid" style="height: 100%;">
+					<thead>
+						<tr>
+							<th data-options="hidden:true,field:'DAG003'">序号</th>
+							<th field="DAG004" width="80">物料编码</th>
+							<th field="DAG015" width="55">扫描数量</th>
+							<th field="DAG014" width="55">应发数量</th>
+							<th field="Cycount" width="55">差异数量</th>
+							<th field="DAG037" width="50">设备编号</th>
+							<th field="DAG038" width="40">分区</th>
+							<th field="DAG039" width="50">站位</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div title="库位列表" data-options="tools:'#dgBARDAB-tools'">
+
+				<table id="dgBARDAB" class="easyui-datagrid" style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="DAB001" width="107">条码</th>
+							<th field="DAB003" width="88">库位</th>
+							<th field="DAB006" width="55">数量</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div title="已扫描列表" data-options="tools:'#dgWOMDAH-tools'">
+				<table id="dgWOMDAH" class="easyui-datagrid" style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="DAH005" width="107">条码</th>
+							<th field="DAH006" width="88">品号</th>
+							<th field="DAH011" width="55">数量</th>
+							<th field="DAH009" width="55">日期</th>
+							<th field="DAH010" width="55">时间</th>
+							<th field="DAH012" width="55">备料人</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+
+		<!-- 数量标签 -->
+		<div id="dgWOMDAG-tools">
+			<span id="dgWOMDAG-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+		<div id="dgBARDAB-tools">
+			<span id="dgBARDAB-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+		<div id="dgWOMDAH-tools">
+			<span id="dgWOMDAH-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+		<div class="mui-input-row" style="height: 25px; margin-top: 5px;">
+			<span id="info_BARDAB" style="color: #0000FF; font-size: 12px;"></span>
+			<span id="div_BARDAB" hidden="hidden">
+						<a id="next_BARDAB"  class="mui-icon mui-icon-redo mui-pull-right">
+							下一个
+						</a>
+					</span>
+		</div>
+		<script type="text/javascript" src="../../js/city.data.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<script type="text/javascript" src="../../js/CangKuManage_js/ReadyMaterialHtml.js"></script>
+		<script type="text/javascript">
+			var ComboPicker = new mui.PopPicker(); //下拉框
+			//*************************************
+			//物料分类选择框事件
+			var wuLiaoType = document.getElementById('wuLiaoType');
+			wuLiaoType.addEventListener('tap', function(e) {
+				var WuLiaoTypeData = [{
+						value: 'IC',
+						text: 'IC',
+					},
+					{
+						value: 'PCB',
+						text: 'PCB',
+					}
+				]; //物料分类数据源，先写死
+				ComboPicker.setData(WuLiaoTypeData);
+				ComboPicker.show(function(items) {
+					var val = items[0].text;
+					if(wuLiaoType.value == val) //如果有变更才继续执行
+						return;
+					next = []; //物料分类修改的时候把跳过集合清空
+					wuLiaoType.value = val ? val : "";
+					wuLiaoType.setAttribute("hiddenVal", items[0].value);
+					ResetTb(); //清空数据表格、输入框重新操作
+				});
+			});
+
+			/**
+			 * 前加工复选框勾选事件
+			 */
+			document.getElementById('IsMachining').addEventListener('change', function(e) {
+				ResetTb(); //清空数据表格、输入框重新操作
+			});
+
+			//*************************************
+			//指令版号选择框事件
+
+			var workBill = document.getElementById('workBill');
+			workBill.addEventListener('tap', function(e) {
+				var a = wuLiaoType.getAttribute("hiddenVal").trim();
+				if(a == "") {
+					mui.toast('请选择物料分类');
+					return;
+				}
+				var data = {
+					IsMachining: mui("#IsMachining")[0].checked, //是否为前加工
+					wuLiaoType: a //物料分类
+				};
+				var responseData =
+					AjaxOperation(data, "获取指令单号", true, "/ReadyMaterial/GetWorkBill")
+				if(!responseData.state)
+					return;
+				ComboPicker.setData(responseData.data.data);
+				ComboPicker.show(function(items) {
+					if(!items[0].text)
+						return;
+					var val = items[0].text.trim().split('/');
+					if(workBill.value == val[0]) //如果有变更才继续执行
+						return;
+					mui("#prepareBill")[0].value = items[0].value;
+					workBill.value = val[0] ? val[0] : "";
+					//刷新表格数据
+					SetDataDAG_DAH();
+				});
+			});
+
+			/**
+			 * 获取材料列表和已扫描列表操作
+			 * @param {表格DOM} e
+			 * @param {表名：WOMDAG,WOMDAH} tbName
+			 * @param {过滤主键} keys
+			 */
+			function GetData(e, tbName, keys) {
+				var data = {
+					tbName: tbName, //表：材料列表和已扫描列表
+					wuLiaoType: wuLiaoType.getAttribute("hiddenVal").trim(), //物料类型，主要是区分前加工和分区备料
+					workBill: mui("#workBill")[0].value, //指令单号
+					dcode: "", //设备编号
+					dpartition: "", //分区
+					stateType: false, //是否显示已经备料完成的材料
+					/*修改者：庄卓杰*/
+					shouTao: false, //是否是首套的材料
+					//修改：庄卓杰 2019年8月4日
+					shouTaoNum:'',//首批数量
+					pageSize: e.datagrid('options').pageSize, //页容量
+					pageNumber: e.datagrid('options').pageNumber, //页码
+					keys: keys //分页主键
+				};
+				return GetDataDAG_DAH(data);
+			}
+		</script>
+	</body>
+
+</html>

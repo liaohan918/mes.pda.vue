@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>库位调拨</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+
+		<style>
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+			
+			.tabs li a.tabs-close,
+			.tabs-p-tool {
+				height: 20px;
+			}
+			
+			#Barinfo {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<!--
+        	作者：280639273@qq.com
+        	时间：2018-3-18
+        	描述：1F--5F
+        -->
+		<div id="Baseinfo" class="mui-input-group mui-content" onclick="SetInputFoucs('#WLTM')">
+			<div class="mui-input-row " id="div1">
+				<label style="width: 35%; float: left; ">单据类型</label>
+				<div style="width: 65%; float: right;">
+					<input style="padding: 5px;width: 40%;" type="text" id="txtDJLX" readonly="true" placeholder="单据类型">
+					<input style="padding: 5px;width: 55%;" type="text" id="txtDJMC" readonly="true">
+				</div>
+			</div>
+			<div class="mui-input-row" id="div2">
+				<label style="width: 35%;float: left;">出库单号</label>
+				<input id="txtDFA002" type="text" style="width:55%; float: left;" class="mui-input-clear" placeholder="请扫描单号">
+			</div>
+			<div class="mui-input-row" id="display" id="div3">
+				<label style="width: 35%;float: left;">物料条码</label>
+				<input id="WLTM" type="text" style="width:55%; float: left;" class="mui-input-clear" placeholder="物料条码">
+			</div>
+
+			<div class="mui-input-row" hidden="hidden" id="div4">
+				<div class=" mui-checkbox mui-left float_left">
+					<label>是否批量入</label>
+					<input id="IsMachining" type="checkbox">
+				</div>
+			</div>
+
+			<div id="tabsid" class="easyui-tabs" data-options="justified:true,tabHeight:30">
+				<div title="条码明细" data-options="tools:'#p-tools2'">
+					<table id="gridINVDFA" class="easyui-datagrid" data-options=" rownumbers:true,
+							singleSelect:true " style="height: 100%;">
+						<thead>
+							<tr>
+								<th field="DFB014" style="width:120px;">物料条码</th>
+								<th field="DFB004" style="width:100px;">物料编码</th>
+								<th field="DFB007" style="width:80px;">数量</th>
+								<th field="DFB005" style="width:120px;">物料名称</th>								
+								<th field="DFB012" style="width:15px;" hidden="true">库位</th>
+							</tr>
+						</thead>
+					</table>
+
+				</div>
+
+				<div title="物料汇总" data-options="tools:'#p-tools1'">
+					<table id="gridINVDFA_01" class="easyui-datagrid" data-options="rownumbers:true, 
+								singleSelect:true " style="height: 100%;">
+						<thead>
+							<tr>
+								<th field="DFB004" style="width:100px;">物料编码</th>								
+								<th field="YRK" style="width:80px;">已入库数量</th>
+								<th field="WRK" style="width:80px;">未入库数量</th>
+								<th field="Total" style="width:80px;">总数量</th>
+								<th field="DFB005" style="width:120px;">物料名称</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+			<div class="mui-input-row" style="font-size:17px;" id="kw">
+				<div>
+					<label style="width: 35%;float: left;">库位</label>
+					<input id="txtKW" type="text" style="width: 35%;float: left;" class="mui-input-clear" placeholder="请扫描库位">
+				</div>
+			</div>
+			<div id="head2" style="width: 100%;height: 40px; background-color: orange; font-size: large;">
+				状态：
+			</div>
+		</div>
+
+	</body>
+	<script type="text/javascript" src="../../js/CangKuManage_js/INVDFA_01.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+	<script type="text/javascript">
+		$('#tabsid').tabs({
+			height: $(window).height() -
+				$("#kw").height() -
+				$("#head2").height() -
+				$("#div1").height() -
+				$("#div2").height() -
+				$("#div3").height() -
+				$("#div4").height()
+		});
+
+		//		$('#gridINVDFA').tabs({
+		//			height: $(window).height()  //- 257
+		//		});
+		//		
+		//		
+		//		$('#gridINVDFA_01').tabs({
+		//			height: $(window).height() - 197
+		//		});
+		//	
+
+		//		/**
+		//		 * 获取焦点
+		//		 */
+		mui.plusReady(function() {
+			mui("#txtDFA002")[0].focus();
+			
+			//add by HCW 20200317
+			$('#tabsid').tabs({
+				height: $(window).height() -
+					$("#kw").height() -
+					$("#head2").height() -
+					$("#div1").height() -
+					$("#div2").height() -
+					$("#div3").height() -
+					$("#div4").height()
+			});
+		});
+
+		/**
+		 * 出库单号扫描
+		 */
+		document.getElementById('txtDFA002').addEventListener('keydown', function(e) {
+			if(e.keyCode != 13) return;
+			$('#gridINVDFA').datagrid('loadData', [{}]);
+			$('#gridINVDFA_01').datagrid('loadData', [{}]);
+			GetDBHAO();
+		});
+
+		//		/**
+		//		 * 库位扫描事件
+		//		 */
+		document.getElementById('txtKW').addEventListener('keydown', function(e) {
+			if(e.keyCode != 13) return;
+			GetStore();
+		});
+
+		document.getElementById('WLTM').addEventListener('keydown', function(e) {
+			if(e.keyCode != 13) return;
+			GetWLTM();
+		});
+	</script>
+
+</html>

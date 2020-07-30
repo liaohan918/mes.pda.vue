@@ -1,0 +1,104 @@
+<!--
+	作者：岳志鹏
+	时间：2018-09-06
+	描述：报废
+-->
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>报废</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.poppicker.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+	</head>
+
+	<body>
+		<!--<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">报废</h1>
+		</header>-->
+		<div class="mui-content">
+			<div class="mui-input-group" id="form">
+				<div class="mui-input-row">
+					<label>报废单号</label>
+					<input type="text" id="billNo" readonly="true" class="" placeholder="请选择单号">
+				</div>
+				<div class="mui-content-padded oauth-area">
+					<!--占位-->
+				</div>
+			</div>
+		</div>
+
+		<div id='show' class="easyui-tabs" data-options="justified:true,tabHeight:30" style="width:100%;">
+			<div title="物料明细" data-options="tools:'#dg1-tools'">
+				<table id='dg1' class="easyui-datagrid" data-options="rownumbers:true, 
+						singleSelect:true, pagination:true" style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="DGB003">物料编号</th>
+							<th field="DGB004" align="right">报废数量</th>
+							<th field="DGB005" align="right">已完成数量</th>
+							<th field="DGB006" align="right">未完成数量</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+
+			<div title="扫描条码" data-options="tools:'#dg2-tools'">
+				<div class="mui-input-group">
+					<div class="mui-input-row" id="barCode">
+						<label>条码</label>
+						<input type="text" id="txtBarCode" class=" mui-input-clear" placeholder="请扫描条码">
+					</div>
+					<table id='dg2' class="easyui-datagrid" data-options="rownumbers:true, 
+						singleSelect:true, pagination:true"">
+						<thead>
+							<tr>
+								<th field="DAB001">条码</th>
+								<th field="DAB002">存放仓库</th>
+								<th field="DAB006" align="right">库存数量</th>
+								<th field="DAB020">物料编码</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="mui-content" id="box">
+			<div class="mui-content-padded oauth-area">
+				<!--占位-->
+			</div>
+			
+				<div class="mui-button-row">
+					<button type="btnChange" class="mui-btn mui-btn-primary" id="btn_change">单据切换</button>&nbsp;&nbsp;
+					<button type="btnStart" class="mui-btn mui-btn-danger" id="btn_start"> 报废开始</button>
+				</div>
+			
+		</div>
+		
+		<!-- 数量标签 -->
+		<div id="dg1-tools">
+			<span id="dg1-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+		<div id="dg2-tools">
+			<span id="dg2-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/CangKuManage_js/INVDGA.js"></script>
+</html>

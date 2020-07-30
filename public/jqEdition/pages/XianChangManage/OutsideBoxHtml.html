@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+
+		<style>
+			.mui-input-row label {
+				width: 30%;
+				padding: 15px 5px;
+			}
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 65%;
+				margin: 2px 5px;
+			}
+			
+			.mui-input-group .mui-input-row:after {
+				left: 0px;
+			}
+			
+			.mui-input-row .mui-numbox {
+				float: left;
+				margin: 2px 30px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：黄邦文
+        	时间：2019-12-11
+        	描述：工序报工--外箱包装
+        -->
+		<div class="mui-content">
+			<div style="padding: 0px 10px;">
+				<div id="item1" class="mui-control-content mui-active">
+					<div class="mui-input-row" style="margin: 8px 0px; font-size: 17px;">
+						<span style="border: 1px solid black;" class="mui-badge">工序采集</span>
+						<span id="txtCurGX" style="border-bottom: 1px solid black;" class="mui-badge">当前工序是：</span>
+						<span id="txtCurGXID" style="border-bottom: 1px solid black;" class="mui-badge">A001</span>
+					</div>
+					<div id='infos' class="mui-input-group">
+						<div class="mui-input-row" style="background-color:lightblue;">
+							<label>卡板条码</label>
+							<input type="text" id="txtBarcodeKaBan" style="width: 150px;float: left;" class="mui-input-clear text-color" placeholder="请扫描卡板条码">
+							<span id='txtSJState' style="background-color: red;border: 1px solid black;margin-top: 10px;" class="mui-badge">未送检</span>
+						</div>
+						<div class="mui-input-row" style="background-color:lightblue;">
+							<div style="width: 50%;float: left;">
+								<label style="width: 60%;">可装数量</label>
+								<input type="text" id="txtKeZhuangSL" style="width: 30%;"readonly="true" value="0" >
+							</div>
+							<div style="width: 50%;float: left;">
+								<label style="width: 60%;">待装数量</label>
+								<input type="text" id="txtDaiZhuangSL" style="width: 30%;"readonly="true" value="0">
+							</div>
+						</div>
+						<div class="mui-input-row">
+							<label>装箱数</label>
+							<div class="mui-numbox">
+								<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+								<input id="txtBoxSL" class="mui-input-numbox" type="number" value="6" />
+								<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+							</div>
+							
+						</div>
+						<div class="mui-input-row">
+							<label>箱条码</label>
+							<input type="text" id="txtBarcodeBox" class="mui-input-clear text-color" placeholder="请连续扫完箱条码">
+						</div>
+						<!--<div class="mui-input-row">
+							<label>作业人员</label>
+							<input type="text" id="txtZuoYeRenYuan" readonly="true">
+						</div>
+						<div class="mui-input-row">
+							<label>产线</label>
+							<input type="text"  id="txtLineName" readonly="true" class="" placeholder="产线名称">
+						</div>-->
+						<div class="mui-input-row">
+							<label>产品条码</label>
+							<input type="text" id="txtBarcodeCP"class="mui-input-clear text-color" placeholder="请扫产品条码">
+						</div>
+						<div class="mui-input-row">
+							<button id="btnReset" style="width: 80px; margin-left: 10px; margin-top: 3px;float: left;">重置</button>
+							<button id="btnSongJian" style="width: 80px; margin-left: 10px; margin-top: 3px;float: left;">送检</button>
+							<button id="btnSubmit" style="width: 80px; margin-left: 10px; margin-top: 3px;float: left;">提交</button>
+						</div>
+					</div>
+				</div>
+				<div id="tabsid" class="easyui-tabs" style="width:100%; margin-top: 5px;" tabHeight='30px;' justified=false>
+					<div title="箱明细" data-options="tools:'#dgWLMX-tools'">
+						<table id="dgSCMX" style="height: 100%;" class="easyui-datagrid" fitColumns:true data-options="  rownumbers:true, singleSelect:true, autoRowHeight:false, pagination:false, pageSize:10">
+							<thead>
+								<tr>
+									<th field="QAB002">箱条码</th>
+									<th field="CPTM">产品条码</th>
+									<th field="QAB017">数量</th>
+									<th field="QAB005">产品编码</th>
+									<th field="QAB006">产品名称</th>
+									<th field="QAB007">产品规格</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div title="卡板明细" data-options="tools:'#dgWLMX-tools'">
+						<table id="dgKBMX" style="height: 100%;" class="easyui-datagrid" fitColumns:true data-options="  rownumbers:true, singleSelect:true, autoRowHeight:false, pagination:false, pageSize:10">
+							<thead>
+								<tr>
+									<th field="boxno">箱条码</th>
+									<th field="boxsl">数量</th>
+									<th field="cpbm">产品编码</th>
+									<th field="cpmc">产品名称</th>
+									<th field="cpgg">产品规格</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/BaoGongManager_js/OutsideBox.js"></script>
+
+</html>

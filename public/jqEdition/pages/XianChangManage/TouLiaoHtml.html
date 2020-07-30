@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<script type="text/javascript" src="../../lib/base_js/js/PageCommonQuote.js"></script>
+		<style>
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：黄邦文
+        	时间：2019-12-06
+        	描述：产线投料
+        -->
+		<div class="mui-content">
+			<div style="padding: 0px 10px;">
+				<div id="item1" class="mui-control-content mui-active">
+					<div id='infos' class="mui-input-group">
+						<div class="mui-input-row">
+							<label>指令单号</label>
+							<input type="text" id="txtBillNo" class="mui-input-clear text-color" placeholder="请扫描指令单号">
+						</div>
+						<div class="mui-input-row">
+							<label>物料条码</label>
+							<input type="text" id="txtBarcode" class="mui-input-clear text-color" placeholder="请扫描物料条码">
+						</div>
+					</div>
+				</div>
+				<div id="tabsid" class="easyui-tabs" style="width:100%; margin-top: 5px;" tabHeight='30px;' justified=true>
+					<div title="待投物料信息" data-options="tools:'#dgBarcode-tools'">
+						<table id="dgDTMX" class="easyui-datagrid" fitColumns:false data-options="  rownumbers:true, singleSelect:true, autoRowHeight:false, pagination:false, pageSize:10">
+							<thead>
+								<tr>									
+									<th field="wlbm" width="80">物料编码</th>
+									<th field="xqsl" width="60">需求数量</th>
+									<th field="blsl" width="60">备料数量</th>
+									<th field="tlsl" width="60">投料数量</th>
+									<th field="wlmc" width="80">名称</th>
+									<th field="wlgg" width="120">规格</th>	
+									<th field="DAG002" width="100">所属单据</th>	
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div title="已投条码明细" data-options="tools:'#dgWLMX-tools'">						
+						<table id="dgYTMX" style="height: 100%;" class="easyui-datagrid" fitColumns:false data-options="  rownumbers:true, singleSelect:true, autoRowHeight:false, pagination:false, pageSize:10">
+							<thead>
+								<tr>
+									<th field="tm" width="150">条码</th>
+									<th field="wlbm" width="80">物料编码</th>
+									<th field="sl" width="60">数量</th>	
+									<th field="wlmc" width="80">名称</th>	
+									<th field="wlgg" width="120">规格</th>	
+									<th field="tlr" width="80">投料人</th>	
+									<th field="tlsj" width="120">投料时间</th>	
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/XianChangManage_js/TouLiao.js"></script>
+
+</html>

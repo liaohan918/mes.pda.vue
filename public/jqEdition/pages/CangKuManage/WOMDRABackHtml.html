@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>库位绑定</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+
+		<style>
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+			
+			.tabs li a.tabs-close,
+			.tabs-p-tool {
+				height: 20px;
+			}
+			
+			#Barinfo {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<!--
+        	作者：2606529150@qq.com
+        	时间：2018-09-12
+        	描述：SMT不良品退料
+        -->
+		<div id="Baseinfo" class="mui-content">
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<label style="width: 35%;float: left;">物料条码</label>
+					<input id="txtBarcode" type="text" style="width: 65%;float: left;" class="text-color" placeholder="请扫描条码">
+				</div>
+				<div class="mui-input-row">
+					<label style="width: 35%;float: left;">退料单号</label>
+					<input id="txtDRA002" type="text" readonly="true" style="background-color: #CCCCCC;width: 65%;float: left;" class="text-color">
+				</div>
+
+				<div class="mui-input-row">
+					<div style="width: 100%;">
+						<label style="width: 30%;" >库位</label>
+						<input id="txtKuWei" type="text" style="width: 40%;float: left;" class="text-color" placeholder="库位">
+						<input id="txtCangku" type="text" style="width: 30%;float: right;" class="text-color" placeholder="仓库">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<div>
+						<label style="width: 35%;float: left;">条码数量</label>
+						<input id="txtSum" type="text" readonly="true" style="width: 40%;float:left" class="text-color" placeholder="条码数量">
+						<button style="width: 25% ;float: right;" type="button" onclick="BackConFirm()" class="mui-btn mui-btn-green">确  认</button>
+					</div>
+
+				</div>
+			</div>
+
+			<div id="tabsid" class="easyui-tabs" data-options="justified:true,tabHeight:30">
+				<div title="条码信息" data-options="tools:'#p-tools1'">
+					<div style="height: 100%;">
+						<textarea id='Barinfo' readonly="readonly" style="height: 94%"></textarea>
+					</div>
+
+				</div>
+
+				<div title="退料明细" data-options="tools:'#p-tools2'">
+					<table id="gridWOMDRB" class="easyui-datagrid" data-options="rownumbers:true, 
+					singleSelect:true " style="height: 90%;">
+						<thead>
+							<tr>
+								<th field="DRB003">序号</th>
+								<th field="DRB004">物料条码</th>
+								<th field="DRB007">物料名称</th>
+								<th field="DRB002">工单</th>
+								<th field="DRB011">应退</th>
+								<th field="DRB010">实退</th>
+							</tr>
+						</thead>
+					</table>
+
+					<div class="mui-input-row" style="height: 10%;  font-size:17px;">
+						<div style="width: 40%;float: left;">
+							<label>应</label>
+							<input id="AllBack" type="text" readonly="true" style="width: 50%;" class="text-color" placeholder="数量">
+						</div>
+						<div style="width: 30%;float: left;">
+							<label>实</label>
+							<input id="ReadyBack" type="text" readonly="true" style="width: 50%;" class="text-color" placeholder="数量">
+						</div>
+						<div style="width: 30%;float: left;">
+							<label>剩</label>
+							<input id="NeedBack" type="text" readonly="true" style="width: 50%;" class="text-color" placeholder="数量">
+						</div>
+					</div>
+
+					<!--<div id="row1" class="mui-input-row" style="font-size:17px;height: 10%;">
+						<label>应退</label>
+						<input id="AllBack" type="text" readonly="true" style="width: 50%;background-color: #CCCCCC;" class="text-color" placeholder="条码数量">
+					</div>
+					<div class="mui-input-row" style="font-size:17px;height: 10%;">
+						<label>实退</label>
+						<input id="ReadyBack" type="text" readonly="true" style="width: 50%;background-color: #CCCCCC;" class="text-color" placeholder="条码数量">
+					</div>
+					<div class="mui-input-row" style="font-size:17px;height: 10%;">
+						<label>剩余</label>
+						<input id="NeedBack" type="text" readonly="true" style="width: 50%;background-color: #CCCCCC;" class="text-color" placeholder="条码数量">
+					</div>-->
+				</div>
+			</div>
+
+	</body>
+	<script type="text/javascript" src="../../js/CangKuManage_js/WOMDRABack.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+	<script type="text/javascript">
+		$('#tabsid').tabs({
+			height: $(window).height() - $("#form").height()-50
+		});
+
+		$('#gridWOMDRB').tabs({
+			height: $(window).height() - $("#form").height() - 115	//90
+		});
+
+		mui.plusReady(function() {
+			mui("#materialCode ")[0].focus();
+			//add by HCW 20200318
+			$('#tabsid').tabs({
+				height: $(window).height() - $("#form").height()-50
+			});
+		});
+	</script>
+	<script type="text/javascript ">
+		/**
+		 * 加载界面后事件
+		 */
+		mui.plusReady(function() {
+			mui("#txtBarcode")[0].focus();
+		});
+
+		/**
+		 * 物料退料事件
+		 */
+		document.getElementById('txtBarcode').addEventListener('keydown', function(e) {
+			if(e.keyCode != 13) return;
+			GetBarCodeInfo();
+		});
+		/**
+		 * 库位扫描事件
+		 */
+		document.getElementById('txtKuWei').addEventListener('keydown', function(e) {
+			if(e.keyCode != 13) return;
+			GetStoragenfo();
+		});
+	</script>
+
+</html>

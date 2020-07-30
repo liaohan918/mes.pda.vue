@@ -1,0 +1,343 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+	</head>
+
+	<body>
+		<!--
+        	作者：黄邦文
+        	时间：2019-05-28
+        	描述：指令与LOT绑定
+        -->
+		<div class="mui-content">
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<label>产线</label>
+					<input type="text" style="width: 85px; float: left;" id="txtLineID" readonly="true" class="" placeholder="请选产线">
+					<input type="text" style="width: 105px;float: left;" id="txtLineName" readonly="true" class="" placeholder="产线名称">
+				</div>
+				<div class="mui-input-row">
+					<label>生产指令</label>
+					<input id="txtWO" type="text" placeholder="生产指令" readonly="readonly" />
+				</div>
+				<div class="mui-input-row">
+					<label>产品型号</label>
+					<input id="txtProductCode" type="text" placeholder="产品型号" readonly="readonly" />
+				</div>
+				<div class="mui-input-row">
+					<label>管制卡号</label>
+					<input id="txtLOT" type="text" class="mui-input-clear text-color" value="" placeholder="请扫描管制卡号" />
+				</div>
+				<div class="mui-input-row">
+					<div style="width: 30%;float: left;">
+						<label>(</label>
+						<input id="txtPingBanSL" type="number" class="mui-input-clear" placeholder="拼板数" />
+					</div>
+					<div style="width: 30%;float: left;">
+						<label>*</label>
+						<input id="txtChenSL" type="number" class="mui-input-clear" placeholder="层数" />
+					</div>
+					<div style="width: 30%;float: left;">
+						<label>)-</label>
+						<input id="txtNGSL" type="number" class="mui-input-clear" placeholder="打叉板" />
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>数量</label>
+					<input id="txtLOTQty" type="number" class="mui-input-clear" placeholder="请录入数量" />
+				</div>
+				<div id="divBtn" class="mui-input-row">
+					<div style="float: right;width: 25%; margin-right: 10px;">
+						<button type="button" id="btnSave" style="width: 100%;" class="mui-btn mui-btn-green ">保存</button>
+					</div>
+				</div>
+			</div>
+			<table id="dgGrid" class="easyui-datagrid" data-options="rownumbers:true, singleSelect:true">
+				<thead>
+					<tr>
+						<th field="QAB005" align="center" width="30%">产品型号</th>
+						<th field="QAB002" align="center" width="45%">管制卡号</th>
+						<th field="QAB017" align="center" width="25%">数量</th>
+					</tr>
+				</thead>
+			</table>
+			<div id="head2" style="width: 100%;height: 40px; background-color: orange;">
+				指令数：0；已绑定数：0；差异：0
+			</div>
+		</div>
+	</body>
+	<!--<script type="text/javascript" src="../../js/XIANCHANGManage_js/WOBINDLOT.js"></script>-->
+	<script type="application/javascript">
+		mui.init();
+		var PickerWO = new mui.PopPicker();
+		$(function() {
+			var userPicker = new mui.PopPicker();
+			//获取产线
+			$.ajax({
+				url: app.API_URL_HEADER + '/GongXuBaoGong/GetLines',
+				data: {},
+				dataType: "json",
+				type: "post",
+				success: function(resdata) {
+					console.log(JSON.stringify(resdata));
+					dt = $.parseJSON(resdata.data);
+					userPicker.setData(dt);
+				},
+				error: function(xhr, type, errorThrown) {
+					alert("获取数据异常：" + JSON.stringify(errorThrown));
+				}
+			});
+			//选择产线
+			$('#txtLineID').click(function() {
+				userPicker.show(function(items) {
+					$('#txtLineName').val(items[0]['text']);
+					$('#txtLineID').val(items[0]['value']);
+					GetWOMsg();
+					$('#txtWO').click();
+					//返回 false 可以阻止选择框的关闭
+					//return false;
+				});
+
+			});
+			//选择指令
+			$('#txtWO').click(function() {
+				PickerWO.show(function(items) {
+					$('#txtWO').val(items[0]['text']);
+					$('#txtProductCode').val(items[0]['value']);
+					GetWOData();
+					$('#txtLOT').focus();
+					//返回 false 可以阻止选择框的关闭
+					//return false;
+				});
+
+			});
+
+			$("#dgGrid").datagrid({
+				height: $(window).height() - $("#form").height() - $("#head2").height()
+			});
+
+			$('#txtLOT').keydown(function(e) {
+				if(e.keyCode != 13) return;
+				CheckGZK();
+			});
+			$('#txtLOTQty').keydown(function(e) {
+				if(e.keyCode != 13) return;
+				WOLOTBIND();
+			});
+
+			$('#btnSave').click(function() {
+				WOLOTBIND();
+			})
+
+			$('#txtChenSL').keydown(function(e) {
+				if(e.keyCode != 13) return;
+				CalcSL();
+				$('#txtNGSL').focus().select();
+			});
+			$('#txtPingBanSL').keydown(function(e) {
+				if(e.keyCode != 13) return;
+				CalcSL();
+				$('#txtChenSL').focus().select();
+			});
+			$('#txtNGSL').keydown(function(e) {
+				if(e.keyCode != 13) return;
+				CalcSL();
+				$('#txtLOTQty').focus().select();
+			});
+
+		})
+
+		function CalcSL() {
+			var ChenSL = $('#txtChenSL').val() == '' ? 0 : $('#txtChenSL').val();
+			var PingBanSL = $('#txtPingBanSL').val() == '' ? 0 : $('#txtPingBanSL').val();;
+			var NGSL = $('#txtNGSL').val() == '' ? 0 : $('#txtNGSL').val();;
+			$('#txtLOTQty').val(ChenSL * PingBanSL - NGSL);
+		}
+
+		function GetWOMsg() {
+			//获取指令
+			$.ajax({
+				url: app.API_URL_HEADER + '/WOBINDLOT/GetWOMsg',
+				data: {
+					Line: $('#txtLineID').val()
+				},
+				dataType: "json",
+				type: "post",
+				success: function(resdata) {
+					console.log(JSON.stringify(resdata));
+					dt = $.parseJSON(resdata.data);
+					PickerWO.setData(dt);
+				},
+				error: function(xhr, type, errorThrown) {
+					alert("获取数据异常：" + JSON.stringify(errorThrown));
+				}
+			});
+		}
+
+		function GetWOData() {
+			//获取指令绑定数据
+			$.ajax({
+				url: app.API_URL_HEADER + '/WOBINDLOT/GetWOData',
+				data: {
+					ZLH: $('#txtWO').val()
+				},
+				dataType: "json",
+				type: "post",
+				success: function(resdata) {
+					//console.log(JSON.stringify(resdata));
+					if(resdata.status == 0) {
+						$('#dgGrid').datagrid('loadData', $.parseJSON(resdata.data.List));
+						$('#txtPingBanSL').val(resdata.data.PBSL);
+						mui('#head2')[0].innerHTML = resdata.data.Msg;
+					} else {
+						$('#dgGrid').datagrid('loadData', []);
+					}
+
+				},
+				error: function(xhr, type, errorThrown) {
+					alert("获取数据异常：" + JSON.stringify(errorThrown));
+				}
+			});
+		}
+
+		function WOLOTBIND() {
+			if($('#txtLineID').val() == "") {
+				playerAudio("NG");
+				mui.toast('请先选择产线！');
+				$('#txtLineID').click();
+				return;
+			}
+			if($('#txtWO').val() == "") {
+				playerAudio("NG");
+				mui.toast('请先选择指令！');
+				$('#txtWO').click();
+				return;
+			}
+			if($('#txtLOT').val() == "") {
+				playerAudio("NG");
+				mui.toast('请扫描管制卡号！');
+				$('#txtLOT').focus();
+				return;
+			}
+			if($('#txtLOTQty').val() == "" || $('#txtLOTQty').val()<=0 || $('#txtLOTQty').val().length>5) {
+				mui.toast('数量不能为空或小于等于0或数量大于5位数，请录入正确数量！');
+				playerAudio("NG");
+				$('#txtLOTQty').focus().select();
+				return;
+			}
+			//获取指令
+			$.ajax({
+				url: app.API_URL_HEADER + '/WOBINDLOT/WOLOTBIND',
+				data: {
+					ZLH: $('#txtWO').val(),
+					GZK: $('#txtLOT').val(),
+					CPBM: $('#txtProductCode').val(),
+					SL: $('#txtLOTQty').val(),
+					UserID: app.userid
+				},
+				dataType: "json",
+				type: "post",
+				success: function(resdata) {
+					console.log(JSON.stringify(resdata));
+					if(resdata.status == 0) {
+						playerAudio("OK");
+						mui.toast('数据保存成功!');
+						$('#txtLOTQty').val('');
+						$('#txtLOT').val('').focus();
+						GetWOData();
+					} else {
+						playerAudio("NG");
+						alert('数据保存失败!' + resdata.message);
+					}
+
+				},
+				error: function(xhr, type, errorThrown) {
+					playerAudio("NG");
+					alert("获取数据异常：" + JSON.stringify(errorThrown));
+				}
+			});
+		}
+
+		function CheckGZK() {
+			if($('#txtWO').val() == "") {
+				mui.toast('请先选择指令！');
+				$('#txtLOT').val('');
+				$('#txtWO').click();
+				return;
+			}
+			//直接判断管制卡号里是否存在产品型号来
+			if($('#txtLOT').val().indexOf($('#txtProductCode').val()) == -1) {
+				mui.toast('管制卡对应的产品型号与指令生产的产品型不同，不能绑定！');
+				$('#txtLOT').val('').focus();
+			} else {
+				$.ajax({
+					url: app.API_URL_HEADER + '/WOBINDLOT/GetLotBindMsg',
+					data: {
+						GZKH: $('#txtLOT').val(),
+						CPBM:$('#txtProductCode').val()
+					},
+					dataType: "json",
+					type: "post",
+					success: function(resdata) {
+						//console.log(JSON.stringify(resdata));
+						if(resdata.status == 0) {
+							playerAudio("NG");
+							if(confirm('此管制卡已绑定，是否重新绑定！'))
+							{
+								if(resdata.message>1)
+								{
+									alert('此管制卡已进入后工段采集了，不能重新绑定！');
+									$('#txtLOT').val('').focus();
+									return;
+								}
+								else
+								{
+									$('#txtChenSL').focus().select();
+								}								
+							}
+							else
+							{
+								$('#txtLOT').val('').focus();
+							}
+							
+						}
+						else if(resdata.status == 2)
+						{
+							playerAudio("NG");
+							alert(resdata.message);
+							$('#txtLOT').val('').focus();							
+						}
+						else {
+							playerAudio("OK");
+							$('#txtChenSL').focus().select();
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+						playerAudio("NG");
+						alert("获取数据异常：" + JSON.stringify(errorThrown));
+					}
+				});
+				
+			}
+		}
+	</script>
+
+</html>

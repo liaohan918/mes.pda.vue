@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>胶水校验</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" href="../../lib/mui/css/mui.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/jquery/js/jquery.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js">
+		</script></script><script type="text/javascript" src="../../js/XiGaoManage_js/JiaoShuiCheck.js" ></script>
+	</head>
+	<body>
+		<!--
+        	作者：黎锋
+        	时间：2019-06-15
+        	描述：维修出库单接收
+        -->
+		<div id="infos" class="mui-content">
+			<div id="form" class="mui-input-group">
+				<!--<div class="mui-input-row">
+					<div style="width: 100%;float: left;">
+						<label>管制卡</label>
+						<input id="txtGuanZhiKa" type="text" style="width: 65%;float: left;" class="text-color" placeholder="请扫描管制卡">
+					</div>
+				</div>-->
+				<div class="mui-input-row">
+					<div style="width: 100%;float: left;">
+						<label>机型</label>
+						<input id="txtJiXing" type="text" style="width: 65%;float: left;" class="text-color" readonly="readonly" placeholder="请选择机型">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<div style="width: 100%;float: left;">
+						<label>条码</label>
+						<input id="txtBarCode" type="text" style="width: 65%;float: left;" class="mui-input-clear text-color" placeholder="请扫描条码">
+					</div>
+				</div>
+			</div>
+			<div class="mui-input-row" style="height: 30px; margin-top: 10px;">
+				<div class="link-area">
+					<h4 style="color: #008000;">待检验列表</h4>
+				</div>
+			</div>
+				<table id="dgWOMDAH" class="easyui-datagrid" fitColumns:false style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="DAH005" width="110">条码</th>
+							<th field="DAH006" width="60">物料编码</th>
+							<th field="DAH007" width="80">物料名称</th>
+							<th field="DAH011" width="50">数量</th>
+							<th field="PAA002" width="60">备料人</th>
+							<th field="Time" width="100">备料时间</th>
+						</tr>
+					</thead>
+				</table>
+		    </div>
+		<script>
+			$('#tabsid').tabs({
+				justified: true,
+				tabHeight: 30,
+				narrow: true,
+				pill: true
+			});
+			
+			//批量设置表格属性
+			$('.easyui-datagrid').datagrid({
+				height: $(window).height() - $("#form").height() - $('#info').height()-40,
+				sortable: false
+			});
+		</script>
+	</body>
+</html>

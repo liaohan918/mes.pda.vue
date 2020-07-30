@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>查询没维护锡膏与机型的关系的机型</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<script type="text/javascript" src="../../js/XiGaoManage_js/QueryNoRelation.js" ></script>
+	</head>
+	<body>
+		<!--
+        	作者：庄卓杰
+        	时间：2019-06-29
+        	描述：送修单单接收
+        -->
+        <div class="mui-input-row" style="height: 40px; margin-top: 10px;">
+				<div class="link-area">
+					<h4 style="color: #008000;">机型信息</h4>
+				</div>
+		</div>
+		<div id="infos" class="mui-content">
+			<table id="dgWOMDAA" class="easyui-datagrid" fitColumns:false style="height: 100%;">
+				<thead>
+					<tr>
+						<th field="DAA014" width="120">机型</th>
+						<th field="DAA015" width="80">机型名称</th>
+						<th field="DAA016" width="180">规格</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<script>
+			//批量设置表格属性
+			$('.easyui-datagrid').datagrid({
+				height: $(window).height() - $("#form").height() - $('#info').height()-65,
+				sortable: false
+			});
+		</script>
+	</body>
+</html>
+

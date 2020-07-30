@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>工治具盘点</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<script type="text/javascript" src="../../js/GongZhiJuManage_js/GZJPDAHtml.js" ></script>
+	</head>
+	<body>
+		<!--
+        	作者：黎锋
+        	时间：2019-08-14
+        	描述：工治具盘点
+        -->
+		<div id="infos" class="mui-content">
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<label style="width: 40%;">盘点单号</label>
+					<input style="width: 60%;" id="txtPDDanHao" type="text" class="mui-input-clear" readonly="readonly" placeholder="请选择盘点单号">
+				</div>
+				<div class="mui-input-row">
+					<label>盘点描述</label>
+					<input id="txtPDMSG" style="background-color: #777777;" type="text" class="mui-input-clear" readonly="readonly" placeholder="盘点描述">
+				</div>
+				<div class="mui-input-row">
+					<label>条码</label>
+					<input id="txtBarCode" type="text" class="mui-input-clear" placeholder="请扫描条码">
+				</div>
+			</div>
+			<div class="link-area">
+					<h4 style="color: #008000;">盘点明细</h4>
+			</div>
+				<table id="dgGZJPDB" class="easyui-datagrid" fitColumns:false style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="PDB002" width="120">工治具条码</th>
+							<th field="PDB003" width="120">工治具名称</th>
+							<th field="PDB006" width="50">仓库</th>
+							<th field="PDB007" width="80">库位</th>
+							<th field="PDB008" width="50">位置状态</th>
+							<th field="PDB009" width="40">已盘</th>
+							<th field="PDB012" width="40">新增</th>
+						</tr>
+					</thead>
+				</table>
+		</div>
+		<script>
+			$('#tabsid').tabs({
+				justified: true,
+				tabHeight: 30,
+				narrow: true,
+				pill: true
+			});
+			
+			//批量设置表格属性
+			$('.easyui-datagrid').datagrid({
+				height: $(window).height() - $("#form").height() - $('#tabsid').height()-28,
+				sortable: false
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,127 @@
+<!--
+	作者：岳志鹏
+	时间：2018-09-04
+	描述：退货
+-->
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>供应商退货</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.poppicker.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<style>
+			#barCodeInfo {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">退货</h1>
+		</header>-->
+		<div class="mui-content">
+			<div class="mui-input-group" id="form">
+				<div class="mui-input-row" id="input04">
+					<div>
+						<label style="width: 23%;">日期</label>
+						<input id="ruKuDate" type="text" style="width: 57%;float: left;" class="text-color" placeholder="选择交易日" onclick="ClickDate()">
+						<button id="refresh" 
+						style="width: 20%;height:28px;float: left;margin-top: 1px; " 
+						class="mui-btn mui-btn-green ">选单</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<div style="width: 100%;float: left;">
+						<label style="width: 23%;float: left;">单号</label>
+						<input id="billNo" type="text" style="width: 57%;float: left;"
+						 class="text-color" placeholder="请扫描单号">
+						<div style="width: 20%;float: left;" class="mui-btn mui-btn-primary" id="SplitBarcode" onclick="SplitBarcode(this)" data-linktype="newpage" data-pageid="WARBCFHtml" data-pageurl="WARBCFHtml.html" data-pagetitle="物料拆分">
+							拆
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="tabsid" class="easyui-tabs" data-options="justified:true,tabHeight:30" style="width:100%">
+			<div title="物料明细" data-options="tools:'#dg1-tools'">
+				<table id='dg1' class="easyui-datagrid" data-options="rownumbers:true, 
+						singleSelect:true, pagination:true">
+					<thead>
+						<tr>
+							<th field="DKB003">物料编号</th>
+							<th field="DKB006" align="right">应退数量</th>
+							<th field="DKB007" align="right">实退数量</th>
+							<th field="DKB004">物料名称</th>
+							<th field="DKB005">物料规格</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div title="扫描条码">
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<div style="width: 67%;float: left;">
+							<label style="width: 30%;font-size: 15px;">条码</label>
+							<input type="text" id="txtBarCode" class=" mui-input-clear" placeholder="请扫描条码" style="width: 70%;">
+						</div>
+						<div class="mui-checkbox mui-left float_left" style="width: 33%;float: left;">
+							<label style="font-size: 15px;">取消</label>
+							<input id="quXiao" type="checkbox">
+						</div>
+					</div>
+					<div class="mui-input-row" style="height: 325px; margin-top: 10px;">
+						<div class="link-area">
+							<h4 style="color: #008000;">条码信息</h4>
+						</div>
+						<textarea readonly="readonly" id='barCodeInfo' style="height: 90%;"></textarea>
+					</div>
+				</div>
+			</div>
+			<div title="库位列表" data-options="tools:'#dg2-tools'">
+				<table id='dg2' class="easyui-datagrid" data-options="rownumbers:true, 
+						singleSelect:true, pagination:true" style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="DAB002">仓库</th>
+							<th field="DAB003">库位</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		
+		<!-- 数量标签 -->
+		<div id="dg1-tools">
+			<span id="dg1-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+		<div id="dg2-tools">
+			<span id="dg2-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/CangKuManage_js/PURDKA.js"></script>
+	<script>
+		var IsOutProcess='0'; //1-委外加工；0-不委外加工
+	</script>
+
+</html>

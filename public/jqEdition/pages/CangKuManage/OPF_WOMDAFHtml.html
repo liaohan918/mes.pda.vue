@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>委外出库单</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<style>
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+			
+			.tabs li a.tabs-close,
+			.tabs-p-tool {
+				height: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<!--
+            	作者：DZP@qq.com
+            	时间：2019-06-05
+            	描述：委外出库单
+            -->
+		<div id="info" class="mui-content" onclick="SetInputFoucs('#materialCode')">
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<div class="mui-input-row " id="div1">
+						<label style="width: 35%; float: left; ">单据类型</label>
+						<div style="width: 65%; float: right;">
+							<input style="padding: 5px;width: 40%;" type="text" id="txtDJLX" readonly="true" placeholder="单据类型">
+							<input style="padding: 5px;width: 55%;" type="text" id="txtDJMC" readonly="true">
+						</div>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<div style="width: 100%;float: left;">
+						<label style="width: 35%;float: left;">委外单号</label>
+						<input id="txtBillNo" type="text" style="width: 65%;float: right;" class="text-color" placeholder="请选择单号">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<div style="width: 65%;float: left;">
+						<label>条码</label>
+						<input id="materialCode" type="text" style="width: 65%;float: left;" class="text-color" placeholder="请扫描条码">
+					</div>
+					<div style="width: 35%;float: right;" class="mui-checkbox mui-left">
+						<label style="width: 100%;float: right;">取消</label>
+						<input id="checkdefault" name="checkbox" value="Item1" type="checkbox">
+					</div>
+				</div>
+			</div>
+
+			<div id="tabsid" class="easyui-tabs" data-options="justified:true,tabHeight:30" style="width:100%;">
+				<div title="材料列表" data-options="tools:'#p-tools1'">
+					<table id="gridKMaterialList" class="easyui-datagrid" data-options="rownumbers:true, 
+					singleSelect:true "
+					 style="height: 100%;">
+						<thead>
+							<tr>
+								<!-- <th field="DAG003">序号</th> -->
+								<th field="DAG004">物料编码</th>
+								<th field="DAG014">应发数量</th>
+								<th field="DAG023">待发数量</th>
+								<th field="DAG015">实发总数</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+
+				<div title="库位列表" data-options="tools:'#p-tools2'">
+					<table id="gridKWList" class="easyui-datagrid" data-options="rownumbers:true, 
+					singleSelect:true " style="height: 90%;">
+						<thead>
+							<tr>
+								<th field="Num">序号</th>
+								<th field="DAB013">FIFO日期</th>
+								<th field="DAB002">仓库</th>
+								<th field="DAB003">库位</th>
+								<th field="DAB006">数量</th>
+							</tr>
+						</thead>
+					</table>
+					<div class="mui-input-row" style="height: 10%;">
+						<div>
+							<label style="width: 50%;left;font-size: 15px ">物料编码</label>
+							<input id="ThismaterialCode" type="text" style="width: 50%;float: left;" class="text-color" placeholder="物料编码">
+						</div>
+					</div>
+				</div> 
+			</div>
+
+			<div id="p-tools1">
+				<span id="wl_sum" class="mui-badge mui-badge-success">0</span>
+			</div>
+			<div id="p-tools2">
+				<span id="kw_sum" class="mui-badge mui-badge-success">0</span>
+			</div>
+			<div id="p-tools3">
+				<span id="tm_sum" class="mui-badge mui-badge-success">0</span>
+			</div>
+
+	</body>
+	<script type="text/javascript" src="../../js/CangKuManage_js/OPF_WOMDAF.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+	<script type="text/javascript">
+		$('#tabsid').tabs({
+			height: $(window).height() - $("#form").height() - 25
+		}); 
+	</script>
+	<script type="text/javascript ">
+		 
+
+		$(function() {
+			$('#gridKMaterialList').datagrid({
+				onClickRow: function(index, data) {
+					GetStorageLocation(data["DAG004"]);
+					document.getElementById('ThismaterialCode').value = data["DAG004"];
+				}
+			})
+		});
+
+		/**
+		 * 条码列表行点击事件
+		 */
+		$(function() {
+			$('#gridBarcodeList').datagrid({
+				onClickRow: function(index, data) {
+					SetFocusBarcode(data);
+				}
+			})
+		}); 
+		document.getElementById('materialCode').addEventListener('keydown', function(e) {
+			if (e.keyCode != 13) return;
+			var barcode = document.getElementById('materialCode').value
+			DowithBarcode(barcode);
+			//根据工单获取：设备编号信息/材料明细信息/已扫描条码信息/材料列表当前行库位列表-默认第一条材料
+			//请求回来dataset：进行回填信息/ 设置下拉框数据 
+		});
+
+		document.getElementById('txtBillNo').addEventListener('keydown',function(e){
+			if (e.keyCode!=13)return;
+			GetMaterialList();
+		}) 
+	</script>
+
+</html>

@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>条码拆分</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<style>
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+			
+			.tabs-p-tool {
+				height: 18px;
+			}
+			
+			#txtMataNo,
+			#txtMataCount,
+			#txtMataName {
+				background-color: #CCCCCC;
+			}
+			
+			.mui-switch.mui-active:before {
+				font-size: 18px;
+				content: attr(data-on);
+				left: 1px;
+			}
+			
+			.mui-switch:before {
+				font-size: 18px;
+				content: attr(data-off);
+				right: 5px;
+				color: #000000;
+			}
+			
+			.mui-input-row .mui-switch {
+				margin-right: 0px;
+			}
+			
+			.mui-input-row label {
+				float: left;
+				width: 35%;
+				padding: 11px 2px;
+				font-size: 14px;
+				text-align: right!important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：G90567<吴冰荣>
+        	时间：2018-12-26
+        	描述：条码拆分打印界面
+        	mod:杨俊燃 2019-03-16 修改界面
+        -->
+		<div id="infos" class="mui-content mui-input-group">
+			<div class="mui-input-row">
+				<label style="width: 19%;float: left;">原条码</label>
+				<input id="txtBarCode" type="text" class="mui-input-clear" placeholder="请扫描原条码" style="width: 50%;float: left;">
+				<button style="width: 31%;float: left;" class="mui-btn mui-btn-primary" onclick="btnPrintTestClick()" id="btnPrintTest">测试打印</button>
+			</div>
+
+			<div class="mui-input-row">
+				<label style="width: 19%;">料名称</label>
+				<input id="txtMataName" type="text" readonly="readonly" placeholder="物料名称" style="width: 81%; border-bottom: 1px solid white;">
+			</div>
+
+			<div class="mui-input-row">
+				<div class="mui-left float_left" style="width: 55%;">
+					<label>料编码</label>
+					<input id="txtMataNo" type="text" readonly="readonly" placeholder="物料编码">
+				</div>
+				<div class="mui-left float_right" style="width: 45%;">
+					<label style="width: 45%;">原条码数</label>
+					<input id="txtMataCount" type="text" class="mui-input-clear" placeholder="原数量" readonly="readonly" style="width: 55%;">
+				</div>
+			</div>
+
+			<div class="mui-input-row">
+				<div style="float: left; width: 55%; ">
+					<label>打印机</label>
+					<input id="cmbPrint" type="text" placeholder="请选择打印机" readonly="readonly">
+				</div>
+				<div style="float: right;width: 45%;">
+					<label id="labCFCount" style="width: 45%;">物料数拆</label>
+					<input id="txtCFCount" type="number" class="mui-input-clear" placeholder="物料数" style="width: 55%;">
+				</div>
+			</div>
+
+			<div class="mui-input-row" style="margin-top: 5px;">
+				<div class="mui-left float_left" id="Print" style="width: 40%;">
+					<div id="switchType" class="mui-switch" data-on='条码个数拆' data-off='物料数量拆' style="width: 100%;">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</div>
+				<div class="mui-left float_right" style="width: 60%;">
+					<button style="width: 50%;" class="mui-btn mui-btn-primary" id="btnPrint" onclick="btnPrintClick()">打印</button>
+					<button style="width: 50%;" class="mui-btn mui-btn-danger" id="btnOK" onclick="btnOKClick()"> 拆分</button>
+				</div>
+			</div>
+		</div>
+
+		<div id="tabsid" class="easyui-tabs" style="width:100%; margin-top: 5px;">
+			<div title="材料列表" data-options="tools:'#dataGrid1-tools'">
+				<table id='dataGrid1' class="easyui-datagrid" style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="DAB001">条码</th>
+							<th field="DAB020">物料编码</th>
+							<th data-options="field:'DAB006',editor:'numberbox'">数量</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div title="拆分履历" data-options="tools:'#dataGrid2-tools'">
+				<table id="dataGrid2" class="easyui-datagrid" data-options="rownumbers:true,singleSelect:true" style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="DAB001">条码</th>
+							<th field="DAB006">数量</th>
+							<th field="DAB034">拆分人</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+
+		<!-- 数量标签 -->
+		<div id="dataGrid1-tools">
+			<span id="dataGrid1-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+		<div id="dataGrid2-tools">
+			<span id="dataGrid2-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../js/CangKuManage_js/WARBCFHtml.js"></script>
+	</body>
+
+</html>

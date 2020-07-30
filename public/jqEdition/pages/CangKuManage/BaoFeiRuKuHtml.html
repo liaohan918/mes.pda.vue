@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>退料入库</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../js/CangKuManage_js/BaoFeiRuKuHtml.js"></script>
+
+	</head>
+	<style type="text/css">
+
+	</style>
+
+	<body>
+		<!--
+            	作者：G98052
+            	时间：2019-05-13
+            	描述：退料入库
+            -->
+		<div id="info" class="mui-content">
+			<div id="form" class="mui-input-group">
+				<!--<div class="mui-input-row" style="width: 100%;left: auto;">
+					<label>单据日期</label>
+					<input id="BillDate" type="text" class="text-color" placeholder="选择交易日">
+				</div>
+
+				<div class="mui-input-row">
+					<label>退料单号</label>
+					<input id="BillNo" type="text" readonly="true" class="text-color" placeholder="请选择单号">
+				</div>-->
+
+				<div class="mui-input-row ">
+					<label>物料条码</label>
+					<input id="txtBarCode" type="text" class="mui-input-clear" placeholder="请扫描条码" />
+				</div>
+				<div class="mui-input-row">
+					<div style="float: left ;width: 60%;">
+						<label>库位</label>
+						<input id="txtKuWei" type="text" class="text-color" placeholder="请扫描库位">
+					</div>
+					<div style="float: left ;width: 40%;" class="mui-checkbox mui-left">
+						<label>默认</label>
+						<input id="checkdefault" name="checkbox" value="Item1" type="checkbox">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mui-input-row" id="div002">
+			<div class="link-area">
+				<h4 style="color: #008000;text-align: center;">条码信息</h4>
+			</div>
+			<textarea readonly="readonly" id='barinfo' style="background-color: #FFE48D;"></textarea>
+			<input id="ShengYuinfo" type="text" readonly="readonly" class="text-color" placeholder="剩余退料条码数：0">
+		</div>
+	</body>
+
+</html>

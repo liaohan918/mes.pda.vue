@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>备料单调拨</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../lib/mui/css/mui.min.css">
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../css/buttons.css" />
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script>
+			var DBType = "02";
+		</script>
+		<script src="../../js/CangKuManage_js/INVDFAHtml03.js"></script>
+		<style>
+			.mui-input-row label {
+				padding: 11px 5px;
+				font-size: 14px;
+			}
+			 .mui-input-row .div-maicode-row1 .mui-input-clear~.mui-icon-clear    { 
+				right: 25%;
+			}		
+			
+		</style>
+	</head>
+
+	<body>
+		<!--
+		 	作者：杨俊燃
+			 时间：2019.03.13
+			 描述：备料调拨单据类别
+		-->
+		<div id="head1" class="mui-input-group">
+			<div class="mui-input-row" style="margin-top: 10px;">
+				<label style="width: 30%; float: left; text-align: right;">单据类型</label>
+				<div style="width: 70%; float: right;">
+					<input style="padding: 5px;width: 50%;" type="text" id="txtDJType" readonly="true" placeholder="请选单据类型">
+					<input style="padding: 5px; width: 48%; background-color:gainsboro; " type="text" id="txtDJTypeText" readonly="true">
+				</div>
+			</div>
+			<div class="mui-input-row">
+				<label style="width: 30%; text-align: right;">调拨单号</label>
+				<input id="txtDBHao" style="width: 70%;padding: 5px;" type="text" class="text-color mui-input-clear" placeholder="请扫描单号">
+			</div>
+		</div>
+
+		<div id="tabsid" class="easyui-tabs" style="width:100%; margin-top: 5px;" tabHeight='30px;' justified=true>
+			<div title="物料明细" data-options="tools:'#dgWLMX-tools'">
+				<table id="dgWLMX" style="height: 100%;" class="easyui-datagrid" fitColumns:false data-options="  rownumbers:true, singleSelect:true, autoRowHeight:false, pagination:false, pageSize:10">
+					<thead>
+						<tr>
+							<th field="DFC004" width="80">物料编码</th>
+							<th field="DFC005" width="55">调拨数量</th>
+							<th field="DFC006" width="55">已完成数量</th>
+							<th field="DFC007" width="55">未完成数量</th>
+							<th field="DFC013" hidden="true">调出仓库</th>
+							<th field="CMDA001" width="80">调出仓库</th>
+							<th field="DFC014" hidden="true">调入仓库</th>
+							<th field="DMDA001" width="80">调入仓库</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div title="库位列表" data-options="tools:'#dgKuWei-tools'">
+				<table id="dgKuWei" class="easyui-datagrid" fitColumns:false style="height: 100%;" data-options=" rownumbers:true, singleSelect:true, autoRowHeight:false">
+					<thead>
+						<tr>
+							<!--<th field="DAB020">物料编码</th>
+							<th field="Num">序号</th>-->
+							<th field="DAB003" width="80">库位</th>
+							<th field="DAB006" width="55">数量</th>
+							<th field="DAB013" width="80">FIFO日期</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div title="扫描条码" data-options="tools:'#dgBarcode-tools'">
+				<div class="mui-input-row ">
+					<div style="float:left; width: 65%;">
+						<label>物料条码</label>
+						<input id="txtBarCode" type="text" class="mui-input-clear" style="" placeholder="请扫描条码" />
+					</div>
+					<div style="width: 35%; float: left;" class="mui-checkbox mui-left">
+						<label style="float: left;">取消</label>
+						<input id="checkdefault" name="checkbox" value="Item1" type="checkbox">
+					</div>
+				</div>
+				<div class="mui-input-row" id="divTxtInfo">
+					<textarea readonly="readonly" id='txtInfo' style="height: 100%;background-color: #FFE48D"></textarea>
+				</div>
+			</div>
+			<div title="主条码" data-options="tools:'#maincode-tools'">
+				<div class="mui-input-row " id="div-maincode">
+					<div class="div-maicode-row1" style="float:left; width: 70%;">
+						<label>主条码</label>
+						<input id="txtMainCode" type="text" class="mui-input-clear" placeholder="请扫描主条码" />				</div>
+					<div style="width: 30%; float: left;" class="mui-checkbox mui-left">
+						<label style="float: left;">取消</label>
+						<input id="ckMainIsCancel" name="checkbox" value="Item1" type="checkbox">
+					</div>
+				</div>
+				<div class="mui-input-row" >
+					<table id="MainCodeGrid" class="easyui-datagrid" style="height: 400px;" data-options=" rownumbers:true, singleSelect:true, autoRowHeight:false">
+						<thead>
+							<tr>
+								<th field="DAB001" width="25%" align="middle">物料条码</th>
+								<th field="DAB020" width="25%" align="middle">物料编码</th>
+								<th field="DAB021" width="25%" align="middle">名称</th>
+								<!-- <th field="DAB003" width="16%" align="middle">库位</th>  -->
+								<th field="DAB006" width="20%" align="middle">数量</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div class="mui-input-row" id="maincodeInfo">
+					<div style="width:47%; float: left;" class="mui-left">
+						<label id="MainCodeTotal" style="width: 100% ;font-size: 16px; ">个数:0,总数:0</label> 
+					</div>
+					<div style="width: 33%; float: left;"  class="mui-checkbox mui-left" >
+						<label style="float: left;">快捷出库</label>
+						<input id="ckquick" name="checkbox" value="" type="checkbox" checked>
+					</div>
+					<div style="width: 20%;float:left;" class="mui-button mui-left">
+						<button id="btnDoMainCode" type="button" data-loading-text="执行中"  style="width:100%"  class="mui-btn mui-btn-green">确定</button>
+					</div> 
+				</div>
+			</div>
+		</div>  
+		<div id="head2"  style="width: 100%;height: 40px; background-color: orange;">
+			状态：
+		</div>
+		<!-- 需要扫描的物料数量标签 -->
+		<div id="dgWLMX-tools">
+			<span id="dgWLMX-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+		<!-- 已完成扫描物料数量标签 -->
+		<div id="dgKuWei-tools">
+			<span id="dgKuWei-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+		<!-- 已完成扫描物料数量标签 -->
+		<div id="dgBarcode-tools">
+			<span id="dgBarcode-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		//add by HCW 20200317
+		mui.plusReady(function() {
+			$('#tabsid').tabs({
+				height: $(window).height() - $("#head1").height() - $("#head2").height() - 15
+			});
+		});
+	</script>
+
+</html>

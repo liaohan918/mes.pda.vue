@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+
+		<style>
+			.mui-input-row label {
+				width: 35%;
+				padding: 15px 10px;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 65%;
+			}
+			
+			.mui-input-group .mui-input-row:after {
+				left: 0px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：黄邦文
+        	时间：2019-05-09
+        	描述：工序报工--工序选择
+        -->
+		<div class="mui-content">
+			<div style="padding: 0px 10px;">
+				<div id="item1" class="mui-control-content mui-active">
+					<div class="mui-input-row" style="margin: 8px 0px; font-size: 17px;">
+						<span style="background-color: red; border: 1px solid black;" class="mui-badge">工序采集</span>
+						<span id="txtCurGX" style="background-color: cornflowerblue; border-bottom: 1px solid black;" class="mui-badge">当前工序是：</span>
+						<span id="txtCurGXID" style="background-color: cornflowerblue; border-bottom: 1px solid black;" class="mui-badge">A001</span>
+					</div>
+					<div id='infos' class="mui-input-group">
+						<div class="mui-input-row">
+							<label>后盖条码</label>
+							<input type="text" id="txtBarcodeCP" class="mui-input-clear text-color" placeholder="请扫后盖条码">
+						</div>
+						<div class="mui-input-row">
+							<label>作业人员</label>
+							<input type="text" id="txtZuoYeRenYuan" readonly="true">
+						</div>
+						<div class="mui-input-row">
+							<label>产线</label>
+							<input type="text" style="width: 105px;float: left;" id="txtLineName" readonly="true" class="" placeholder="产线名称">
+						</div>
+						<div class="mui-input-row">
+							<label>箱条码</label>
+							<input type="text" id="txtBarcodeHG" class="mui-input-clear text-color" placeholder="请扫箱条码">
+						</div>
+					</div>
+				</div>
+				<div id="tabsid" class="easyui-tabs" style="width:100%; margin-top: 5px;" tabHeight='30px;' justified=true>
+					<div title="产品信息" data-options="tools:'#dgBarcode-tools'">
+						<div class="mui-input-row" id="divTxtInfo">
+							<textarea readonly="readonly" id='txtInfo' style="height: 100%;background-color: #FFE48D"></textarea>
+						</div>
+					</div>
+					<div title="生产履历" data-options="tools:'#dgWLMX-tools'">
+						<table id="dgSCMX" style="height: 100%;" class="easyui-datagrid" fitColumns:true data-options="  rownumbers:true, singleSelect:true, autoRowHeight:false, pagination:false, pageSize:10">
+							<thead>
+								<tr>
+									<th field="PAA002" width="55">人员</th>									
+									<th field="QAC011" width="55">产线</th>
+									<th field="QAC009" width="55">工序</th>
+									<th field="QAC019" width="55">良品</th>
+									<th field="QAC020" width="55">不良品</th>
+									<th field="QAC017" width="125">时间</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/BaoGongManager_js/NeiXiangHeDuiHtml.js"></script>
+
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>散料盘点</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../js/CangKuManage_js/INVSingleHtml.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js" ></script>
+		<style type="text/css">
+			#txtWLBM,
+			#txtPDDanHao,
+			#txtCKBM,
+			#txtKWBM,
+			#txtKHBM,
+			#txtZMSL {
+				background-color: gainsboro;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：黄邦文
+        	时间：2018-09-04
+        	描述：散料盘点
+        -->
+		<div class="mui-content">
+			<form id="form" class="mui-input-group" onclick="SetInputFoucs('#txtBarcode')">
+				<div class="mui-input-row">
+					<label>盘点单号</label>
+					<input id="txtPDDanHao" type="text" readonly="readonly" placeholder="自动生成" />
+				</div>
+				<div class="mui-input-row">
+					<label>条码</label>
+					<input id="txtBarcode" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描条码" />
+				</div>
+				<div class="mui-input-row">
+					<label>物料编码</label>
+					<input id="txtWLBM" type="text" value="" readonly="readonly" placeholder="自动生成"/>
+				</div>
+				<div class="mui-input-row">
+					<label>仓库编码</label>
+					<input id="txtCKBM" type="text" value="" readonly="readonly" placeholder="自动生成"/>
+				</div>
+				<div class="mui-input-row">
+					<label>储位编码</label>
+					<input id="txtKWBM" type="text" value="" readonly="readonly" placeholder="自动生成"/>
+				</div>
+				<div class="mui-input-row">
+					<label>客户别</label>
+					<input id="txtKHBM" type="text" value="" readonly="readonly" placeholder="自动生成"/>
+				</div>
+				<div class="mui-input-row">
+					<label>账面数量</label>
+					<input id="txtZMSL" type="tel" readonly="readonly" value="" placeholder="自动生成"/>
+				</div>
+				<div class="mui-input-row">
+					<label>盘点数量</label>
+					<input id="txtPDSL" type="number" value="" class="mui-input-clear text-color" 
+						onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" placeholder="请输入实盘数量"/>
+				</div>
+				<div class="mui-content-padded oauth-area">
+					<!--占位-->
+
+				</div>
+				<div class="mui-content-padded" style="float: left; margin-left: 50px;">
+					<button type="button" id="btn_clear" style="width: 100px;" class="mui-btn mui-btn-red ">清 除</button>
+				</div>
+				<div class="mui-content-padded" style="float: right; margin-right: 50px;">
+					<button type="button" id="btn_ok" style="width: 100px;" class="mui-btn mui-btn-green ">确 认</button>
+				</div>
+			</form>
+		</div>
+		</script>
+	</body>
+
+</html>

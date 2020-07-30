@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	作者：张凌玮
+	时间：2018-09-13
+	描述：飞达解绑
+-->
+
+	<head>
+		<meta charset="UTF-8">
+		<title>飞达解绑</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<style>
+			#info {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+		<script src="../../lib/jquery/js/jquery.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+	</head>
+
+	<body>
+		<!--<header id="header" class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">飞达解绑</h1>
+			</header>-->
+		<div class="mui-content">
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<label>飞达条码</label>
+					<input id="TexFeederID" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描飞达条码" />
+				</div>
+
+				<div class="mui-input-row" style="height: 350px; margin-top: 10px;">
+					<div class="link-area">
+						<h4 style="color: #008000;">原物料条码信息</h4>
+					</div>
+					<textarea readonly="readonly" id='info' style="height: 93%;"></textarea>
+				</div>
+
+			</divFA0210ANF481282-2>
+
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/FeiDaManage_js/FeederunBind.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+	<script>
+		document.getElementById('TexFeederID').focus();
+		document.getElementById('TexFeederID').addEventListener('keydown', function(e) {
+			if(e.keyCode != 13) return;
+			FeederUnbind();
+		});
+	</script>
+
+</html>

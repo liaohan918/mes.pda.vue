@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />	
+		<!--<script type="text/javascript" src="../../lib/base_js/js/PageCommonQuote.js"></script>-->
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../js/XianChangManage_js/BlankingHtml.js"></script>		
+		<style type="text/css">
+			textarea{
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mui-content">
+			<div class="mui-input-group">
+				<div id="head">
+					<div class="mui-input-row">
+						<label>指令单号</label>
+						<input id="workBillNo" type="text" class="mui-input-clear" placeholder="请输入指令单号">
+					</div>
+					<div class="mui-input-row">
+						<label>物料条码</label>
+						<input id="barCode" type="text" class="mui-input-clear" placeholder="请扫描物料条码">
+					</div>
+					<div class="mui-input-row">
+						<label>剩余数量</label>
+						<input id="reNum" type="text" class="mui-input-clear" placeholder="请输入剩余数量">
+					</div>
+				</div>
+				<div id="info">
+					<h4 style="text-align: center;color: #008000;">条码信息</h4>
+					<textarea id="barCodeInfo" readonly="readonly" style="background-color: #FFE48D;">
+					</textarea>
+				</div>				
+				<div id="bottom" class="mui-input-row">
+					<button id="btnCommit" onclick="commit()" type="button" style="width:100%" class="mui-btn mui-btn-danger ">确认</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

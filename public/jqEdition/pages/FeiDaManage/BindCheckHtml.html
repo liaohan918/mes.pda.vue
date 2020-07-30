@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>配送核对</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+
+		<style>
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+			
+			.tabs li a.tabs-close,
+			.tabs-p-tool {
+				height: 20px;
+			}
+		</style>
+		</style>
+	</head>
+
+	<body>
+
+		<!--
+        	作者：张凌玮
+        	时间：2018-09-13
+        	描述：配送核对
+       -->
+
+		<div id="OrderInfo" style="font-size:17px;">
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<div style="width: 100%;">
+						<label style="width: 20%;">指令</label>
+						<input id="TexLine" readonly="true" class="float_right" type="text" style="width: 20%;background-color: #CCCCCC;" placeholder="线别">
+						<input id="TexWorkOrder" type="text" style="width: 60%;" placeholder="指令号">
+					</div>
+				</div>
+				<div id="info" class="mui-input-row">
+					<div class="float_right">
+						<label style="width: 40%;">分区</label>
+						<input id="TexTable" type="text" readonly="readonly" style="width: 60%;" placeholder="选择分区">
+					</div>
+					<div class="float_left">
+						<label style="width: 40%;">设备</label>
+						<input id="Equipment" type="text" readonly="readonly" style="width: 60%;" placeholder="选择设备">
+					</div>
+				</div>
+
+			</div>
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<div class="link-area">
+						<h4 style="color: #008000;">扫描物料条码查找设备分区</h4>
+					</div>
+				</div>
+			</div>
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<label>物料条码</label>
+					<input id="TexMaterialBar" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描条码" />
+				</div>
+				<!--<div class="mui-button-row">
+					<div style=" text-align: center; height: 8%;">
+						<button id="btnOrderCommit" style="width: 35%;text-align: center;" type="button" class="mui-btn mui-btn-primary">确定</button>
+					</div>
+				</div>-->
+			</div>
+
+		</div>
+
+		<div id="tabsid" class="easyui-tabs" data-options="justified:true,tabHeight:30" style="width:100%;">
+
+			<div title="核对清单 " data-options="tools: '#p-tools1' ">
+				<table id="gridMaterList" class="easyui-datagrid " data-options="rownumbers:true, singleSelect:true " style="height: 92%; ">
+					<thead>
+						<tr>
+							<th field="CCB005">设备编码</th>
+							<th field="CCB006">分区</th>
+							<th field="CCB007">飞达位置</th>
+							<th field="CCB010">物料编码</th>
+						</tr>
+					</thead>
+				</table>
+				<!--<div id="heduiInfo" class="mui-input-group" style="font-size:17px;">
+					<div class="mui-button-row" style="width: 50%;float: right;">
+						<button id="btnVerify" style="width: 40%;" class="mui-btn mui-btn-primary">核对</button>
+						<button id="btnBackToOrder" style="width: 40%;" class="mui-btn mui-btn-primary" onclick="BackToOrder() ">返回</button>
+					</div>
+				</div>-->
+				<!--<div class="mui-button-row">style="width: 35% " 
+					</div>-->
+
+			</div>
+
+			<div title="核对 " data-options="tools: '#p-tools2'" style="font-size:17px;">
+
+				<div id="info" class="mui-input-row">
+					<div style="width: 35%;" class="float_left">
+						<label style="width: 100%;">核对方式:</label>
+					</div>
+					<div style="width: 65%;" class="mui-checkbox float_right">
+						<input id="cbUseFeeder" name="checkbox" style="width: 20%;" value="Item1" type="checkbox">
+						<label id="Choose" style="width: 80%; " class="float_right">物料核对</label>
+					</div>
+				</div>
+
+				<!--				
+				<div class="mui-input-row" style="width: 50%;float: left;">
+					<div class="mui-checkbox mui-left">
+						
+						<label>飞达核对</label>
+						<input id="cbUseFeeder" name="checkbox" value="Item1" type="checkbox">
+					</div>
+				</div>-->
+
+				<div id='txtFeeder' class="mui-input-row ">
+					<label id="ChooseOne" class="text-color">物料编码</label>
+					<input id="txtCode" type="text " class="text-color " placeholder="请扫描条码">
+				</div>
+				<div  id='StockInfo' class="mui-input-row" style="height: 230px; margin-top: 10px; ">
+					<div class="link-area">
+						<h4>条码信息</h4>
+					</div>
+					<textarea id='MaterialInfo' readonly="readonly" ></textarea>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script type="text/javascript" src="../../js/FeiDaManage_js/BindCheck.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/common.js "></script>
+	<script type="text/javascript" src="../../lib/base_js/js/app.js "></script>
+	<script type="text/javascript">
+		$('#tabsid').tabs({
+			//			height: $(window).height() - $("#form ").height() - 15
+			height: $(window).height() - $("#OrderInfo").height() - 15,
+		});
+
+		$('#gridMaterList').tabs({
+			height: $('#tabsid').height() - $('#heduiInfo').height() -35,
+		});
+
+		$('#MaterialInfo').tabs({
+			height: $('#tabsid').height() - $('#txtFeeder').height() - $('#info').height(),
+		});
+
+		mui.plusReady(function() {
+			mui("#materialCode")[0].focus();
+		});
+
+		console.log("高度 " + window.screen.height);
+		console.log("宽度 " + window.screen.width);
+	</script>
+	<script type="text/javascript ">
+	
+	mui("#TexWorkOrder")[0].focus();
+	
+		/*
+		 * 工单扫描事件
+		 */
+		document.getElementById('TexWorkOrder').addEventListener('keydown', function(e) {
+			if(e.keyCode != 13) return;
+			GetOrderNumInfoByOrderNum();
+		});
+		/**
+		 * 核对清单行点击事件
+		 */
+		$(function() {
+			$('#gridMaterList').datagrid({
+				onClickRow: function(index, data) {
+					tbMaterialListIndex = index;
+					StartVerify();
+				}
+			})
+		});
+
+		/*
+		 * 条码扫描事件
+		 */
+		document.getElementById('TexMaterialBar').addEventListener('keydown', function(e) {
+			if(e.keyCode != 13) return;
+			GetOrderNumInfoByMaterial();
+		});
+
+		/*
+		 * 核对界面Feeder 扫描
+		 */
+		document.getElementById('txtCode').addEventListener('keydown', function(e) {
+			if(e.keyCode != 13) return;
+			var usefeeder = document.getElementById("cbUseFeeder").checked;
+			if(usefeeder) {
+				VerifyByMaterial();
+			} else {
+				VerifyByFeeder();
+			}
+		});
+
+		/*
+		 * 工单信息确定
+		 */
+		//		document.getElementById('btnOrderCommit').addEventListener('tap', function(e) {
+		//			OrderCommit();
+		//		});
+
+		/*
+		 * 飞达核对选择
+		 */
+		document.getElementById('cbUseFeeder').addEventListener('tap', function(e) {
+			var usefeeder = document.getElementById("cbUseFeeder").checked;
+			if(usefeeder) {
+				document.getElementById("ChooseOne").innerText = "物料编码";
+				document.getElementById("Choose").innerText = "物料核对";
+			} else {
+				document.getElementById("ChooseOne").innerText = "飞达编码";
+				document.getElementById("Choose").innerText = "飞达核对";
+			}
+		});
+
+		/*
+		 * 核对界面核对按钮
+		 */
+		//		document.getElementById('btnVerify').addEventListener('tap', function(e) {
+		//			StartVerify();
+		//		});
+		/*
+		 * 设备分区点击
+		 */
+		document.getElementById('TexTable').addEventListener('tap', function(e) {
+			SetSheBei();
+		});
+
+		/*
+		 * 设备点击
+		 */
+		document.getElementById('Equipment').addEventListener('tap', function(e) {
+			SetSheBei();
+		});
+	</script>
+
+</html>

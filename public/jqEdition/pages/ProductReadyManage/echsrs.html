@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/echarts/js/echarts.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/datagrid.methods.js"></script>
+		<style>
+			.panel-body {
+				background-color: #000000;
+				color: #ffffff;
+				font-size: 12px;
+			}
+			/*指令进度条设置*/
+			
+			.progressbar-value .progressbar-text {
+				background-color: lightgreen;
+				color: #ffffff;
+			}
+			/*进度条字体大小*/
+			
+			.progressbar-text {
+				font-size: 20px;
+				color: #ffffff;
+			}
+			/*指令信息字体大小设置*/
+			
+			.tbFontSize {
+				font-size: 15px;
+				float: right;
+			}
+		</style>
+
+		<style>
+			/*easyui表格样式自定义修改*/
+			
+			.panel {
+				text-align: center;
+			}
+			
+			.panel-icon,
+			.panel-tool {
+				/*组件条大小等属性*/
+				position: absolute;
+				top: 40%;
+				margin-top: -8px;
+				height: 30px;
+				overflow: hidden;
+			}
+			
+			.panel-title {
+				/*标题大小等属性*/
+				margin-top: 8px;
+				margin-left: 8px;
+				font-size: 40px;
+				font-weight: bold;
+				color: #ffffff;
+				height: 30px;
+				line-height: 16px;
+				background-color: #000000;
+				text-align: left;
+			}
+			
+			.panel-tool .defined a {
+				/*主要是控制微调的按钮*/
+				display: block;
+				width: 20px;
+				height: 11.5px;
+			}
+			
+			.textbox .textbox-text {
+				/*控制table的组件条字体大小*/
+				font-size: 15px;
+			}
+			
+			.l-btn-text {
+				/*控制手动属性按钮的字体大小*/
+				font-size: 15px;
+			}
+			
+			.panel-header {
+				background-color: #000000;
+				background: -webkit-linear-gradient(top, #000000 0, #000000 100%);
+				background: linear-gradient(to bottom, #000000 0, #000000 100%);
+			}
+			/*表内容字体*/
+			
+			.datagrid-cell,
+			.datagrid-cell-group,
+			.datagrid-header-rownumber,
+			.datagrid-cell-rownumber {
+				font-size: 15px;
+			}
+			/*列头字体大小*/
+			
+			.datagrid-header .datagrid-cell span {
+				font-size: 20px;
+				color: #ffffff;
+			}
+			
+			.panel-header,
+			.panel-body {
+				border-color: #ffffff;
+			}
+			/*头部行*/
+			
+			.datagrid-header-row {
+				background-color: #000000;
+				color: #111;
+				Height: 30px;
+			}
+			
+			.datagrid-cell-rownumber {
+				color: #ffffff;
+			}
+			/*头部行，获得焦点改变颜色*/
+			
+			.datagrid-row-over,
+			.datagrid-header td.datagrid-header-over {
+				background: #796f6f;
+				color: #000000;
+				cursor: default;
+			}
+			
+			.datagrid-header,
+			.datagrid-td-rownumber {
+				background-color: #000000;
+				background: -webkit-linear-gradient(top, #000000 0, #000000 100%);
+				background: -moz-linear-gradient(top, #000000 0, #000000 100%);
+				background: -o-linear-gradient(top, #000000 0, #000000 100%);
+				background: linear-gradient(to bottom, #000000 0, #000000 100%);
+			}
+			
+			.datagrid-header td,
+			.datagrid-body td,
+			.datagrid-footer td {
+				border-color: #ffffff;
+				border-style: double;
+			}
+			/*//更改表格中单元格行间距*/
+			
+			.datagrid-btable tr {
+				height: 30px;
+				background-color: #000000;
+			}
+			
+			.datagrid-htable,
+			.datagrid-btable,
+			.datagrid-ftable {
+				color: #ffffff;
+				border-collapse: separate;
+			}
+			/*设置表格视图*/
+			
+			.datagrid-body {
+				background-color: #000000
+			}
+			/*选中行颜色*/
+			
+			.datagrid-row-selected {
+				color: #ffffff;
+			}
+			/*鼠标再行上边时*/
+			
+			.datagrid-row-over {
+				color: #ffffff;
+			}
+			/*菜单垂直线*/
+			
+			.menu-line {
+				border-left: 0px;
+				border-right: 0px;
+			}
+		</style>
+
+	</head>
+
+	<body class="easyui-layout" style="width:100%;height:100%;">
+		<div class="defined" data-options="region:'south',split:true" style="height:30%" ondblclick="full()">
+			<table id="tbWOMQAC" data-options="loadMsg:'加载数据中...',fitColumns:false" style="width:100%; height:100%;"></table>
+		</div>
+		<div class="defined" data-options="title:'产线：L4-1',region:'west',collapsible:false,tools:'#tt',split:true" style="width:350px;" ondblclick="full()">
+
+			<form id="productionFrom" method="post">
+				<div id="productionPB" class="easyui-progressbar" style="height:40px;margin:5px;"></div>
+				<table cellpadding="3" style="width:100%">
+					<tbody>
+						<tr>
+							<td class="tbFontSize">指令单号:</td>
+							<td><input class="easyui-textbox" type="text" name="DAA001" data-options="readonly:true"></input>
+							</td>
+						</tr>
+						<tr>
+							<td class="tbFontSize">客户别:</td>
+							<td><input class="easyui-textbox" name="DAA003" data-options="readonly:true"></input>
+							</td>
+						</tr>
+						<tr>
+							<td class="tbFontSize">产品编号:</td>
+							<td><input class="easyui-textbox" name="DAA014" data-options="readonly:true"></input>
+							</td>
+						</tr>
+						<tr>
+							<td class="tbFontSize">产品规格:</td>
+							<td><input class="easyui-textbox" name="DAA016" data-options="readonly:true"></input>
+							</td>
+						</tr>
+						<tr>
+							<td class="tbFontSize">计划开始时间:</td>
+							<td><input class="easyui-textbox" type="text" name="StartTime" data-options="readonly:true"></input>
+							</td>
+						</tr>
+						<tr>
+							<td class="tbFontSize">计划结束时间:</td>
+							<td><input class="easyui-textbox" name="EndTime" data-options="readonly:true"></input>
+							</td>
+						</tr>
+						<tr>
+							<td class="tbFontSize">实际开始时间:</td>
+							<td><input class="easyui-textbox" name="ActualStartTime" data-options="readonly:true"></input>
+							</td>
+						</tr>
+						<tr>
+							<td class="tbFontSize">计划数量:</td>
+							<td><input class="easyui-textbox" type="number" name="DAA027" data-options="readonly:true"></input>
+							</td>
+						</tr>
+						<tr>
+							<td class="tbFontSize">已生产数量:</td>
+							<td><input class="easyui-textbox" type="number" name="RTA010" data-options="readonly:true"></input>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<h1 id="hint" style="background-color:red"></h1>
+			</form>
+			<p>上一次关闭执行的次数信息</p>
+			<input id='ccc' />
+			<input id='ddd' />
+			<textarea id='eee' ></textarea>
+			<textarea id='fff'></textarea>
+			<textarea id='ggg'></textarea>
+			<textarea id='hhh'></textarea>
+			<textarea id='iii'></textarea>
+		</div>
+		<div class="defined" data-options="region:'center'">
+			<div class="easyui-layout" data-options="fit:true" style="width:100%;height:100%;">
+				<div class="defined" id="echarsNorth" data-options="region:'north',split:true" style="height:35%;" ondblclick="full()">
+					<div id="charSMTRTC" style='width:100%;height:100%;'></div>
+
+				</div>
+				<div class="defined" id="echarsSouth" data-options="region:'south',split:true" style="height:35%;" ondblclick="full()">
+				</div>
+				<div class="defined" id="echarsCenter" data-options="region:'center',split:true" ondblclick="full()">
+					<div id="charSMTRTE" style='width:100%;height:100%;'></div>
+
+				</div>
+			</div>
+		</div>
+
+		<div id="tt">
+			<div class="easyui-navpanel" style="margin-right:1px">
+				<button class="easyui-menubutton" style="color:#ffffff; background-color:#796868; font-size: 15px;" data-options="menu:'#mm'">设置</button>
+			</div>
+		</div>
+
+		<div id="mm" class="easyui-menu" data-options="itemHeight:35" style="width:70px;">
+			<div class="menu-sep"></div>
+			<a href="#" id="fullscreen" onclick="fullscreen()" class="easyui-linkbutton" data-options="iconCls:'icon-fangda'" style="width: 100px; height: 30px;margin-left: 8px; display: inline-block;">放大界面</a>
+			<div class="menu-sep"></div>
+			<a href="#" id="resizeChars" onclick="resizeChars()" class="easyui-linkbutton" data-options="iconCls:'icon-large-chart'" style="width: 100px; height: 30px;margin-left: 8px; display: inline-block;">重置图表</a>
+		</div>
+
+		<script type="text/javascript">
+			var option = {
+				title: {
+					text: '产能图',
+					textStyle: {
+						color: '#ffffff'
+					}
+				},
+				textStyle: {
+					color: '#ffffff'
+				},
+				legend: {
+					textStyle: {
+						color: '#ffffff'
+					}
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '3%',
+					top: '20%',
+					containLabel: true
+				},
+				xAxis: [{
+					type: 'category',
+					//data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+					axisTick: {
+						alignWithLabel: true
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#ffffff'
+						}
+					}
+				}],
+				yAxis: [{
+					type: 'value',
+					axisLine: {
+						lineStyle: {
+							color: '#ffffff'
+						}
+					}
+				}],
+				series: [{
+					name: '每小时产能',
+					type: 'bar',
+					barWidth: '60%',
+					itemStyle: {
+						color: '#0094ff'
+					},
+					label: {
+						normal: {
+							show: true,
+							position: 'inside'
+						}
+					}
+				}]
+			};
+
+			var option2 = {
+				title: {
+					text: '抛料图',
+					textStyle: {
+						color: '#ffffff'
+					}
+				},
+				textStyle: {
+					color: '#ffffff'
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				legend: {
+					data: ['运行', '等待', '其他', '停止'],
+					textStyle: {
+						color: '#ffffff'
+					}
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '3%',
+					top: '20%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'category',
+					axisLine: {
+						lineStyle: {
+							color: '#ffffff'
+						}
+					}
+				},
+				yAxis: {
+					type: 'value',
+					axisLine: {
+						lineStyle: {
+							color: '#ffffff'
+						}
+					},
+					max: 100
+				},
+				series: [{
+						name: '运行',
+						type: 'bar',
+						stack: '总量',
+						itemStyle: {
+							color: 'Lime'
+						},
+					},
+					{
+						name: '等待',
+						type: 'bar',
+						stack: '总量',
+						itemStyle: {
+							color: 'Blue'
+						},
+					},
+					{
+						name: '其他',
+						type: 'bar',
+						stack: '总量',
+						itemStyle: {
+							color: 'Yellow'
+						},
+					},
+					{
+						name: '停止',
+						type: 'bar',
+						stack: '总量',
+						itemStyle: {
+							color: 'Red'
+						},
+					}
+				]
+			};
+
+			var charSMTRTC; //产能表
+			var charSMTRTE; //抛料表
+			var charSMTRTDs = {}; //运转表集合
+			var chars = []; //Echars集合，用在界面修改大小的时候遍历整体调整大小
+			var EcharsTotal = 0; //win窗口工序指令信息总行数
+			var thisIndex = 0; //滚动索引
+			var windowState = true; //放大或缩小
+			var tbStateWOMQAC = false; //是否正在获取工序数据，根据这个判断是否进行滚动
+
+			$(document).ready(function() {
+				setTimeout("SetInfos()", 500); //延迟半秒，因为着图加载偶尔会找不到对象
+				setTimeout("SetInfos2()", 500); //延迟半秒，因为着图加载偶尔会找不到对象
+				setInterval(SetInfos, 10000); //进来就开始启动数据刷新，默认10秒刷新一次
+				setInterval(SetInfos2, 300000); //5分钟刷新一次
+				setInterval(EcharsRollSpectaculars, 5000); //5秒滚动一行
+				
+				
+			});
+			
+			mui.plusReady(function() {
+				$("#ccc").val(plus.storage.getItem("ccc")||"未找到");
+				$("#ddd").val(plus.storage.getItem("ddd")||"未找到");
+				$("#eee").val(plus.storage.getItem("eee")||"未找到");
+				$("#fff").val(plus.storage.getItem("fff")||"未找到");
+				$("#ggg").val(plus.storage.getItem("ggg")||"未找到");
+				$("#hhh").val(plus.storage.getItem("hhh")||"未找到");
+				$("#iii").val(plus.storage.getItem("iii")||"未找到");
+});
+
+			/**
+			 * 放大缩小界面
+			 */
+			function fullscreen() {
+				if(windowState) {
+					fullScreen();
+				} else {
+					exitScreen();
+				}
+			}
+
+			/**
+			 * 重置图大小
+			 */
+			function resizeChars() {
+				$.each(chars, function(inxex, item) {
+					item.resize();
+				});
+			}
+var ccc=0;
+			function SetInfos() {
+				//console.log("刷新111111111");
+				tbStateWOMQAC = true; //是否正在获取工序数据，根据这个判断是否进行滚动
+				SetSMTRTC();
+				SetSMTRTE();
+				SetWOMQAC();
+				SetproductionFrom();
+				mui.toast(new Date()+ ":刷新 第"+ ++ccc +"次：产能/抛料/工序信息/指令信息");
+				plus.storage.setItem("ccc", "刷新 第"+ ++ccc +"次：产能/抛料/工序信息/指令信息");
+				tbStateWOMQAC = false;
+			}
+
+			function full() {
+				//	alert("老铁双击666");
+			}
+			
+			var ddd=0;
+			/**
+			 * 指令信息/工序信息/运转率
+			 */
+			function SetInfos2() {
+				//console.log("刷新指令信息/工序信息/运转率");
+				SetSMTRTD();
+				mui.toast("刷新 第"+ ++ddd +"次：刷新运转率！");
+				plus.storage.setItem("ddd", "刷新 第"+ ++ddd +"次：刷新运转率！");
+			}
+
+			/**
+			 * 滚动工序表格
+			 */
+			function EcharsRollSpectaculars() {
+				if(tbStateWOMQAC) //如果在获取数据就不进行滚动
+					return;
+				if(thisIndex >= EcharsTotal)
+					thisIndex = 0;
+				$('#tbWOMQAC').datagrid('scrollTo', thisIndex);
+				$('#tbWOMQAC').datagrid('selectRow', thisIndex);
+				thisIndex++;
+				console.log("滚动");
+			}
+
+			/**
+			 * 设置指令明细信息
+			 */
+			function SetproductionFrom() {
+				$.ajax({
+					url: app.API_URL_HEADER + "/PullHead/GetproductionFrom",
+					data: {
+						line: 'L4-1'
+					},
+					dataType: "json",
+					type: "post",
+					async: true,
+					success: function(data) {
+						data = JSON.parse(data);
+						$("#hint")[0].innerHTML = "";
+						if(data == "NG") {
+							$("#hint")[0].innerHTML = "无正在生产的指令";
+							$('#productionFrom').form('clear');
+							return;
+						}
+						$('#productionFrom').form('load', {
+							DAA022: data["DAA022"],
+							DAA001: data["DAA001"],
+							DAA003: data["DAA003"],
+							DAA004: data["DAA004"],
+							DAA058: data["DAA058"],
+							DAA014: data["DAA014"],
+							DAA015: data["DAA015"],
+							DAA016: data["DAA016"],
+							DAA002: data["DAA002"],
+							DAA042: data["DAA042"],
+							DAA049: data["DAA049"],
+							DAA027: data["DAA027"],
+							DAA029: data["DAA029"],
+							StartTime: data["StartTime"],
+							EndTime: data["EndTime"],
+							ActualStartTime: data["ActualStartTime"],
+							RTA010: data["RTA010"],
+							RTA011: data["RTA011"],
+							RTA012: data["RTA012"],
+							Progress: data["Progress"]
+						});
+						$("#productionPB").progressbar('setValue', data["Progress"]);
+						$("#productionPB .progressbar-text")[0].innerHTML = "生产进度：" + data["Progress"] + "%";
+						$("#productionPB .progressbar-text")[1].innerHTML = "生产进度：" + data["Progress"] + "%";
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.storage.setItem("eee", "刷新 第"+ ccc +"次：刷新指令信息异常！");
+						return;
+					}
+				});
+			}
+
+			/**
+			 * 获取当前线别正在生产中指令的SMTRTC生产效率记录表
+			 */
+			function SetSMTRTC() {
+				$.ajax({
+					url: app.API_URL_HEADER + "/PullHead/GetSMTRTC",
+					data: {
+						line: 'L4-1'
+					},
+					dataType: "json",
+					type: "post",
+					async: true,
+					success: function(data) {
+						data = JSON.parse(data);
+						var tempOption = option;
+						tempOption.title.text = "产能图";
+						tempOption.series[0].name = "每小时产能";
+						tempOption.xAxis[0].data = data.xAxis;
+						tempOption.series[0].data = data.series;
+						if(!charSMTRTC) {
+							charSMTRTC = echarts.init(document.getElementById('charSMTRTC'));
+							chars.push(charSMTRTC);
+						}
+						charSMTRTC.setOption(tempOption);
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.toast(JSON.stringify(xhr));
+						
+						plus.storage.setItem("fff", "刷新 第"+ ccc +"次：刷新产能异常！");
+					}
+				});
+			}
+
+			/**
+			 * 获取当前单据的SMTRTD设备运行状态表
+			 */
+			function SetSMTRTD() {
+				//$("#echarsSouth")[0].innerHTML = "";
+				$.ajax({
+					url: app.API_URL_HEADER + "/PullHead/GetSMTRTD",
+					data: {
+						line: 'L4-1'
+					},
+					dataType: "json",
+					type: "post",
+					async: true,
+					success: function(data) {
+						data = JSON.parse(data);
+						$.each(data, function(index, item) {
+							var tempOption = option2;
+							tempOption.title.text = item["name"];
+							tempOption.xAxis.data = item.xAxis;
+							tempOption.series[0].data = item.seriesA; //运行
+							tempOption.series[1].data = item.seriesB; //等待
+							tempOption.series[2].data = item.seriesD; //其他
+							tempOption.series[3].data = item.seriesC; //停止
+
+							if(!charSMTRTDs[item["name"]]) {
+								var str = "<div style= 'width:" + ((100 / data.length) - 1) + "%;height:100%;float:left'>" +
+									"<div id= '" + item["name"] + "' style= 'width:100%;height:100%;'></div>" +
+									"</div >";
+								$("#echarsSouth").append(str);
+								var barChart1 = echarts.init(document.getElementById(item["name"]));
+								charSMTRTDs[item["name"]] = barChart1;
+								chars.push(barChart1);
+							}
+							charSMTRTDs[item["name"]].setOption(tempOption);
+						});
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.toast(JSON.stringify(e));
+						
+						plus.storage.setItem("ggg", "刷新 第"+ ddd +"次：刷新运转率异常！");
+					}
+				});
+			}
+
+			/**
+			 * 获取当前单据的SMTRTE栈位抛料率表
+			 */
+			function SetSMTRTE() {
+				$.ajax({
+					url: app.API_URL_HEADER + '/PullHead/GetSMTRTE',
+					data: {
+						line: 'L4-1'
+					},
+					dataType: "json",
+					type: "post",
+					async: true,
+					success: function(data) {
+						data = JSON.parse(data);
+						var tempOption = option;
+						tempOption.title.text = "抛料图";
+						tempOption.series[0].name = "抛料数";
+						tempOption.xAxis[0].data = data.xAxis;
+						tempOption.series[0].data = data.series;
+						if(!charSMTRTE) {
+							charSMTRTE = echarts.init(document.getElementById('charSMTRTE'));
+							chars.push(charSMTRTE);
+						}
+						charSMTRTE.setOption(tempOption);
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.toast(JSON.stringify(xhr));
+						plus.storage.setItem("hhh", "刷新 第"+ ccc +"次：刷新抛料异常！");
+					}
+				});
+			}
+
+			/**
+			 * 设备线别工序步骤信息
+			 */
+			function SetWOMQAC() {
+				$.ajax({
+					url: app.API_URL_HEADER + "/PullHead/GetWOMQAC",
+					data: {
+						line: 'L4-1'
+					},
+					dataType: "json",
+					type: "post",
+					async: true,
+					success: function(data) {
+						data = JSON.parse(data);
+						EcharsTotal = data.rows.length;
+						$('#tbWOMQAC').datagrid({
+							rowStyler: function(index, row) {
+								var style = "";
+								switch(row["type"]) {
+									case "A-投入数":
+										style = 'color:orange;font-weight:bold;';
+										break;
+									default: //C-不良品
+										style = 'font-weight:bold;';
+										break;
+								}
+								return style;
+							},
+							onLoadSuccess: function(data) {
+								$(this).datagrid("autoMergeCells", ['QAC003']);
+							},
+							rownumbers: true,
+							frozenColumns: [data.frozenColumns],
+							data: data.rows,
+							columns: [data.clos]
+						});
+
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.toast(JSON.stringify(xhr));
+						plus.storage.setItem("iii", "刷新 第"+ ccc +"次：刷新工序信息异常！");
+					}
+				});
+			}
+
+			/**
+			 * 全屏事件
+			 */
+			function fullScreen() {
+				$('#fullscreen').focus();
+				var el = document.documentElement;
+				var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+				if(typeof rfs != "undefined" && rfs) {
+					rfs.call(el);
+					windowState = false;
+					$('#fullscreen').linkbutton({
+						iconCls: 'icon-suoxiao',
+						text: '缩小'
+					});
+				};
+				return;
+			}
+
+			/**
+			 * 退出全屏事件
+			 */
+			function exitScreen() {
+				if(document.exitFullscreen) {
+					document.exitFullscreen();
+				} else if(document.mozCancelFullScreen) {
+					document.mozCancelFullScreen();
+				} else if(document.webkitCancelFullScreen) {
+					document.webkitCancelFullScreen();
+				} else if(document.msExitFullscreen) {
+					document.msExitFullscreen();
+				}
+				if(typeof cfs != "undefined" && cfs) {
+					cfs.call(el);
+				}
+				windowState = true;
+				$('#fullscreen').linkbutton({
+					iconCls: 'icon-fangda',
+					text: '放大'
+				});
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!--
+	作者：庄卓杰
+	时间：2019-11-03
+	描述：入库查询
+-->
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>入库查询</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.poppicker.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<style>
+			#barCodeInfo {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div class="mui-input-group" id="form">
+				<div class="mui-input-row" id="input04">
+					<div style="width: 100%;float: left;">
+						<label>日期</label>
+						<input id="ruKuDate" type="text" class="mui-input-clear" placeholder="请选择日期" onclick="ClickDate()">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>条码</label>
+					<input type="text" id="barCode" class="" placeholder="请扫描条码">
+				</div>
+			</div>
+		</div>
+
+		<div id="tabsid" class="easyui-tabs" data-options="justified:true,tabHeight:30" style="width:100%">
+			<div title="物料明细" data-options="tools:'#dg1-tools'">
+				<table id='dg1' class="easyui-datagrid" data-options="rownumbers:true, 
+						singleSelect:true">
+					<thead>
+						<tr>
+							<th field="DHB003" width="75">物料编号</th>
+							<th field="DHB001" width="105">收货单据</th>
+							<th field="DHB006" width="45">收货数</th>
+							<th field="RKS" width="45">入库数</th>
+							<th field="DRKS" width="45">待入库数</th>
+							<th field="DHB004" width="75">物料名称</th>
+							<th field="JYS" width="45">检验数</th>
+							<th field="DJS" width="45">待检数</th>
+							<th field="DHB005" width="75">物料规格</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div title="条码列表" data-options="tools:'#dg2-tools'">
+				<table id='dg2' class="easyui-datagrid" data-options="rownumbers:true, 
+						singleSelect:true" style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="DHB003" width="75">物料编号</th>
+							<th field="DHB001" width="105">收货单据</th>
+							<th field="DHB006" width="45">收货数</th>
+							<th field="DAB001" width="130">条码</th>
+							<th field="RKS" width="45">入库数</th>
+							<th field="DRKS" width="45">待入库数</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		
+		<!-- 数量标签 -->
+		<div id="dg1-tools">
+			<span id="dg1-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+		<div id="dg2-tools">
+			<span id="dg2-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../lib/base_js/js/Ajax.js"></script>
+	<script type="text/javascript" src="../../js/CangKuManage_js/RuKuQueryHtml.js"></script>
+
+</html>

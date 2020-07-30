@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>仓库调拨</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<script type="text/javascript" src="../../lib/base_js/js/PageCommonQuote.js"></script>
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" /> 
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script src="../../js/CangKuManage_js/INVDFAHtml.js"></script>
+	</head> 
+	<body>
+		<!--
+		 	作者：黄邦文
+			 时间：2019.10.16
+			 描述：仓库调拔
+		-->
+		<div id="head1" class="mui-input-group">
+			<div class="mui-input-row" style="margin-top: 10px;">
+				<label>单号</label>
+				<input id="txtDBHao" type="text" readonly="true" class="text-color" placeholder="请选择单号">
+			</div>
+			<!--<div class="mui-input-row">
+				<div style="width: 45%;float: left;">
+					<input id="txtCKYuan" type="text" style="background-color: #CCCCCC;" readonly="readonly" class="mui-text-right">
+				</div>
+				<div style="width: 15%;float: left;">
+					<label>到</label>
+				</div>
+				<div style="width: 40%;float: right;" class="mui-checkbox mui-left">
+					<input id="txtCKMD" type="text" style="background-color: #CCCCCC" readonly="readonly">
+				</div>
+			</div>-->
+		</div>
+
+		<div id="tabsid" class="easyui-tabs" style="width:100%; margin-top: 5px;" tabHeight='30px;' justified=true>
+			<div title="物料明细" data-options="tools:'#dgWOMDAG-tools'">
+				<table id="dgWLMX" class="easyui-datagrid" data-options=" rownumbers:true, singleSelect:true,fitColumns:true, autoRowHeight:false">
+					<thead>
+						<tr>
+							<th field="DFC004" align="center">物料编码</th>
+							<th field="DFC005" align="center">调拨数量</th>
+							<th field="DFC006" align="center">已完成数量</th>
+							<th field="DFC007" align="center">未完成数量</th>
+							<th field="DFC013" align="center">调出仓库</th>
+							<th field="DFC014" align="center">调入仓库</th>
+							<th field="MBA002" align="center">物料名称</th>
+							<th field="MBA004" align="center">物料规格</th>
+							<th field="DFC008" align="center">备注</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div title="扫描条码" data-options="tools:'#dgWOMDAH-tools'">
+				<div class="mui-content">
+					<div class="mui-input-row ">
+						<label>物料条码</label>
+						<input id="txtBarCode" type="text"  class="mui-input-clear" placeholder="请扫描条码" />
+					</div>
+					<div class="mui-input-row" id="divTxtInfo">
+						<textarea readonly="readonly" id='txtInfo' style="height: 100%;background-color: #FFE48D"></textarea>
+					</div>
+					<div class="mui-input-row">
+						<label>库位</label>
+						<input id="txtStoreCode" type="text" class="mui-input-clear" placeholder="输入库位">
+
+					</div>
+					<!--<div class="mui-button-row">
+						<button id="btnBindKW" type="button" style="width: 95%;float:none" class="button green" onclick="btnBindKW_Click()">
+									库位绑定
+						</button>
+					</div>-->
+				</div>
+
+			</div>
+		</div>
+
+	</body>
+
+</html>

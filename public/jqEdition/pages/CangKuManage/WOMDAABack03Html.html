@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<!--
+	作者：黄邦文
+	时间：2019-05-15
+	描述：SMT不良品退料
+-->
+	<head>
+		<meta charset="UTF-8">
+		<title>SMT不良品退料</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" DAd href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript">
+			var TL_type = "3";
+		</script>
+
+		<style>
+			#info {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content mui-input-group">
+			<div id="head1">
+				<div class="mui-input-row">
+					<label>退料单号</label>
+					<input id="billNo" readonly="readonly" type="text" value="" class="text-color" placeholder="请扫描条码" />
+				</div>
+				<div class="mui-input-row">
+					<label>条码</label>
+					<input id="materialCode" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描条码" />
+				</div>
+
+				<div class="mui-input-row">
+					<div>
+						<label >实盘数量</label>
+						<input id="DAH026" type="number" class="mui-input-clear text-color" placeholder="实盘数量">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<div>
+						<label style="width: 30%;">不良项目</label>
+						<input id="txtBLCode" type="text" readonly="readonly" style="width: 30%;float: left;" class="mui-input-clear text-color" placeholder="选择不良项">
+						<input id="txtBLName" type="text" readonly="readonly" style="width: 40%;float: left;" class="mui-input-clear text-color" placeholder="不良名称">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<div style="float: left ;width: 60%;">
+						<label>库位</label>
+						<input id="txtKuWei" type="text" class="text-color" placeholder="请扫描库位">
+					</div>
+					<div style="float: left ;width: 40%;" class="mui-checkbox mui-left">
+						<label>默认</label>
+						<input id="checkdefault" name="checkbox" value="Item1" type="checkbox">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<button id="btnCommit" style="width: 30%;float: right;" class="mui-btn mui-btn-green ">确  认</button>
+				</div>
+			</div>
+			<div id="inforow" class="mui-input-range" >
+				<div class="link-area" style="height: 7%;">
+					<h4 id='infoh' style="color: #008000;">原条码信息</h4>
+				</div>
+				<textarea readonly="readonly" id='info' style="height: 93%;"></textarea>
+			</div>
+		</div>
+	</body> 
+	<script type="text/javascript" src="../../js/CangKuManage_js/WOMDAABack.js"></script>
+
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>指令投入</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<script type="text/javascript" src="../../lib/base_js/js/PageCommonQuote.js"></script>
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script src="../../lib/mui/js/mui.dtpicker.js"></script>
+		<link href="../../lib/layui/css/layui.css" rel="stylesheet" media="all" />
+		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+		
+		<style type="text/css">
+			.rowTitle {
+				text-align: right;
+				padding: 0px;
+				margin-top: 10px;
+				margin-right: 5px;
+				width: 60px;
+			}
+			
+			.layui-input-inline{
+				width: 100px; 
+			}
+			.rowData{
+				width: 200px;
+			} 
+		</style>
+	</head>
+	<body>
+		<!--
+        	作者：胡丁文
+        	时间： 
+        	描述：工序投入
+        -->
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">工序投入</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded  " style="margin: 5px;"> 
+ 
+				<form class="layui-form" action="">
+					<div class="layui-inline">
+					  <label class="layui-form-label rowTitle"  >当前工序</label>
+					  <div class="layui-input-inline rowData">
+						 <select id="txtWorkStep" name="txtWorkStep" lay-filter="txtWorkStep" lay-verify="notNull" lay-search>
+						  <option  value="">请选择</option> 
+						</select>        
+					  </div>
+					</div> 
+					<div class="layui-inline">
+					  <label class="layui-form-label rowTitle" >作业人员</label>
+					  <div class="layui-input-inline rowData">
+						 <input id="txtWorker" name="txtWorker" type="text"   lay-verify="notNull" placeholder="扫描人员工号" class="layui-input" >     
+					  </div>
+					</div> 
+					<div class="layui-inline">
+					  <label class="layui-form-label rowTitle"  >设备编码</label>
+					  <div class="layui-input-inline rowData">
+						<input id="txtDev" name="txtDev" type="text"   lay-verify="notNull" placeholder="扫描设备编码"  class="layui-input">          
+					  </div>
+					</div> 
+					<div class="layui-inline">
+					  <label class="layui-form-label rowTitle"  >产线</label>
+					  <div class="layui-input-inline rowData">
+						 <select  id="txtLine" name="txtLine" lay-verify="notNull" lay-search>
+						  <option value="">请选择</option> 
+						</select>        
+					  </div>
+					</div> 
+					<div class="layui-inline" style="float: right;">
+						<div class="layui-input-inline ">
+					<!-- <input type="checkbox" name="" title="下次默认填写" lay-skin="primary" > -->
+					<button lay-submit lay-filter="go" class="layui-btn" >进入</button>  
+					</div>
+					</div>  
+				</form> 
+			
+				
+			</div>
+
+		</div>  
+		<script type="text/javascript" src="../../js/XianChangManage_js/StepInput.js"></script>
+	</body>
+</html>

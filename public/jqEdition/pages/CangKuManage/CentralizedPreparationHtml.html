@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>集中备料</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<script type="text/javascript" src="../../lib/base_js/js/MacAddress.js"></script>
+		<script type="text/javascript" src="../../js/CangKuManage_js/CentralizedPreparationHtml.js"></script>
+
+		<style>
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+			
+			.tabs-p-tool {
+				height: 18px;
+			}
+			
+			#SingleDiv span {
+				right: 35%;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<!--
+        	作者：吴冰荣
+        	时间：2019-03-19
+        	描述：集中备料
+        -->
+		<div class="mui-input-group">
+			<!--class="mui-input-group mui-content"-->
+			<div id="head">
+				<div class="mui-input-row">
+
+					<div style="width: 40%;float: right;" class="mui-checkbox mui-right">
+						<div style="width: 60%" class="mui-btn mui-btn-primary mui-right float_right" id="btnWorkBill" onclick="searchWorkBill()">
+							查询工单
+						</div>
+					</div>
+
+					<div class="mui-left" style="width: 60%;float: left;">
+						<label>日期</label>
+						<input id="datDate" type="text" value="" class="text-color" readonly="readonly" />
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<div style="width: 40%;float: right;" class="mui-checkbox mui-right">
+						<input id="txtWarehouse" type="text" value="" class="text-color" placeholder="请选择仓库" readonly="readonly" />
+					</div>
+
+					<div class="mui-left" style="width: 60%;float: left;" id="SingleDiv">
+						<label style="font-size: 15px;">单别</label>
+						<input id="txtSingleNumber" type="text" class="text-color" placeholder="请选择单别" readonly="readonly" />
+					</div>
+				</div>
+				<div id="form" class="mui-input-group">
+					<div class="mui-input-row">
+						<div class="link-area">
+							<h4 style="color: #008000;">扫描指令勾选合并</h4>
+						</div>
+					</div>
+				</div>
+				<div id="form" class="mui-input-group" style="margin-bottom: 5px;">
+					<div class="mui-input-row">
+						<label>指令号</label>
+						<input id="txtWorkBill" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描指令" />
+					</div>
+				</div>
+
+				<div id="tabsid" class="easyui-tabs" data-options="justified:true,tabHeight:30" style="width:100%; height: auto;">
+					<div title="合并工单" class="mui-input-group" data-options="tools:'#tools0'">
+						<table id="mergeDetailed" class="easyui-datagrid" data-options="
+				rownumbers:true,
+				singleSelect:false,
+				checkOnSelect:true,
+				selectOnCheck:true,
+				autoRowHeight:false,
+				pagination:false,
+				pageSize:10,
+				fitColumns:true,
+				tools:'#p-tools'">
+							<thead>
+								<tr>
+									<th data-options="field:'ck',checkbox:true"></th>
+									<th field="DAF002">单号</th>
+									<th field="DAF015">工单号</th>
+									<th field="SyncKey">标识</th>
+								</tr>
+							</thead>
+						</table>
+
+						<div class="mui-input-row" id="detailedBottom">
+							<!--<div class="mui-checkbox mui-left float_left" style="width: 40%;">
+							<label>追加</label>
+							<input id="append" type="checkbox">
+						</div>-->
+
+							<div style="width: 50%" class="mui-btn mui-btn-success mui-right float_right" id="StartPreparation" onclick="StartPreparation(this)" data-linktype="newpage" data-pageid="CentralizedPreparationHtml2" data-pageurl="CentralizedPreparationHtml2.html" data-pagetitle="集中备料-备料">
+								开始备料
+							</div>
+
+							<div style="width: 25%" class="mui-btn mui-btn-danger mui-right float_left" id="Cancel" onclick="CancelPreparation()">
+								取消
+							</div>
+
+							<div style="width: 25%" class="mui-btn mui-btn-primary mui-right float_left" id="Append" onclick="AppendPreparation()">
+								追加
+							</div>
+						</div>
+					</div>
+					<div id="pnl02" title="合并工单号配料" data-options="tools:'#tools'">
+						<table id="mergeMain" class="easyui-datagrid">
+							<thead>
+								<tr>
+									<th field="SyncKey" align="center">合并单号</th>
+									<!--<th field="DAF002" align="center">原单号</th>-->
+									<th field="DAF001" align="center">合并单别</th>
+									<th field="DAF016" align="center">预计开工时间</th>
+								</tr>
+							</thead>
+						</table>
+
+						<center>
+							<button type="btnChange" style="width: 55%;align-content: center;" class="mui-btn mui-btn-success" id="btn_Continue" onclick="btnConfirmClick(this)" data-linktype="newpage" data-pageid="CentralizedPreparationHtml2" data-pageurl="CentralizedPreparationHtml2.html" data-pagetitle="集中备料-备料">
+							继续备料</button>
+						</center>
+					</div>
+				</div>
+
+				<div id="tools">
+					<span class="mui-badge mui-badge-success" id="grid-sum">0</span>
+				</div>
+
+				<div id="tools0">
+					<span class="mui-badge mui-badge-success" id="grid-sum0">0</span>
+				</div>
+
+			</div>
+	</body>
+
+</html>

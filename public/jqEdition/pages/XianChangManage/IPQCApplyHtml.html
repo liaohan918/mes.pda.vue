@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title> 
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<script type="text/javascript" src="../../lib/base_js/js/PageCommonQuote.js"></script>
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" /> 
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<style>
+			.mui-input-row label {
+				width: 25%;
+				padding: 11px 2px;
+				color: blue;
+			} 
+			 
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 75%;
+			}
+			
+			.mui-input-group .mui-input-row:after {
+				left: 0px;
+			}
+			
+			.mui-switch.mui-active:before {
+				font-size: 18px;
+				content: attr(data-on);
+				left: 1px;
+			}
+			
+			.mui-switch:before {
+				font-size: 18px;
+				content: attr(data-off);
+				right: 5px;
+				color: #000000;
+			}
+			
+			.mui-input-row .mui-switch {
+				margin-right: 0px;
+			}
+			
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+			.m-pic-cover {
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				background-color: rgba(0, 0, 0, .5);
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：黄邦文
+        	时间：2019-07-16
+        	描述：IPQC申请
+        -->
+		<div class="mui-content">
+			<div style="padding: 10px 10px;">
+				<div id="item1" class="mui-control-content mui-active">
+					<div id='info1' class="mui-input-group">
+						<div class="mui-input-row">
+							<label>单据号</label>
+							<input type="text" id="txtBillNo" readonly="readonly" class="text-color" placeholder="自动产生IPQC单号">
+						</div>
+						<div class="mui-input-row">
+							<div style="width: 50%; float: left;">
+								<label style="width: 40%; float: left;">申请人</label>
+								<input style="width: 60%; float: left;" type="text" id="txtApplyerNo" placeholder="申请人" readonly="readonly">
+							</div>
+							<div style="width: 50%; float: left;">
+								<label style="width: 30%; float: left;">日期</label>
+								<input style="width: 70%; float: left;" type="text" id="txtApplyDate" placeholder="日期" readonly="readonly">
+							</div>
+						</div>
+						<div class="mui-input-row">
+							<label>产线</label>
+							<input type="text" style="width: 85px; float: left;" id="txtLineID" readonly="true" class="" placeholder="请选产线">
+							<input type="text" style="width: 105px;float: left;" id="txtLineName" readonly="true" class="" placeholder="产线名称">
+						</div>
+						<div class="mui-input-row">
+							<label>生产工单</label>
+							<input type="text" id="txtSCGD" class="text-color" readonly="true" style="float: left;background-color: lightgray;" placeholder="生产工单">
+						</div>
+						<div class="mui-input-row">
+							<label>产品型号</label>
+							<input type="text" id="txtCPBM" class="mui-input-clear text-color" style="width: 150px;float: left;background-color: yellow;" placeholder="产品型号">
+							<button id="btnAdd" style="width: 35px; margin-left: 2px; margin-top: 3px; ">选</button>
+						</div>
+						<div class="mui-input-row">
+							<div style="width: 50%; float: left;">
+								<label style="width: 50%; float: left;">工序</label>
+								<input style="width: 50%; float: left;background-color: yellow;" type="text" readonly="readonly" id="txtGongXuName" placeholder="工序">
+							</div>
+							<div style="width: 50%; float: left;">
+								<label style="width: 50%; float: left;">工位</label>
+								<input style="width: 50%; float: left;background-color: yellow;" type="text" readonly="readonly" id="txtBanBie" placeholder="工位">
+							</div>
+						</div>
+						<div class="mui-input-row">
+							<label>违规人</label>
+							<input type="text" style="width: 105px; float: left;" id="txtWeiGuiName"  placeholder="违规人姓名">
+							<input type="text" style="width: 105px;float: left;" id="txtWeiGuiNo" readonly="true" placeholder="违规人工号">
+						</div>
+						<div class="mui-input-row">
+							<label>责任人</label>
+							<input type="text" style="width: 105px; float: left;background-color: yellow;" id="txtZeRenName"  placeholder="责任人姓名">
+							<input type="text" style="width: 105px;float: left;background-color: yellow;" id="txtZeRenNo" readonly="true" placeholder="责任人工号">
+						</div>
+					</div>
+					<div id='info2' style="margin-top: 3px;" class="mui-input-group">
+						<div class="mui-input-row  ">
+							<label style="float: left;width: 26%; padding: 11px 0px;">问题级别</label>
+							<div style="float: left;width: 37%;" class="mui-radio mui-left">
+								<label style="width: 100%;">一般</label>
+								<input id="txtWenTiLevel1" name="radio1" type="radio" value="YiBan" checked>
+							</div>
+							<div style="float: left;width: 37%; " class="mui-radio mui-left">
+								<label style="width: 100%;">重大</label>
+								<input id="txtWenTiLevel2" name="radio1" type="radio" value="ZhongDa">
+							</div>
+							<!--<div class="mui-left float_left" id="Print" style="width: 50%;">
+								<div id="switchType" class="mui-switch" data-on='一般' data-off='重大' style="width: 100%;">
+									<div class="mui-switch-handle"></div>
+								</div>
+							</div>-->
+						</div>
+						<div class="mui-input-row">
+							<label>违规类别</label>
+							<input type="text" id="txtWeiGuiLeiBie" readonly="readonly" style="background-color: yellow;" class="text-color" placeholder="请选择违规类别">
+						</div>
+					</div>
+
+				</div>
+				<div id='info3' style="margin-top: 3px;" class="mui-input-group">
+					<div class="mui-input-row">
+						<label>问题描述</label>
+					</div>
+					<textarea id='txtWenTiInfo' style="height:90px;background-color: yellow;"></textarea>
+				</div>
+				<div id='info3' style="margin-top: 3px;" class="mui-input-group">
+					<div class="mui-input-row">
+						<label>现场照片</label>
+					</div>
+					<div id="insert" style="padding: 5px 15px;">
+						<img id='photodefault' src="../../fonts/PhotoDefault.jpg" onclick='SelectPhoto()' />
+					</div>
+				</div>
+				<button id="btnReset" class=" mui-btn-warning" style="float: left; width: 100px; margin-left: 20px; margin-top: 5px; ">重置</button>
+				<button id="btnSubmit" class=" mui-btn-green" style="float: right; width: 100px; margin-right: 20px; margin-top: 5px; ">提交</button>
+			</div>
+			<div id="dialog_large_image" class="m-pic-cover" data-scale="1" style="padding: 5px 5px; display: none; " onclick="ClearImg()">
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/QualityManage_js/IPQCApply.js"></script>
+
+</html>

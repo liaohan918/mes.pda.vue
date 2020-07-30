@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>库位查询</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../lib/mui/css/mui.min.css">
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<script type="text/javascript" src="../../js/GongZhiJuManage_js/GZJSJAHtml.js"></script>
+
+		<style>
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+			
+			.tabs li a.tabs-close,
+			.tabs-p-tool {
+				height: 20px;
+			}
+			
+			#barCodeInfo {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+        	作者：G98138 
+        	时间：2018-12-10
+        	描述：工治具收集
+        -->
+		<div id="tabsid" class="easyui-tabs" data-options="justified:true,tabHeight:30" style="width:100%;height:500px ;">
+
+			<div style="font-size: 17px;" title="钢网收集" data-options="tools:'#p-tools1'">
+				<div class="mui-input-row">
+                    <label>型号</label>
+					    <!--<input id="DAB001" type="text" class="mui-input-clear" placeholder="请输入库位" onkeypress="GetMaterielByStore()">-->
+                    <select id="gwType">
+	                    <option value="-1">--请选择--</option>
+                    </select>
+                </div>
+                <!--<div class="mui-input-row" id="input02">
+				    <label style="float: left;">描述</label>
+				    <input id="DAB001" type="text" style="background-color: #CCCCCC;" placeholder="描述" readonly="readonly"/ >
+			    </div>-->
+				<div class="mui-input-row">
+				    <label>库位条码</label>
+					<input id="KuWeiCode" type="text" class="mui-input-clear" placeholder="请输入库位">
+				</div>
+				<div class="mui-input-row">
+					<label>钢网条码</label>
+					<input id="GangWangCode" type="text" class="mui-input-clear" placeholder="请输入库位">
+				</div>
+				<div class="link-area">
+					<h4 style="color: #008000; text-align: center;">收集结果</h4>
+					<textarea readonly="readonly" id='info1' style="height:260px;background: yellow;"></textarea>
+				</div>
+			</div>
+			<div style="font-size: 17px;" title="飞达收集" data-options="tools:'#p-tools1'">
+				<div class="mui-input-row">
+                    <label>型号</label>
+					    <!--<input id="DAB001" type="text" class="mui-input-clear" placeholder="请输入库位" onkeypress="GetMaterielByStore()">-->
+                    <select id="fdType">
+	                    <option value="-1">--请选择--</option>
+                    </select>
+                </div>
+				<div class="mui-input-row">
+					<label>条码</label>
+					<input id="fdCode" type="text" class="mui-input-clear" placeholder="请输入飞达条码">
+				</div>
+				<div class="link-area">
+					<h4 style="color: #008000; text-align: center;">收集结果</h4>
+					<textarea readonly="readonly" id='info2' style="height:260px;background: yellow;"></textarea>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+//      $('#info1').height($(window).height() - $('#gwType').height() - $('#KuWeiCode').height() - $('#GangWangCode').height()-120);
+	    $('#tabsid').height(465);
+	</script>
+</html>

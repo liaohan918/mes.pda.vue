@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+	</head>
+
+	<body>
+		<!--
+        	作者：庄卓杰
+        	时间：2019-06-11
+        	描述：委外单合并
+        -->
+		<div class="mui-content"  onclick="SetInputFoucs('#txtBillNo')">
+			<div style="padding: 10px 10px;">
+				<div id="item1" class="mui-control-content mui-active">
+					<div id='infos' class="mui-input-group">
+						<div class="mui-input-row">
+							<div>
+								<label style="width: 25%; padding: 11px 3px;">委外单号</label>
+							</div>
+							<div>
+								<input type="text" id='txtBillNo' style="width: 150px;" placeholder="请扫描委外单号"/>
+							</div>
+						</div>
+					</div>
+					<div style="margin-top: 10px;">
+						<table id="dgCHK" style="height: 100%;" class="easyui-datagrid" data-options="rownumbers:true, singleSelect:false,checkOnSelect:true, SelectOnCheck:true,autoRowHeight:false, pagination:false, fitColumns:false">
+							<thead>
+								<tr>
+									<th field="DAF021" width="100">委外单号</th>
+									<th field="DAF023" width="150">产品编号</th>
+									<th field="DAF002" width="20" hidden="hidden">配料单ID</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div class="mui-content-padded oauth-area">
+						<button type="button" id="btnDelete" style="width: 100px; float: left;" class="mui-btn mui-btn-red">清除</button>
+						<button type="button" id="btnHeBing" style="width: 100px; float: right;" class="mui-btn mui-btn-green">合并</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../../js/CangKuManage_js/OPF_WOMDAFHeBing.js"></script>
+	</body>
+
+</html>

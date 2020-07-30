@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+	<!--拆分绑定-->
+	<head>
+		<meta charset="UTF-8">
+		<title>拆分绑定</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<!--<link rel="stylesheet" href="../../lib/base_js/css/common.css" />-->
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js" ></script>
+        <script type="text/javascript" src="../../js/app.js" ></script>
+        <script src="../../lib/mui/js/mui.min.js"></script>
+        <!--<script src="../../lib/base_js/js/app.js"></script>-->
+        <script src="../../lib/base_js/js/common.js"></script>
+        <script src="../../lib/base_js/js/app.js"></script>
+        
+		<style>
+			#info {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+		
+	</head>
+	<body>
+		 <!--
+		 	作者：吴冰荣
+			 时间：2018.09.04
+			 描述：拆分绑定
+		 -->
+		<div class="mui-content">
+			<form id="form" class="mui-input-group">
+				<div class="mui-input-row" style="height: 10px;">
+					<!--占位-->
+				</div>
+				<div class="mui-input-row" id="txt1">
+					<label>源条码</label>
+					<input id="txtBarCode" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描条码"/>
+				</div>
+				<!--style="height: 350px;-->
+				<div class="mui-input-row" id="txtInfo"> <!--style="height: 330px; margin-top: 10px;"-->
+					<div class="link-area">
+						<h4 style="color: #008000; text-align: center;">条码信息</h4>
+					</div>
+					<!--style="height: 90%;"-->
+					<textarea readonly="readonly" id='info' style="height: 100%;"></textarea>
+				</div>
+				<div class="mui-input-row" id="txt2">
+					<label>新数量</label>
+					<input id="txtNum" type="number" value="" class="mui-input-clear text-color"   placeholder="请输入数量"/>
+				</div>
+				<div class="mui-input-row" id="txt3">
+					<label>新条码</label>
+					<input id="txtNewBarCode" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描条码"/> 
+				</div>
+				<div class="mui-input-row" style="height: 10px;">
+					<!--占位-->
+				</div>
+			</form>
+		</div>
+		<script>
+			//add by HCW 20200317
+			mui.plusReady(function() {
+				$('#txtInfo').height($(window).height()- $("#txt1").height() - $("#txt2").height() - $("#txt3").height() - 20);
+			});
+					
+			$('#txtInfo').height($(window).height()- $("#txt1").height() - $("#txt2").height() - $("#txt3").height() - 20);
+			$('#txtBarCode').focus();
+			$('#txtBarCode').keyup(function(event) {
+				//回车
+				if(event.keyCode == "13") {
+					var tmpBarCode = mui('#txtBarCode')[0].value;
+					if(tmpBarCode == "") {
+						return;
+					}
+					$.ajax({
+						url: app.API_URL_HEADER + "/BARCODESplit/SourceBarCode",
+						data: {
+							SourceBarCode: mui('#txtBarCode')[0].value,
+							CF_type: true
+						},
+						dataType: "json", //数据类型
+						type: "post", //"get" 请求方式
+						async: true, //是否异步
+						success: function(data) { //成功后操作，返回行集合(data)
+							var resultJson = eval("("+data+")");
+							document.getElementById("info").value = resultJson.message;
+							$('#txtNum').focus();
+						},
+						error: function(xhr, type, errorThrown) { //请求异常，抛出异常，处理异常
+							//console.log(errorThrown);
+							alert("获取数据异常：" + JSON.stringify(errorThrown)); //弹框提示异常信息
+						}
+					});
+		
+				}
+			});
+			
+			$('#txtNum').keyup(function(event) {
+				//回车
+				if(event.keyCode == "13") {
+					$('#txtNewBarCode').focus();
+				}
+			});
+			
+			$('#txtNewBarCode').keyup(function(event) {
+				//回车
+				if(event.keyCode == "13") {
+					var tmpBarCode = mui('#txtBarCode')[0].value;
+					if("" == mui('#txtBarCode')[0].value && "" == mui('#txtNum')[0].value && "" == mui('#txtNewBarCode')[0].value) {
+						return;
+					}
+//					var currentSession = app.loadconfig(app.CONFIG_CURRENT_SESSION);
+//					var user_id = currentSession.login.usersyersysid;
+					var currentSession = app.loadconfig(app.CONFIG_CURRENT_SESSION);
+					var user_id = currentSession.user_id;
+//					var user_id = "G90567";
+//					currentSession.user_ier_id =  = document.getElementByItById("emp_no").value;					
+					$.ajax({						
+						url: app.API_URL_HEADER + "/BARCODESplit/NewBarCode",
+						data: {
+							_sp_SourceBarCode: mui('#txtBarCode')[0].value.toString().trim().toUpperCase(),
+							_sp_NewQty: mui('#txtNum')[0].value,
+							_sp_NewBarCode: mui('#txtNewBarCode')[0].value.toString().trim().toUpperCase(),
+							_sp_UserID: user_id,
+							_sp_TIME: GetSysDateTime(),
+							Type: "WMS_SPLIT_BarCode"
+						},
+						dataType: "json", //数据类型
+						type: "post", //"get" 请求方式
+						async: true, //是否异步
+						success: function(data) { //成功后操作，返回行集合(data)
+							var resultJson = eval("("+data+")");
+							if("1" == resultJson.status){
+								alert("警告：" + resultJson.message);
+							}else{
+								document.getElementById("txtBarCode").value = "";
+								document.getElementById("info").value = "";
+								document.getElementById("txtNum").value = "";
+								document.getElementById("txtNewBarCode").value = "";
+								mui.toast("操作成功~");
+							}
+							
+//							document.getElementById("info").value = resultJson.message;					
+						},
+						error: function(xhr, type, errorThrown) { //请求异常，抛出异常，处理异常
+							//console.log(errorThrown);
+							alert("获取数据异常：" + JSON.stringify(errorThrown)); //弹框提示异常信息
+						}
+					});
+		
+				}
+			});
+		</script>
+				    
+	</body>
+
+</html>

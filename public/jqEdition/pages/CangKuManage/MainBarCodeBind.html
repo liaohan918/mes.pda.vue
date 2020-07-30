@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>主条码绑定</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<style>
+
+		</style>
+
+	</head>
+
+	<body>
+		<!--
+        	作者：DZP
+        	时间：2019-05-15
+        	描述：主条码绑定
+        -->
+		<div class="mui-input-group mui-content" onclick="SetInputFoucs('#MMBarcode')">
+			<div class="mui-input-row " id="row001">
+				<label style="width: 35%; float: left; ">仓库</label>
+				<div style="width: 65%; float: right;">
+					<input style="padding: 5px;width: 40%;"   type="text" id="WareHouse" readonly="true" placeholder="请选择仓库">
+					<input style="padding: 5px;width: 55%;"   type="text" id="WareHouseID" readonly="true">
+				</div>
+			</div>
+			<div class="mui-input-row" id="row002">
+				<label>主条码</label>
+				<input id="MainBarCode" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描主条码" /> </div>
+			<div class="mui-input-row" id="row003">
+				<label>库位</label>
+				<input id="MainKW" type="text" class="mui-input-clear text-color" readonly="readonly" />
+			</div>
+			
+			<div class="mui-input-row" id="row004">
+				<div style="width: 65%;float: left;">
+					<label style="width: 50%;float: left;">物料条码</label>
+					<input id="MMBarCode" type="text" style="width:50%; float: left;" class="mui-input-clear"  placeholder="请扫描物料条码">
+				</div>
+				<div style="width: 35%;float: left;" class="mui-checkbox mui-left">
+					<label style="width: 100%;float: left;">解绑</label>
+					<input id="checkdefault" name="checkbox" value="Item1" type="checkbox">
+				</div>
+			</div>
+			
+			
+			<table id="bindGrid" title="绑定明细" class="easyui-datagrid" data-options=" rownumbers:true, singleSelect:true, autoRowHeight:false">
+				<thead>
+					<tr>
+						<th field="DAB001" width="110" align="middle">物料条码</th>
+						<th field="DAB020" width="80" align="middle">物料编码</th>
+						<th field="DAB021" width="80" align="middle">名称</th>
+						<th field="DAB003" width="90" align="middle">库位</th>
+						<!-- <th field="DAB008" width="100" align="middle">规格</th> -->
+						<th field="DAB002" width="50" align="middle">仓库</th>
+						<th field="DAB006" width="50" align="middle">数量</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="mui-input-row" id="maincodeInfo">
+			<label id="MainCodeTotal" style="width: 100% ;font-size: 16px; ">条码个数:0,总数量:0</label>
+		</div>
+		<script type="text/javascript" src="../../js/CangKuManage_js/MainBarCodeBind.js"></script>
+		<script>
+			$('#bindGrid').height($(window).height() -
+				$("#row001").height() -
+				$("#row002").height() -
+				$("#row003").height() - 
+				$("#row004").height() -
+				$("#maincodeInfo").height() - 45
+				);
+			/**
+			 * 扫描主条码
+			 */
+			$("#MainBarCode").keydown(function(e) {
+				if (e.keyCode != 13) return;
+				var maicode = $("#MainBarCode").val();
+				CheckMainBarCode(maicode);
+			})
+
+			$("#MMBarCode").keydown(function(e) {
+				if (e.keyCode != 13) return;
+				var maicode = $("#MainBarCode").val();
+				var MMBarCode = $("#MMBarCode").val();
+				MainBarCodeBind(maicode, MMBarCode);
+			})
+
+		</script>
+	</body>
+
+</html>

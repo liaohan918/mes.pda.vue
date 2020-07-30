@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>库位变更</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<style>
+			#info {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+		<script src="../../lib/jquery/js/jquery.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div id="form" class="mui-input-group" onclick="SetInputFoucs('#materialCode')">
+				<div class="mui-input-row" id="row001">
+					<label>物料条码</label>
+					<input id="materialCode" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描条码" />
+				</div>
+				<div class="mui-input-row" id="div001">
+					<label>交易时间</label>
+					<input id="tradingDate" type="text" readonly="readonly" style="width: 60%;" class="text-color" placeholder="选择交易日">
+				</div>
+
+				<div class="mui-input-row" id="div002" style="height: 100%; margin-top: 10px;">
+					<div class="link-area">
+						<h4 style="color: #008000;text-align: center;">原条码信息
+							<span id="bardCode-count" class="mui-badge mui-badge-success easyui-draggable" style="font-size: 15px;"
+							 data-options="onStopDrag:onStopDrag">0</span>
+						</h4>
+					</div>
+					<textarea readonly="readonly" id='info' style="height: 90%;"></textarea>
+				</div>
+
+
+				<div class="mui-input-row" id="div003">
+					<div style="width: 100%;float: left;padding: 1px 1px;">
+						<label style="width: 40%;float: left;">新库位</label>
+						<input id="storeCode" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描库位" style="width: 60%;float: left;" />
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/CangKuManage_js/WARBABChag.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+	<script type="text/javascript" javascript">
+		$('#info').height(
+			$(window).height() -
+			$("#row001").height() -
+			$("#div001").height() -
+			$("#div002").height()-3);
+	</script>
+</html>

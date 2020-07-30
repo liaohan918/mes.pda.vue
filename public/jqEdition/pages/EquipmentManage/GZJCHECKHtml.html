@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>工治具校验</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" href="../../lib/mui/css/mui.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/jquery/js/jquery.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<script type="text/javascript" src="../../js/GongZhiJuManage_js/GZJCHECKHtml.js"></script>
+
+	</head>
+
+	<body>
+		<!--<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">工治具领用</h1>
+		</header>-->
+		<!--
+        	作者：黎锋
+        	时间：2018-09-27
+        	描述：工治具校验
+       -->
+		<div id="form" class="mui-input-group">
+			<div class="mui-input-row">
+				<div style="width: 75%;float: left;">
+					<label>指令</label>
+					<input id="DAA001" type="text" value="" style="background-color: #CCCCCC;" class="mui-input-clear text-color" placeholder="请选择指令" readonly="readonly" />
+				</div>
+				<div style="width: 25%;float: right;">
+					<input id="lineId" type="text" value="" style="background-color: #CCCCCC;" readonly="readonly" placeholder="线别" />
+				</div>
+			</div>
+			<div class="mui-input-row">
+				<label>治具类型</label>
+				<input id="gzjType" type="text" value="" style="background-color: #CCCCCC;" placeholder="工治具类型" readonly="readonly" onclick="GetGZJType()">
+			</div>
+			<div class="mui-input-row">
+				<label>治具条码</label>
+				<input id="Barcode" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描工治具条码"/>
+			</div>
+		</div>
+		<div class="mui-content-padded oauth-area">
+			<!--占位-->
+		</div>
+		<div class="mui-content">
+			<div id="form" class="mui-input-group">
+				<div id="tabsid" class="easyui-tabs" data-options="justified:true,tabHeight:30" style="width:100%;">
+					<div id="pal01" title="待校验列表" data-options="tools:'#dgGZJList-tools'">
+						<table id="tb1" class="easyui-datagrid" style="height: 300px;" data-options=" rownumbers:true, singleSelect:true">
+							<thead>
+								<tr>
+									<th field="USE002" width="150">工治具条码</th>
+									<th field="USE003" width="100">型号编码</th>
+									<!--<th field="USE004" width="80">状态</th>-->
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div id="pal02" title="已校验列表" data-options="tools:'#dgScanList-tools'">
+						<table id="tb2" class="easyui-datagrid" style="height: 350px;" data-options=" rownumbers:true, singleSelect:true">
+							<thead>
+								<tr>
+									<th field="USE003" width="100">型号编码</th>
+									<th field="USE002" width="150">条码</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="dgGZJList-tools">
+			<span id="dgGZJList-sum" class="mui-badge mui-badge-success" style="height: auto;width: auto;">0</span>
+		</div>
+		<div id="dgScanList-tools">
+			<span id="dgScanList-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+		</div>
+
+	</body>
+
+</html>

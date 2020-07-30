@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>主条码打印</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		 
+	</head>
+
+	<body>
+
+		<!--
+        	作者：280639273@qq.com
+        	时间：2018-3-18
+        	描述：主条码打印
+        -->
+		<div id="Baseinfo" class="mui-input-group mui-content">
+
+			<div class="mui-input-row" id="div001">
+				<div style="width:65%;float: left;">
+					<label style="float: left; width: 60%;">条码个数</label>
+					<input id="Count" type="number" value="" class="text-color" style="float: left; width: 30%; background-color: cornsilk;" />
+				</div>
+				<div style="width: 35%;float: right;" class="mui-checkbox mui-left">
+					<button style="width: 100% ;float: right;" type="button" onclick="CreateBar()" class="mui-btn mui-btn-green">生成条码</button>
+				</div>
+			</div>
+
+			<div class="mui-input-row" id="div002">
+				<div style="width:65%;float: left;">
+					<label style="float: left; width: 42%;">打印机</label>
+					<input id="cmbPrint" style="float: left; width: 58%;" type="text" onclick="selectPrinter()"  placeholder="请选择打印机" readonly="readonly">
+				</div>
+				<div style="width: 35%;float: right;" class="mui-checkbox mui-left">
+					<button style="width: 100% ;float: right;" type="button" onclick="PrintBar()" class="mui-btn mui-btn-green">打   印</button>
+				</div>
+			</div>
+
+			<div id="tabsid" class="easyui-tabs" data-options="justified:true,tabHeight:30">
+				<table id="girdBar" class="easyui-datagrid" data-options=" rownumbers:true,
+				singleSelect:true " style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="MainBar" style="width:100%;">主条码</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="../../js/CangKuManage_js/MainBarCode.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+	<script type="text/javascript">
+		$('#tabsid').tabs({
+			height: $(window).height() -
+				$("#div001").height() -
+				$("#div002").height()
+		});
+		
+		//add by HCW 20200318
+		mui.plusReady(function() {
+			$('#tabsid').tabs({
+						height: $(window).height() -
+							$("#div001").height() -
+							$("#div002").height()
+					});
+		});
+	</script>
+
+</html>

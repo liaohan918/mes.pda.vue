@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>退料入库</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.min.css"  rel="stylesheet"/>
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../lib/easyui/css/easyui.css"  rel="stylesheet"/>
+		<link href="../../lib/base_js/css/common.css" rel="stylesheet" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script src="../../lib/jquery/js/jquery.min.js"></script>	
+		<script src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>	
+		<script src="../../lib/base_js/js/common.js"></script>
+		<script src="../../js/CangKuManage_js/MaterialSearchHtml.js"></script>
+		</style>
+
+	</head>
+
+	<body>
+		<!--
+        	作者：吴冰荣
+        	时间：2019-03-14
+        	描述：待入库物料
+        -->
+		<div class="mui-input-group"><!--class="mui-input-group mui-content"-->
+			<div id="head">
+				<div class="mui-input-row">
+					<label>日期</label>
+					<input id="datDate" type="text" value="" class="text-color" readonly="readonly"/>
+				</div>
+				
+				<div class="mui-input-row" style="margin-bottom: 10px;">
+					<div style="width: 65%;float: left;" id="tiaoMadiv">
+						<label style="font-size: 15px;">仓库</label>
+						<input id="ItemClass" type="text" style="width: 65%;float: left;" placeholder="请选择仓库类型" readonly="readonly">
+					</div>
+					<div style="width: 35%;float: right;" class="mui-btn mui-btn-primary" id="SplitBarcode" onclick="KeyPress()">
+						查询
+					</div>
+				</div>			
+			</div>
+
+			<div id="tabsid" class="easyui-tabs" data-options="justified:true,tabHeight:30" style="width:100%; height: auto;">
+				<div title="明细列表" class="mui-input-group" data-options="tools:'#tools'">
+					<table id="detailedList" class="easyui-datagrid" data-options = "rownumbers:true,fitColumns:false">
+					<thead>
+						<tr>
+							<th field="MBA001">物料编码</th>
+							<th field="MBA002">物料名称</th>
+							<th field="MBA004">物料规格</th>
+							<th field="DHA001">到货单号</th>
+							<th field="DHA008" >供应商</th>
+							<th field="S_DHB013">清点数</th>
+							<th field="S_DAB005">入库数</th>
+							<th field="DHA004">到货日期</th>				
+						</tr>
+					</thead>
+					</table>
+				</div>			
+				<!--<div title="汇总列表" data-options="tools:'#tools1'">
+					<table id="sumList" class="easyui-datagrid" data-options = "rownumbers:true,fitColumns:false">
+					<thead>
+						<tr>
+							<th field="DeliveryNumber">送货单号</th>
+							<th field="TotalNumber">汇总数量</th>
+						</tr>
+					</thead>
+					</table>
+				</div>			-->
+			</div>
+			
+			<!--<div id="tools">
+				<span id="gridBARDAB-sum" class="mui-badge mui-badge-success">0</span>
+			</div>-->
+			
+		<div id="tools">
+			<span class="mui-badge mui-badge-success" id="grid-sum">0</span>
+		</div>
+		<!--<div id="tools1">
+			<span class="mui-badge mui-badge-success" id="grid-sum1">0</span>
+		</div>-->
+			
+			<!--<div id="txtInfo" style="height: 100%;">
+				<div class="link-area" id="div001">
+					<h4 style="text-align:center" id="labShengYuShu">剩余退料条码数</h4>
+				</div>
+				<textarea id='info' readonly="readonly"></textarea>
+			</div>-->
+
+		</div>
+	</body>
+
+</html>

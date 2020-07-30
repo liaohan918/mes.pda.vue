@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>维修出库单</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<script type="text/javascript" src="../../js/XianChangManage_js/GuanZhiKaSearch.js" ></script>
+		<style>
+
+		</style>
+	</head>
+
+
+
+	<body>
+		<!--
+        	作者：黎锋
+        	时间：2019-06-15
+        	描述：维修出库单
+        -->
+		<div id="infos" class="mui-content">
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<label style="width: 40%;">管制卡条码</label>
+					<input style="width: 60%;" id="txtGZKHao" type="text" class="mui-input-clear" placeholder="请输入扫描管制卡/条码">
+				</div>
+				<!--<div class="mui-input-row">
+					<label>当前工序</label>
+					<input type="text" style="width: 100px; float: left;padding: 11px 2px; background-color:#777777;" id="txtGongXuID" readonly="true" class="" >
+					<input type="text" style="width: 100px; float: left;padding: 11px 2px; background-color:#777777;" id="txtGongXuMC" readonly="true" class="" >
+				</div>-->
+			</div>
+			<div class="link-area">
+					<h4 style="color: #008000;">生产履历明细</h4>
+			</div>
+				<table id="dgWOMQAC" class="easyui-datagrid" fitColumns:false style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="QAC016" width="55">人员</th>									
+							<th field="QAC011" width="55">产线</th>
+							<th field="QAC009" width="55">工序</th>
+							<th field="QAC015" width="55">作业数量</th>
+							<th field="QAC019" width="55">良品</th>
+							<th field="QAC020" width="55">不良品</th>
+						</tr>
+					</thead>
+				</table>
+		</div>
+		<script>
+			$('#tabsid').tabs({
+				justified: true,
+				tabHeight: 30,
+				narrow: true,
+				pill: true
+			});
+			
+			//批量设置表格属性
+			$('.easyui-datagrid').datagrid({
+				height: $(window).height() - $("#form").height() - $('#tabsid').height()-30,
+				sortable: false
+			});
+		</script>
+	</body>
+</html>

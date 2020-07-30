@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>组别调拨</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../lib/mui/css/mui.min.css">
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../css/buttons.css" />
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script>
+			var DBType="03";			
+		</script>
+		<script src="../../js/CangKuManage_js/INVDFAHtml03.js"></script>
+	</head>
+
+	<body>
+		<!--
+		 	作者：杨俊燃
+			 时间：2019.03.13
+			 描述：组别调拨单据类别
+		-->
+		<div id="head1" class="mui-input-group">
+			<div class="mui-input-row" style="margin-top: 10px;">
+				<label>调拨单号</label>
+				<input id="txtDBHao" type="text" readonly="true" class="text-color" placeholder="请选择单号">
+			</div>
+		</div>
+
+		<div id="tabsid" class="easyui-tabs" style="width:100%; margin-top: 5px;"tabHeight='30px;' justified=true>
+			<div title="物料明细" data-options="tools:'#dgWOMDAG-tools'">
+				<table id="dgWLMX" class="easyui-datagrid" data-options=" rownumbers:true, singleSelect:true, autoRowHeight:false, pagination:false, pageSize:10">
+					<thead>
+						<tr>
+							<th field="DFC004" align="center">物料编码</th>
+							<th field="DFC005" align="center">调拨数量</th>
+							<th field="DFC006" align="center">已完成数量</th>
+							<th field="DFC007" align="center">未完成数量</th>
+							<th field="DFC009" align="center" hidden="true">调出组别</th>
+							<th field="AMIG004" align="center">调出组别</th>
+							<th field="DFC010" align="center" hidden="true">调入组别</th>
+							<th field="BMIG004" align="center">调入组别</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div title="扫描条码" data-options="tools:'#dgWOMDAH-tools'">
+				<div class="mui-input-row ">
+					<label>物料条码</label>
+					<input id="txtBarCode" type="text" class="mui-input-clear" style="background-color: yellow;" placeholder="请扫描条码" />
+				</div>
+				<div class="mui-input-row" id="divTxtInfo">
+					<textarea readonly="readonly" id='txtInfo' style="height: 100%;background-color: #FFE48D"></textarea>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

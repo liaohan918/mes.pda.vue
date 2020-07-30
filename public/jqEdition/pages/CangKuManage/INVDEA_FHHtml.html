@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>返还收料</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+
+		<style>
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+			
+			.tabs li a.tabs-close,
+			.tabs-p-tool {
+				height: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="info" class="mui-content" onclick="SetInputFoucs('#materialCode')">
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<div>
+						<label>申请日期</label>
+						<input id="tradingDate" type="text" style="width: 150px;float: left;" class="text-color" placeholder="选择交易日">
+						<button id="refresh" style="width: 55px;height:28px;float: left;margin-top: 2px; " class="mui-btn mui-btn-green ">刷新</button>
+					</div>
+
+				</div>
+
+				<div class="mui-input-row">
+					<div style="width: 100%;float: left;">
+						<label style="width: 35%;float: left;">返还单号</label>
+						<input id="BillNo" type="text" readonly="true" oninput="BillNoChange(this.value)" style="width: 65%;float: right;"
+						 class="text-color" placeholder="请选择单号">
+
+					</div>
+
+				</div>
+
+				<div class="mui-input-row">
+					<div style="width: 65%;float: left;">
+						<label>条码</label>
+						<input id="materialCode" type="text" style="width: 65%;float: left;" class="text-color" placeholder="请扫描条码">
+					</div>
+
+				</div>
+
+				<div class="mui-input-row">
+					<div style="width: 65%;float: left;">
+						<label>库位</label>
+						<input id="housestore" type="text" style="width: 65%;float: left;" class="text-color" placeholder="请扫描库位">
+					</div>
+					<div style="width: 35%;float: left;" class="mui-checkbox mui-left">
+						<label style="width: 100%;float: left;">默认</label>
+						<input id="checkdefault" name="checkbox" value="Item1" type="checkbox">
+					</div>
+
+				</div>
+
+			</div>
+
+			<div id="tabsid" class="easyui-tabs" data-options="justified:true,tabHeight:30" style="width:100%;">
+				<div title="物料汇总" data-options="tools:'#p-tools2'">
+					<table id="gridKMaterialList" class="easyui-datagrid" data-options="rownumbers:true, 
+					singleSelect:true "
+					 style="height: 100%;">
+						<thead>
+							<tr>
+								<th field="DEB003">物料编码</th>
+								<th field="DEB004">物料名称</th>
+								<th field="DEB008">应发数量</th>
+								<th field="DEB010">实发数量</th>
+								<th field="DAIFA">未发数量</th>
+								<th field="DEB016">发料仓库</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div title="条码明细" data-options="tools:'#p-tools1'">
+					<table id="gridBarcodeList" class="easyui-datagrid" data-options="rownumbers:true, 
+					singleSelect:true " style="height: 100%;">
+						<thead>
+							<tr>
+								<th field="DEC004">条码</th>
+								<th field="DEC005">物料编码</th>
+								<th field="DEC007">数量</th>
+								<th field="MDA002">发料仓库</th>
+								<!-- <th field="aaa">是否按条码归还</th> -->
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+
+			<div id="p-tools1">
+				<span id="wl_sum" class="mui-badge mui-badge-success">0</span>
+			</div>
+			<div id="p-tools2">
+				<span id="kw_sum" class="mui-badge mui-badge-success">0</span>
+			</div>
+
+	</body>
+	<script type="text/javascript" src="../../js/CangKuManage_js/INVDEA.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+	<script type="text/javascript">
+		$('#tabsid').tabs({
+			height: $(window).height() - $("#form").height() - $("#tm_sum").height()
+		});
+		$(function() {
+			billType = "1410";
+			DateInit();
+		});
+		$('#BillNo').click(function() {
+			GetBillNobyClick()
+		});
+
+		$('#refresh').click(function() {
+			if (GetBillNoList()) {
+				ReflishInfo();
+			}
+		})
+		$("#materialCode").keydown(function(e) {
+			if (e.keyCode != 13) return;
+
+			var ckdefault = $("#checkdefault").prop("checked") == true ? "1" : "0"
+			if (ckdefault == "1") {
+				var barcode = $('#materialCode').val();
+				var housestore = $('#housestore').val();
+				DowithBarcode(barcode, housestore, "0");
+			} else {
+				$("#housestore").val('');
+				$("#housestore")[0].focus();
+			}
+		})
+		$("#housestore").keydown(function(e) {
+			if (e.keyCode != 13) return;
+			
+			var barcode = $('#materialCode').val();
+			var housestore = $('#housestore').val();
+			DowithBarcode(barcode, housestore, "0");
+			$("#checkdefault").prop("checked", true);
+		})
+
+		$("#tradingDate").on("tap", function(e) {
+			ChangeDate(e);
+			$("#materialCode")[0].focus();
+		});
+		
+		//add by HCW 20200317
+		mui.plusReady(function(e){
+			$('#tabsid').tabs({
+				height: $(window).height() - $("#form").height() - $("#tm_sum").height()
+			});
+		});
+	</script>
+</html>

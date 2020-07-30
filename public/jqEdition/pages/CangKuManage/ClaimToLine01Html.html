@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>申请领料单发料</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+
+		<style>
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+			
+			.tabs li a.tabs-close,
+			.tabs-p-tool {
+				height: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<!--
+            	作者：庄卓杰
+            	时间：2019-11-06
+            	描述：申领单备料（线别过滤）
+            -->
+		<div id="info" class="mui-content" onclick="SetInputFoucs('#materialCode')">
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<div>
+						<label style="width: 35%;">单据日期</label>
+						<input id="tradingDate" type="text" style="width: 45%;float: left;" class="text-color" placeholder="选择单据日期">
+						<button id="refresh" 
+						style="width: 20%;height:28px;float: left;margin-top: 1px; " 
+						class="mui-btn mui-btn-green ">刷新</button>
+					</div>
+				</div>
+
+				<div class="mui-input-row">
+					<div>
+						<label style="width: 35%;">生产线别</label>
+						<input id="line" type="text" style="width: 65%;float: left;" class="text-color mui-input-clear" placeholder="选择生产线别">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<div style="width: 100%;float: left;">
+						<label style="width: 35%;float: left;">申领单号</label>
+						<input id="BillNo" type="text" readonly="true" oninput="BillNoChange(this.value)" style="width: 45%;float: left;"
+						 class="text-color" placeholder="请选择单号">
+						<div style="width: 20%;float: left;" class="mui-btn mui-btn-primary" id="SplitBarcode" onclick="SplitBarcode(this)" data-linktype="newpage" data-pageid="WARBCFHtml" data-pageurl="WARBCFHtml.html" data-pagetitle="物料拆分">
+							拆
+						</div>
+					</div>
+
+				</div>
+
+				<div class="mui-input-row">
+					<div style="width: 65%;float: left;">
+						<label>条码</label>
+						<input id="materialCode" type="text" style="width: 65%;float: left;" class="text-color" placeholder="请扫描条码">
+					</div>
+					<div style="width: 35%;float: right;" class="mui-checkbox mui-left">
+						<label style="width: 100%;float: right;">取消</label>
+						<input id="checkdefault" name="checkbox" value="Item1" type="checkbox">
+					</div>
+				</div>
+			</div>
+
+			<div id="tabsid" class="easyui-tabs" data-options="justified:true,tabHeight:30" style="width:100%;">
+				<div title="材料列表" data-options="tools:'#p-tools1'">
+					<table id="gridKMaterialList" class="easyui-datagrid" data-options="rownumbers:true, 
+					singleSelect:true "
+					 style="height: 100%;">
+						<thead>
+							<tr>
+								<th field="DAG003">序号</th>
+								<th field="DAG004">物料编码</th>
+								<th field="DAG014">应发数量</th>
+								<th field="DAG023">待发数量</th>
+								<th field="DAG015">实发总数</th>
+								<th field="DAG005">物料名称</th>
+								<th field="DAG006">物料规格</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+
+				<div title="库位列表" data-options="tools:'#p-tools2'">
+					<table id="gridKWList" class="easyui-datagrid" data-options="rownumbers:true, 
+					singleSelect:true " style="height: 90%;">
+						<thead>
+							<tr>
+								<th field="Num">序号</th>
+								<th field="DAB003">库位</th>
+								<th field="DAB006">数量</th>
+								<th field="DAB013">FIFO日期</th>
+								<th field="DAB002">仓库</th>
+							</tr>
+						</thead>
+					</table>
+					<div class="mui-input-row" style="height: 10%;">
+						<div>
+							<label style="width: 50%;left;font-size: 15px ">物料编码</label>
+							<input id="ThismaterialCode" type="text" style="width: 50%;float: left;" class="text-color" placeholder="物料编码">
+						</div>
+					</div>
+				</div>
+
+				<div title="已扫描列表" data-options="tools:'#p-tools3'">
+					<table id="gridBarcodeList" class="easyui-datagrid" data-options="rownumbers:true, 
+					singleSelect:true" style="height: 100%;">
+						<thead>
+							<tr>
+								<th field="SeqNo">序号</th>
+								<th field="DAH005">条码</th>
+								<th field="DAH008">规格</th>
+								<th field="DAH011">数量</th>
+							</tr>
+						</thead>
+					</table>
+
+				</div>
+			</div>
+
+			<div id="p-tools1">
+				<span id="wl_sum" class="mui-badge mui-badge-success">0</span>
+			</div>
+			<div id="p-tools2">
+				<span id="kw_sum" class="mui-badge mui-badge-success">0</span>
+			</div>
+			<div id="p-tools3">
+				<span id="tm_sum" class="mui-badge mui-badge-success">0</span>
+			</div>
+
+	</body>
+	<script type="text/javascript" src="../../js/CangKuManage_js/ClaimToLine01Html.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+	<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+</html>

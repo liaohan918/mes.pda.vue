@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>设备点检</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/base_js/app.js"></script>
+		<script src="../../js/mui.picker.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../js/easyui_js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="../../js/base_js/common.js"></script>
+		<link rel="stylesheet" href="../../css/common.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../css/easyui_css/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+		<script type="text/javascript" src="../../js/base_js/MacAddress.js"></script>
+		<script type="text/javascript" src="../../js/base_js/Ajax.js"></script>
+		<script type="text/javascript" src="../../js/EquipmentManage_js/MCSCAHCheckHtml.js"></script>
+
+		<style>
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+			#txtInfo {
+				background-color: #FFE48D;
+			}
+			
+			#datDate{
+				background-color: #C7C7CC;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<!--
+        	作者：吴冰荣
+        	时间：2019-05-23
+        	描述：设备检查
+        -->
+		<div class="mui-input-group">
+			<div id="head" style="margin-bottom: 5px;">
+				<div class="mui-input-row">
+					<label>检查日期</label>
+					<input id="datDate" readonly="readonly" type="text" class="text-color" placeholder="请选择日期" />
+				</div>
+				<div class="mui-input-row">
+					<label>保养周期</label>
+					<input id="keepCycle"  readonly="readonly" type="text" class="text-color" placeholder="请选择周期" />
+				</div>
+				<div class="mui-input-row">
+					<label>设备编码</label>
+					<input id="txtDeviceBarCode" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描条码" />
+				</div>
+			</div>
+
+			<div id="tabsid" class="easyui-tabs" data-options="justified:true,tabHeight:30" style="width:100%; height: auto;">
+				<div title="信息" class="mui-input-group" ><!--data-options="tools:'#tools0'"-->
+					<div class="mui-input-row" id="txtInfo" style="margin-top: 10px;">
+						<!--<font color="red" size="3">点检项目</font>-->
+						<!--<textarea readonly="readonly" id='info' style="height: 100%;"></textarea>-->											
+						
+					</div>
+					<!--<div class="mui-input-row" id="txtInfo0" style="margin-top: 10px;">
+						<font color="#0000FF">衡量标准</font>
+						<textarea readonly="readonly" id='info0' style="height: 100%;"></textarea>						
+						
+					</div>-->
+					<div class="mui-input-row" style="margin-left: 10%;margin-right: 10%; margin-bottom: 5px;" id="divInfo">
+						<!--style="margin-left: 10%;margin-right: 10%; margin-bottom: 5px;"-->
+						<div class="mui-checkbox mui-right float_right" style="width: 35%;">
+							<label>NG</label>
+							<input id="NGCheck" type="checkbox">
+						</div>
+						<div style="width: 65%;float:left;" class="mui-btn mui-btn-success" id="OKBtn">
+							OK
+						</div>
+					</div>
+					<div class="mui-input-row" id="txtInfo1" style="margin-top: 10px;">
+						<textarea id='info1' style="height: 100%;" placeholder="NG时填写描述信息~"></textarea>
+					</div>
+					<div id="NGBtn" style="width: 55%;float:left;margin-left: 25%;" class="mui-btn mui-btn-warning">
+							提交NG检测
+						</div>
+
+				</div>
+				<div id="pnl02" title="明细" data-options="tools:'#tools'">
+					<div class="mui-input-row" id="divInfo">
+						<div style="width: 40%;float:right;" class="mui-btn mui-btn-success" id="DeleteBtn">
+							删除选中的检测
+						</div>
+					</div>
+					<table id="Detail" class="easyui-datagrid" data-options='rownumbers:true,singleSelect:true, pagination:true,fitColumns:true,' >
+						<thead>
+							<tr>
+								<th field="IsCheck" align="center">状态</th>
+								<th field="CAH008" align="center">结果</th>
+								<th field="CAH005" align="center">项目</th>
+								<th field="CAH007" align="center">要求</th>
+								<th field="CAH006" align="center">周期</th>
+								<th field="CAH011" align="center">类别</th>								
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+
+			<!--<div id="tools0">
+				<span id="MainSummary-sum" class="mui-badge mui-badge-success">0</span>
+			</div>-->
+
+			<div id="tools">
+				<span class="mui-badge mui-badge-success" id="Detail-sum">0</span>
+			</div>
+		</div>
+	</body>
+
+</html>

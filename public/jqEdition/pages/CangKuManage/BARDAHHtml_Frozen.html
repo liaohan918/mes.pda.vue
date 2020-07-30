@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<script type="text/javascript" src="../../js/CangKuManage_js/BARDAHHtml_Frozen.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+	</head>
+
+	<body>
+		<!--
+        	作者：G103574 向龙飞
+        	时间：2019-07-12
+        	描述：冻结
+        -->
+		<div class="mui-content">
+			<div id="tabsid" class="easyui-tabs" style="width:100%; margin-top: 5px;" tabHeight='30px;' justified=true>
+				<div id="item1" title="批量" data-options="tools:'#dg-tools'">
+					<div id='infos' class="mui-input-group">
+						<div class="mui-input-row">
+							<label>条码</label>
+							<input type="text" id="txtBarcode1" class="mui-input-clear" placeholder="请扫描条码">
+						</div>
+						<div class="mui-input-row">
+							<label>物料编码</label>
+							<input type="text" id="DAB020" readonly="readonly" >
+						</div>
+						<div class="mui-input-row">
+							<label>供应商</label>
+							<input type="text" id="DAB019" readonly="readonly" >
+						</div>
+						<div class="mui-input-row">
+							<label>批次</label>
+							<input type="text" id="DAB007" readonly="readonly" >
+						</div>
+						<div class="mui-input-row">
+							<label>客户编号</label>
+							<input type="text" id="DAB030" readonly="readonly" >
+						</div>
+						<div class="mui-input-row">
+							<button id="btnQuery" type="button" class="mui-btn mui-btn-primary" style="float: right; margin: 2px 5px">查询</button>
+						</div>
+					</div>
+					<table id="datagrid" style="height: 100%;" class="easyui-datagrid" data-options=" rownumbers:true, singleSelect:true, fitColumns:true, autoRowHeight:false, selectOnCheck:false">
+						<thead>
+							<tr>
+								<th data-options="field:'ck',checkbox:true"></th>
+								<th field="DAB001">条码</th>
+								<th field="DAB020">物料编码</th>
+								<th field="DAB030">客户编号</th>
+								<th field="DAB045">供应商</th>
+								<th field="DAB007">批次</th>
+								<th field="DAB006">数量</th>
+							</tr>
+						</thead>
+					</table>
+					<button id="btnFreeze1" type="button" class="mui-btn mui-btn-primary" style="width: 100%">冻结</button>
+				</div>
+				<div id="item2" title="单个">
+					<div class="mui-input-group">
+						<div class="mui-input-row">
+							<label>条码</label>
+							<input type="text" id="txtBarcode2" class="mui-input-clear" placeholder="请扫描条码">
+						</div>
+						<textarea id="barcode2info" readonly="readonly" style="height:100%;background-color: #FFE48D; margin-top: 5px;">
+						</textarea>
+						<button id="btnFreeze2" type="button" class="mui-btn mui-btn-primary" style="width: 100%">冻结</button>
+					</div>
+				</div>
+			</div>
+	</body>
+
+</html>

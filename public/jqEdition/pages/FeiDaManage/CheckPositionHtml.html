@@ -1,0 +1,63 @@
+
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>站位核对</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js" ></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../js/FeiDaManage_js/CheckPosition.js" ></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js" ></script>
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<style>
+			#info {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<!--
+        	作者：黎锋
+        	时间：2018-09-27
+        	描述：库位绑定
+        -->
+		<div class="mui-input-group mui-content" onclick="SetInputFoucs('#DAB001')">
+				<div class="mui-input-row" id="">
+					<label>工单单号</label>
+					<input id="FDA001" type="text" style="background-color: #CCCCCC;" readonly="readonly"/>
+				</div>
+				<div class="mui-input-row" id="">
+					<label>物料条码</label>
+					<input id="materialBarcode" type="text" class="mui-input-clear text-color" placeholder="请扫描条码" />
+				</div>
+				<div class="mui-input-row" id="">
+					<label>左盘条码</label>
+					<input id="reftMaterialBarcode" type="text" class="mui-input-clear text-color" placeholder="请扫描左盘条码" />
+				</div>
+				<div class="mui-input-row" id="">
+					<label>右盘条码</label>
+					<input id="rightMaterialBarcode" type="text" class="mui-input-clear text-color" placeholder="请扫描右盘条码" />
+				</div>
+				<div class="link-area" id="">
+					<h4 style="color: #008000; text-align: center;">
+						备注信息
+					</h4>
+					<textarea readonly="readonly" id='info' style="height:100%;"></textarea>
+			</div>	
+		</div>
+	<script>
+		$('#info').height($(window).height()-260);
+	</script>
+	</body>
+
+</html>

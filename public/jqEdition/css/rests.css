@@ -1,0 +1,23 @@
+.mui-btn-inline {
+	font-size: 20px;
+	display: inline;
+	width: 49%;
+}
+
+.text-color {
+	color: #007aff;
+}
+
+label {
+	text-align: right;
+}
+
+.float_left {
+	width: 50%;
+	float: left;
+}
+
+.float_right {
+	width: 50%;
+	float: right;
+}

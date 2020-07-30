@@ -1,0 +1,389 @@
+<!doctype html>
+<html>
+	<!--工单备料-->
+	<head>
+		<meta charset="UTF-8">
+		<title>工单备料</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		 
+		<script src="../../lib/jquery/js/jquery.min.js" ></script>  
+        <script src="../../lib/base_js/js/app.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/base_js/js/common.js"></script>
+        <link href="../../lib/layui/css/layui.css" rel="stylesheet" media="all" />
+        <script src="../../lib/layui/js/layui.js" charset="utf-8"></script>
+		<style type="text/css">
+			.line{
+				float: left; 
+				margin-left: 3px;
+			}
+			.layui-form-label {
+				width: 60px;
+			}
+			.layui-btn-xs{
+				position: relative;
+				top: 7px; /*偏移*/
+			}
+			.layui-input{
+				width: 170px;
+			}
+		</style>
+	</head>
+	<body>
+		 <!--
+			作者：工单备料
+			时间：2020-04-17
+			描述：工单备料
+		 -->  
+		<form id="form" lay-filter="form" class="layui-form layui-inline" action=""> 
+			<button style="display: none;" type="submit" class="layui-btn" lay-submit="" lay-filter="go"></button>
+			<div class="layui-form-item layui-inline">
+			    <label class="layui-form-label">指令</label>
+			    <div class="line">
+			      <input  class="layui-input" id="curOrder" type="text" onkeyup="enterSearch(event)"  name="title" autocomplete="off" placeholder="请扫描指令"> 
+				</div>  
+				<div class="line"> 
+				   <button type="button" onclick="splitBarcode(this)" class="layui-btn layui-btn-normal layui-btn-xs" data-linktype="newpage" data-pageid="WARBCFHtml" data-pageurl="WARBCFHtml.html" data-pagetitle="物料拆分">拆分</button>
+				</div>
+			  </div>
+			<div class="layui-form-item layui-inline">
+			    <label class="layui-form-label">条码</label>
+			    <div class="line">
+			      <input  class="layui-input" id="curBarcode" type="text" onkeyup="enterBarcode(event)" name="title" autocomplete="off" placeholder="请扫描条码"> 
+			    </div>
+				<div class="line"> 
+				   <input id="curDay" type="checkbox" name="like1[write]" lay-filter="curDay" lay-skin="primary" title="取消" > 
+				</div>
+				
+			  </div> 
+			  <div class="layui-form-item layui-inline">
+			      <label class="layui-form-label">打印机</label>
+			      <div class="line">
+			        <select id="curPrint" name="print" lay-filter="curPrint">
+			          <option value="">请选择</option> 
+			        </select>
+			      </div>  
+				  <div class="line">
+				     <button type="button" onclick="printCode(this)" class="layui-btn layui-btn-normal layui-btn-xs" >补打</button>
+				  </div>
+			    </div> 
+			  
+		</form>
+		<div class="layui-tab">
+		    <ul class="layui-tab-title">
+		      <li class="layui-this">物料明细</li> 
+		      <li>库位</li>
+		      <li>条码明细</li> 
+		    </ul>
+		    <div class="layui-tab-content">
+		      <div class="layui-tab-item layui-show">
+				  <table id="demo" lay-filter="demo"></table> 
+			  </div>
+		      <div class="layui-tab-item">
+				   <table id="demo2" lay-filter="demo2"></table> 
+			  </div>
+		      <div class="layui-tab-item">
+				   <table id="demo3" lay-filter="demo3"></table> 
+			  </div> 
+		    </div>
+		  </div>
+		<div class="layui-card"> 
+		  <div class="layui-card-body">
+			选中物料:<label id="matNo"></label>,总应发:<label id="matNeedCount"></label>,总实发:<label id="matSendCount"></label>,差异:<label id="matDiffCount"></label>
+		  </div>
+		</div>
+		<script>
+			var table;
+			var form;
+			var picker;
+			var curOrder = null;
+			var curSelectRow=null;
+			var curPrint = null;
+			var isCancel = false;
+			var OrderRows=[];
+			var BarcodeRows=[];
+			layui.use(['table','form', 'element', 'layer'],function(){
+			  table = layui.table; 
+			  form = layui.form; 
+			  //第一个实例
+			  table.render({
+			    elem: '#demo'
+			    ,height: 312
+			    ,data:[]
+			    ,page: false //开启分页
+			    ,cols: [[ //表头
+				   {type:'numbers'} 
+			      ,{field: 'DAA001', title: '指令', width:180, sort: true}
+			      ,{field: 'DAG004', title: '物料编码', width:180}
+			      ,{field: 'DAG014', title: '应发数', width:80}
+			      ,{field: 'DAG015', title: '实发数', width:80} 
+			      ,{field: 'diff', title: '差异数', width: 80} 
+			    ]], 
+				limit:9999999
+				
+			  }); 
+			  table.render({
+			    elem: '#demo2'
+			    ,height: 312
+			    ,data:[]
+			    ,page: false //开启分页
+			    ,cols: [[ //表头
+				   {type:'numbers'} 
+			      ,{field: 'DAB001', title: '条码', width:180, sort: true}
+			      ,{field: 'DAB003', title: '库位', width:180}
+			      ,{field: 'DAB006', title: '数量', width:180} 
+			    ]],  
+				limit:9999999
+			  				
+			  }); 
+			  table.render({
+			    elem: '#demo3' 
+			    ,height: 312
+			    ,data:[]
+			    ,page: false //开启分页
+			    ,cols: [[ //表头
+				   {type:'numbers'} 
+				  ,{type: 'checkbox'}
+			      ,{field: 'DAA001', title: '指令', width:180, sort: true}
+			      ,{field: 'DAG004', title: '物料编码', width:180}
+			      ,{field: 'DAH005', title: '条码', width:180}
+			      ,{field: 'DAH011', title: '数量', width:180}  
+			    ]], 
+				limit:9999999
+			  				
+			  }); 
+			  form.on('submit(go)', function(data){ 
+				return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。 
+			  }); 
+			  form.on('checkbox(curDay)', function(data){
+				$("#curBarcode").val("");
+				$("#curBarcode").focus(); 
+				isCancel = data.elem.checked;
+			  });   
+			  table.on('row(demo)', function(obj){
+			    //console.log(obj.tr) //得到当前行元素对象
+			    //console.log(obj.data) //得到当前行数据 
+				curSelectRow  = obj.data;
+				orderClick();
+				$("#curBarcode").val("");
+				$("#curBarcode").focus();
+			  });
+			  table.reload('demo',{
+			    data : [{}]
+			  }); 
+			   getPrintList();  
+			   form.on('select(curPrint)', function(data){  
+				 curPrint = data.value;
+			   });    
+			});   
+			$(function(){ 
+				 $("#curOrder").focus();
+				
+			}) 
+			function enterSearch(event){
+				//获取指令数据
+				if(event.keyCode == 13) {//用户点击回车的事件号为13
+					search(true);
+				}
+			}
+			function printCode(e){
+				//补打条码明细里面的 
+				var checkStatus = table.checkStatus('demo3'); //idTest 即为基础参数 id 对应的值 
+				console.log(checkStatus.data) //获取选中行的数据 
+				
+				if(curPrint==''||curPrint==null){
+					layer.alert("请选择要打印机",{},function(){
+						layer.closeAll(); 
+					});  
+					return;
+				}
+				if(checkStatus.data.length==0){
+					layer.alert("请选择要打印的条码",{},function(){
+						layer.closeAll(); 
+					});  
+					return;
+				}
+				var obj = {
+					print : curPrint,
+					barList: []
+				}
+				//checkStatus.data.map(item=>item.DAH005)
+				checkStatus.data.forEach(function(item){
+					obj.barList.push(item.DAH005);
+				})
+				$.post(app.API_URL_HEADER+"/IQCPBA/Print",JSON.stringify(obj),function(res){
+					if(res.status==0){
+						console.log(res);
+						res.data.forEach(function(item){
+							$('#curPrint').append(new Option(item.PrintName, item.PrintName));// 下拉菜单里添加元素 
+						}) 
+						layui.form.render("select");
+					}else{ 
+						layer.alert(res.message,{},function(){
+							layer.closeAll(); 
+						});    
+					}
+				},"json")
+			}
+			function getPrintList(){ 
+				//获取打印机列表
+				$.post(app.API_URL_HEADER+"/IQCPBA/GetPrintList","",function(res){
+					if(res.status==0){
+						console.log(res);
+						res.data.forEach(function(item){
+							$('#curPrint').append(new Option(item.PrintName, item.PrintName));// 下拉菜单里添加元素 
+						}) 
+						layui.form.render("select");
+					}else{ 
+						layer.alert(res.message,{},function(){
+							layer.closeAll(); 
+						});    
+					}
+				},"json")
+			}
+			function search(isClean){
+				var keyword = $("#curOrder").val();
+				$.post(app.API_URL_HEADER+"/IQCPBA/GetOrder",JSON.stringify({id:keyword}),function(res){
+					if(res.status==0){
+						
+						if(isClean){
+							$("#matNo").text("");
+							$("#matNeedCount").text("");
+							$("#matSendCount").text("");
+							$("#matDiffCount").text("");
+							curOrder = null;
+							curSelectRow = null;
+							curOrder = keyword;
+							table.reload('demo2',{
+								data:[]
+							});  
+						}else{
+							console.log(res);
+						}
+						
+						
+						
+						OrderRows = res.data.WOMDAA;
+						BarcodeRows = res.data.WOMDAH;
+						table.reload('demo',{
+						  data : OrderRows
+						}); 
+						table.reload('demo3',{
+						  data : BarcodeRows
+						}); 
+						$("#curBarcode").val("");
+						$("#curBarcode").focus();
+						showTip();
+					}else{ 
+						layer.alert(res.message,{},function(){
+							layer.closeAll();
+							$("#curOrder").val("");
+							$("#curOrder").focus();
+						});    
+					}
+				},"json")
+			}
+			function enterBarcode(event){
+				//扫描条码
+				if(event.keyCode == 13) {//用户点击回车的事件号为13
+					if(curOrder == null){  
+						layer.alert("还没有扫描工单",{},function(){
+							layer.closeAll();
+							$("#curBarcode").val("");
+							$("#curBarcode").focus();
+						});  
+						return;
+					}
+					if(curSelectRow == null){ 
+						layer.alert("还没有选择备的物料",{},function(){
+							layer.closeAll();
+							$("#curBarcode").val("");
+							$("#curBarcode").focus();
+						}); 
+						return;
+					}
+					var keyword = $("#curBarcode").val();
+					var data = {
+						barcode:keyword,
+						orderNo:curOrder,
+						materialCode:curSelectRow.DAG004,
+						isCancel : this.isCancel,
+						userId :localStorage.getItem("uid"),
+						print : curPrint
+					}
+					 $.post(app.API_URL_HEADER+"/IQCPBA/SubmitOrderBarcode", JSON.stringify(data), function(res) {
+					 	if(res.status == 0) {
+					 		console.log(res);
+							
+					 	} else{
+							layer.alert(res.message,{},function(){
+								layer.closeAll();
+							});    
+						}
+						search(false);
+					 },"json");  
+				}
+			} 
+			function test(){ 
+				var id = app.getUid();
+				console.log(id);
+				layer.alert(id);  
+			}  
+			function orderClick(){ 
+				//获取库位
+				var data = {
+					strMataNo: curSelectRow.DAG004,
+					pageSize: 1000, //页容量
+					pageNumber: 1, //初始化页码
+					keys: 'DAB029,DAB016', //分页主键
+				}; 
+				$.post(app.API_URL_HEADER+"/WONOToLine/GetgridKWList", data, function(data) {
+					if(data.status == 0) {
+						 var dgData = {};
+						 dgData.rows = data.data.StockInfo;
+						 dgData.sumDataNo = data.data.TotalCount;
+						 //console.log(dgData);
+						 table.reload('demo2',{
+								data:dgData.rows
+						 }); 
+						 
+					}
+					
+				},"json");  
+				showTip();
+			}
+			function showTip(){
+				var matNeedCount=0;
+				var matSendCount=0;
+				var matDiffCount=0
+				if(curSelectRow!=null){
+					OrderRows.forEach(function(item){
+						if(item.DAG004 == curSelectRow.DAG004){
+							matNeedCount+=Number(item.DAG014);
+							matSendCount+=Number(item.DAG015);
+							matDiffCount+=Number(item.diff);
+						}
+					})
+					
+					$("#matNo").text(curSelectRow.DAG004);
+				}
+				$("#matNeedCount").text(matNeedCount);
+				$("#matSendCount").text(matSendCount);
+				$("#matDiffCount").text(matDiffCount); 
+			}
+			
+			function splitBarcode(e) {
+				//条码拆分 
+				//跳转界面
+				var extras = {
+					BarCode: "",
+					waitySendQty: 0
+				};
+				newpage(e, extras);
+			}
+		</script>     
+	</body>
+
+</html>

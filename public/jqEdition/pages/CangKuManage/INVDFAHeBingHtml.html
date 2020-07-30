@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../js/CangKuManage_js/INVDFAHeBing.js"></script>
+		<style>
+			/*.mui-input-row label {
+				width: 25%;
+				padding: 11px 3px;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 75%;
+			}*/
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：黄邦文
+        	时间：2019-05-07
+        	描述：合并调拔发料
+        -->
+		<div class="mui-content">
+
+			<div style="padding: 10px 10px;">
+				<div id="item1" class="mui-control-content mui-active">
+					<div id='infos' class="mui-input-group">
+						<div class="mui-input-row">
+							<div>
+								<label style="width: 25%; padding: 11px 3px;">未备机型</label>
+							</div>
+							<div>
+								<input type="text" id="txtJiXing" style="width:150px" readonly="true" class="" placeholder="请选择机型">
+								<button id="btnRefresh" style="width: 60px;  margin-top: 5px; height: 30px; " class="mui-btn-green">刷新</button>
+							</div>
+						</div>
+						<div class="mui-input-row">
+							<div style="width: 50%; float: left; display: none;" class="mui-checkbox mui-left">
+								<label>全选</label>
+								<input id="chkSelectAll" name="checkbox" checked="checked" type="checkbox">
+							</div>
+							<div style="width: 100%; float: left;" class="mui-checkbox mui-left">
+								<label>当天单据</label>
+								<input id="chkToday" name="checkbox" checked="checked" type="checkbox">
+							</div>
+						</div>
+					</div>
+					<div id="tabsid" style="margin-top: 10px;">
+						<table id="dgCHK" style="height: 100%;" class="easyui-datagrid" fitColumns:false data-options="rownumbers:true, singleSelect:false,checkOnSelect:true, SelectOnCheck:true,autoRowHeight:false, pagination:false">
+							<thead>
+								<tr>
+									<th data-options="field:'ck',checkbox:true"></th>
+									<th field="DFA001" width="100">出库类型</th>
+									<th field="DFA007" width="150">出库单号</th>
+									<th field="DFA002" width="20" hidden="hidden">出库单ID</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<!--<div class="mui-input-row" style="margin-top: 10px;" id="divTxtInfo">
+						<textarea readonly="readonly" id='txtInfo' style="height: 100%;background-color: #FFE48D"></textarea>
+					</div>-->
+					<div id="bottomid" class="mui-content-padded oauth-area">
+						<button type="button" id="btnHeBing" style="width: 100px; float: right;" class="mui-btn mui-btn-green">合并</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

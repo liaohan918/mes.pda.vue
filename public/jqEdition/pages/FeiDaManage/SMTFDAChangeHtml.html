@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	作者：黎锋
+	时间：2019-05-25
+	描述：飞达更换
+-->
+
+	<head>
+		<meta charset="UTF-8">
+		<title>飞达更换</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../js/FeiDaManage_js/SMTFDAChange.js"></script>
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+
+		<style>
+			#info {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+		<script src="../../lib/jquery/js/jquery.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+	</head>
+
+	<body>
+		<div class="mui-input-group mui-content""> 
+			<div class="mui-input-row">
+				<label style="width:40% ;">旧飞达条码</label>
+				<input id="txtOldFeederCode" type="text" class="mui-input-clear text-color" placeholder="请扫描飞达条码" style="width: 60%;" />
+			</div>
+			<div class="mui-input-row">
+				<label style="width:40% ;">新飞达条码</label>
+				<input id="txtNewFeederCode" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描飞达条码" style="width:60% ;" />
+			</div>
+			<div class="mui-input-row">
+				<div class="mui-checkbox" style="float: right;" id="Check">
+					<label>仅核对</label>
+					<input id="OnlyCheck" name="checkbox" type="checkbox" />
+				</div>
+			</div>
+			<div class="mui-input-row" style="height: 350px; margin-top: 10px;">
+				<div class="link-area">
+					<h4 style="color: #008000;">绑定信息</h4>
+				</div>
+				<textarea readonly="readonly" id='info' style="height: 100%;"></textarea>
+			</div>
+
+		</div>
+	</body>
+	<!--<!--<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+	<!--<script type="text/javascript" src="../../js/FeiDaManage_js/SMTFDAChange.js"></script>
+
+	<!--<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>-->
+	<script>
+				$('#info').height($(window).height()-70);
+	</script>
+
+</html>

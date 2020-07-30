@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>超期复检后返库</title>
+		<meta charset="UTF-8">
+		<title></title> 
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<script type="text/javascript" src="../../lib/base_js/js/PageCommonQuote.js"></script>
+		<script type="text/javascript" src="../../js/CangKuManage_js/CQDAC.js"></script>
+	</head>
+
+	<body>
+		<!--
+            	作者：G98052
+            	时间：2020-03-11
+            	描述：超期复检后返库
+            -->
+		<div id="info" class="mui-content">
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row ">
+					<label>物料条码</label>
+					<input id="txtBarCode" type="text" class="mui-input-clear" placeholder="请扫描条码" />
+				</div>
+				<div class="mui-input-row">
+					<div style="float: left ;width: 60%;">
+						<label>库位</label>
+						<input id="txtKuWei" type="text" class="text-color" placeholder="请扫描库位">
+					</div>
+					<div style="float: left ;width: 40%;" class="mui-checkbox mui-left">
+						<label>默认</label>
+						<input id="checkdefault" name="checkbox" value="Item1" type="checkbox">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mui-input-row" id="div002">
+			<div class="link-area">
+				<h4 style="color: #008000;text-align: center;">条码信息</h4>
+			</div>
+			<textarea readonly="readonly" id='barinfo' style="background-color: #FFE48D;"></textarea>
+			<input id="ShengYuinfo" type="text" readonly="readonly" class="text-color" placeholder="剩余返库条码数：0">
+		</div>
+	</body>
+
+</html>

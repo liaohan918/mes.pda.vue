@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>打包-追溯码</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../js/XianChangManage_js/ChanPingGuanZhiKaBind2.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<style type="text/css">
+			#txtCPBM,
+			#txtCPMC,
+			#txtCPGG,
+			#txtCPTMSL,
+			#txtDZSL {
+				background-color: gainsboro;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：黄邦文
+        	时间：2019-05-21
+        	描述：产品管制卡绑定
+        -->
+		<div class="mui-content">
+			<div id="form" class="mui-input-group" onclick="SetInputFoucs('#txtCPBarcode')">
+				<div class="mui-input-row">
+					<label>追溯码</label>
+					<input id="txtCPBarcode" type="text" class="mui-input-clear text-color" placeholder="请扫描追溯码" />
+				</div>
+				<div class="mui-input-row">
+					<label>管制卡号</label>
+					<input id="txtGZKHao" type="text" value="" class="mui-input-clear text-color" placeholder="扫描管制卡号" />
+				</div>
+				<div class="mui-input-row">
+					<label>产品编码</label>
+					<input id="txtProductCode" type="text" value=""  placeholder="产品编码" readonly="readonly"/>
+				</div>
+				<div class="mui-input-row">
+					<div  style="float: left; width: 50%;">
+						<label style="width: 60%;">标准量</label>
+						<input style="width: 40%;"id="txtStdPacking" type="text" placeholder=" " readonly="readonly"/>
+					</div>
+					<div style="float: left; width: 50%;">
+						<label style="width: 60%;">可装量</label>
+						<input style="width: 40%;"id="txtCanPacking" type="text" value="" readonly="readonly"/>
+					</div>
+				</div> 
+				<div class="mui-input-row">
+					<label>装入数量</label>
+					<input id="txtZRSL" type="number" value="" class="mui-input-clear text-color" onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" placeholder="请录入数量" />
+				</div>
+				<div class="mui-input-row">
+					<div style="width: 50%;float: right;" class="mui-checkbox mui-left">
+						<label>管制卡解绑</label>
+						<input name="checkbox" id="chkbox" value="Item1" type="checkbox">
+					</div>
+				</div>
+			</div>
+			<div id="tblist" class="mui-input-row">
+			 		<table id="dgGrid" class="easyui-datagrid"   data-options="rownumbers:true, singleSelect:true">
+						<thead>
+							<tr>
+								<th field="QAG008"  align="center" width="40%">管制卡号</th>
+								<th field="QAG004" align="center"  width="35%">产品编码</th>
+								<th field="QAG009" align="center" width="25%">数量</th>
+							</tr>
+						</thead>
+					</table>
+			</div>
+			<!-- <div class="mui-input-row" id="div002">
+				<div class="link-area">
+					<h4 style="color: #008000;text-align: center;">产品信息</h4>
+				</div>
+				<textarea readonly="readonly" id='barinfo' style="background-color: #FFE48D;"></textarea>
+			</div> -->
+			<div id="divBtn" class="mui-input-row">
+				<div class="mui-content-padded" style="float: right; margin-right: 50px;">
+					<button type="button" id="btn_clear" style="width: 100px;" class="mui-btn mui-btn-red ">清 除</button>
+				</div>
+				<!-- <div class="mui-content-padded" style="float: right; margin-right: 50px;">
+					<button type="button" id="btn_ok" style="width: 100px;" class="mui-btn mui-btn-green ">绑  定</button>
+				</div> -->
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<style>
+			/* .float_left {
+				width: 40%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 70%;
+				float: right;
+			} */
+		</style>
+	</head>
+
+
+
+	<body>
+		<!--
+        	作者：DZP
+        	时间：2019-5-28
+        	描述：发料(用旧物料到仓库进行发新物料）
+        -->
+		<div id="infos" class="mui-content">
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<label>旧料条码</label>
+					<input id="txtoldmm" type="text" class="mui-input-clear" placeholder="请输入旧物料条码">
+				</div>
+				<div class="mui-input-row">
+					<div style="float:left;width: 50%;">
+						<label style="width: 40%;">产线</label>
+						<input id="txtline" readonly="readonly" type="text" style="width: 60%;" placeholder="产线">
+					</div>
+					<div style="float:left;width: 50%;">
+						<label style="width: 40%;">设备</label>
+						<input id="txtequi" readonly="readonly" type="text" style="width: 60%;" placeholder="设备">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<div style="float:left;width: 50%;">
+						<label style="width: 40%;">分区</label>
+						<input id="txtpart" readonly="readonly" type="text" style="width: 60%;" placeholder="分区">
+					</div>
+					<div style="float:left;width: 50%;">
+						<label style="width: 40%;">指令</label>
+						<input id="txtWO" readonly="readonly" type="text" style="width: 60%;" placeholder="指令">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<div style="width: 50%;float: left;">
+						<label style="width: 40%;">位置</label>
+						<input style="width: 60%;" id="txtPosition" readonly="readonly" type="text" placeholder="飞达位置" style="width: 60%;">
+					</div>
+					<div style="width: 50%;float: left;">
+						<label style="width: 40%;">物料</label>
+						<input style="width: 60%;" readonly="readonly" id="txtmm" type="text" placeholder="物料编码">
+					</div>
+					<div style="width: 0%;float: left; display: none;">
+						<label>备料单号</label>
+						<input id="txtblno" type="text" placeholder="备料单号">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<div class="mui-input-row">
+						<label>新料条码</label>
+						<input id="txtnewmm" type="text" class="mui-input-clear " placeholder="请扫描新物料条码">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<div style="float: right;" class="mui-checkbox mui-left">
+						<label style="float: right;">取消备料</label>
+						<input style="float: right;" id="iscancel" name="checkbox" value="Item1" type="checkbox">
+					</div>
+				</div>
+			</div>
+			<div id="tabsid" class="easyui-tabs" style="width:100%; margin-top: 3px;">
+				<div title="库位列表" data-options="tools:'#dgBARDAB-tools'">
+					<table id="dgBARDAB" class="easyui-datagrid" fitColumns:false style="height: 100%;">
+						<thead>
+							<tr>
+								<th field="DAB002" width="110">仓库</th>
+								<th field="DAB003" width="95">库位</th>
+								<th field="DAB006" width="60">数量</th>
+								<th field="DAB013" width="100">FIFO日期</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div title="备料信息" data-options="tools:'#dgWOMDAG-tools'">
+					<div class="mui-input-row" style="margin-top: 10px;">
+						<div class="link-area">
+							<h4 style="color: #008000;">条码信息</h4>
+						</div>
+						<textarea readonly="readonly" id='barCodeInfo' style="background-color: #FFE48D"></textarea>
+					</div>
+
+				</div>
+
+			</div>
+			<div id="dgBARDAB-tools">
+				<span id="stock-sum" class="mui-badge mui-badge-success">0</span>
+			</div>
+		</div>
+		<script>
+			$('#tabsid').tabs({
+				justified: true,
+				tabHeight: 30,
+				narrow: true,
+				pill: true
+			});
+			$('#barCodeInfo').height(
+				$(window).height() - $("#form").height()
+			);
+			
+			//add by HCW 20200317
+			mui.plusReady(function() {
+				$('#tabsid').height(
+					$(window).height() - $("#form").height()
+				);
+			});
+			
+			//批量设置表格属性
+			$('.easyui-datagrid').datagrid({
+				height: $(window).height() - $("#form").height() - $('#tabsid').height(),
+				sortable: false
+			});
+			//*************************************
+			//初始化设置
+			$("#txtoldmm").focus(); //旧条码获取焦点 
+
+			//*************************************
+			$('#txtoldmm').keydown(function(e) {
+				if (e.keyCode != 13)
+					return;
+				GetWOBillInfo();
+			});
+
+			$('#txtnewmm').keydown(function(e) {
+				if (e.keyCode != 13)
+					return;
+				if ($("#iscancel").prop("checked") == true)
+					CancelIssueMM();
+				else
+					execIssueMM();
+			});
+			/* 通过旧料条码获取工单信息 */
+			function GetWOBillInfo() {
+				var oldmm = $("#txtoldmm").val();
+				if (oldmm == "")
+					return;
+				$.ajax({
+					url: app.API_URL_HEADER + '/ReadyMaterial/GetWOMDAHByOldMM',
+					data: {
+						oldmm: oldmm
+					},
+					datatype: "json",
+					type: "post",
+					success: function(res) {
+						if (res.status == "1") {
+							$("#infos input").val('');
+							$("#barCodeInfo").val('');
+							$("#dgBARDAB").datagrid("loadData", []);
+							mui('#stock-sum')[0].innerHTML = 0;
+							mui.alert(res.message);
+							playerAudio("NG");
+							return;
+						} else {
+							$("#dgBARDAB").datagrid("loadData", res.data.tbStock);
+							$("#barCodeInfo").val(res.data.BlInfo); //備料的信息
+							$("#txtline").val(res.data.tbBl[0].DAF020); //產綫
+							$("#txtequi").val(res.data.tbBl[0].DAG037); //設備
+							$("#txtpart").val(res.data.tbBl[0].DAG038); //分區
+							$("#txtWO").val(res.data.tbBl[0].DAF015); //工單
+							$("#txtmm").val(res.data.tbBl[0].DAG004); //物料编码
+							$("#txtblno").val(res.data.tbBl[0].DAF002); //備料單
+							$("#txtPosition").val(res.data.tbBl[0].DAG039); //飞达位置 
+							mui('#stock-sum')[0].innerHTML = res.data.tbStock.length;
+							$("#txtnewmm").val(''); //清空發料條碼
+							$("#txtnewmm").focus(); //發料條碼
+							playerAudio("OK");
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						alert("获取数据异常：" + JSON.stringify(errorThrown));
+					}
+				})
+			}
+
+			/* 执行发料 */
+			function execIssueMM() {
+				var newmm = $("#txtnewmm").val();
+
+				if (newmm == $("#txtoldmm").val()) {
+							mui.alert("新旧条码一致，请确认");
+							playerAudio("NG");
+					$("#txtnewmm").val('');
+					$("#txtnewmm").focus();
+					return;
+				}
+				$.ajax({
+					url: app.API_URL_HEADER + '/ReadyMaterial/AddMaterialByOldMM',
+					data: {
+						Auditor: app.userid(), //用户ID
+						DAB001: newmm, //材料条码
+						DAF015: $("#txtWO").val(), //指令单号
+						DAF002: $("#txtblno").val(), //备料单号
+						DAG037: $("#txtequi").val(), //设备编号
+						DAG038: $("#txtpart").val(), //设备分区
+						DAG039: $("#txtPosition").val(), //飞达位置
+						DAG004: $("#txtmm").val() //飞达位置
+					},
+					datatype: "json",
+					type: "post",
+					success: function(res) {
+						if (res.status == "1") {
+							mui.alert(res.message);
+							playerAudio("NG");
+							return;
+						} else {
+							mui.toast('条码' + newmm + '发料成功！');
+							playerAudio("OK");
+						}
+						$("#txtnewmm").val('');
+						$("#txtnewmm").focus();
+					},
+					error: function(xhr, type, errorThrown) {
+						alert("获取数据异常：" + JSON.stringify(errorThrown));
+					}
+				})
+			}
+
+			/* 取消备料 */
+			function CancelIssueMM() {
+				var newmm = $("#txtnewmm").val();
+				if (newmm == "")
+					return;
+				$.ajax({
+					url: app.API_URL_HEADER + '/ReadyMaterial/BarCancelReady',
+					data: {
+						Auditor: app.userid(), //用户ID
+						DAB001: newmm, //备料单号
+						DAF015: $("#txtWO").val(), //指令单号
+						DAF002: $("#txtblno").val() //备料单号 
+					},
+					datatype: "json",
+					type: "post",
+					success: function(res) {
+						if (res.status == "1") {
+							mui.alert(res.message);
+							playerAudio("NG");
+							return;
+						} else {
+							mui.toast('条码' + newmm + '取消发料成功！');
+							playerAudio("OK");
+						}						
+						$("#txtnewmm").val('');
+						$("#txtnewmm").focus();
+					},
+					error: function(xhr, type, errorThrown) {
+						alert("获取数据异常：" + JSON.stringify(errorThrown));
+					}
+				})
+			}
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>主条码查询</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<script type="text/javascript" src="../../js/CangKuManage_js/MainBarCodeSearch.js" ></script>
+		<style>
+			/* .float_left {
+				width: 40%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 70%;
+				float: right;
+			} */
+		</style>
+	</head>
+
+
+
+	<body>
+		<!--
+        	作者：黎锋
+        	时间：2019-06-21
+        	描述：主条码查询
+        -->
+		<div id="infos" class="mui-content">
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<label style="width: 40%;">主条码</label>
+					<input style="width: 60%;" id="txtDAB018" type="text" class="mui-input-clear" placeholder="请扫输入主条码">
+				</div>
+			</div>
+			<div class="link-area">
+					<h4 style="color: #008000;">条码列表</h4>
+			</div>
+				<table id="dgBARDAB" class="easyui-datagrid" fitColumns:false style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="DAB020" width="70">物料编码</th>
+							<th field="DAB001" width="110">条码</th>
+							<th field="DAB006" width="50">数量</th>
+							<th field="DAB002" width="50">仓库</th>
+							<th field="DAB003" width="80">库位</th>
+							<th field="DAB035" width="30">位置</th>
+						</tr>
+					</thead>
+				</table>
+				
+				<div class="mui-content-padded" style="float: left; margin-left: 10px;">
+					<span id="info_BARDAB" style="color: #0000FF; font-size: 20px;"></span>
+				</div>
+				
+				
+		</div>
+		<script>
+			$('#tabsid').tabs({
+				justified: true,
+				tabHeight: 30,
+				narrow: true,
+				pill: true
+			});
+			
+			//批量设置表格属性
+			$('.easyui-datagrid').datagrid({
+				height: $(window).height() - $("#form").height() - $('#info_BARDAB').height()-50,
+				sortable: false
+			});
+		</script>
+	</body>
+</html>

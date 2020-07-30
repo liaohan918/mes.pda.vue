@@ -1,0 +1,70 @@
+
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>库位绑定</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<!--<link rel="stylesheet" href="../../lib/base_js/css/common.css" />-->
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js" ></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<!--<script type="text/SetInputFoucsjavascript" src="../../lib/base_js/js/common.js" ></script>-->
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../js/CangKuManage_js/WARBABQTHtml.js" ></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js" ></script>
+		
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<style>
+			#info {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<!--
+        	作者：黎锋
+        	时间：2018-09-27
+        	描述：库位绑定
+        -->
+		<div class="mui-input-group mui-content" onclick="SetInputFoucs('#DAB001')">
+				<div class="mui-input-row" id="row001">
+					<label>条码</label>
+					<input id="DAB001" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描条码" onkeypress="GetBarInfo()" />
+				</div>
+				<div id="txtInfo"><!--<div class="mui-input-row" style="height: 350px; margin-top: 10px;">-->
+					<div class="link-area" id="div001">
+						<h4 style="color: #008000; text-align: center;">
+							条码信息
+							<span id="dgWOMDAG-sum" class="mui-badge mui-badge-success easyui-draggable" style="font-size: 15px;" data-options="onStopDrag:onStopDrag">0</span>
+						</h4>
+					</div>
+					<textarea readonly="readonly" id='info' style="height:100%;"></textarea>
+				</div>
+				<div class="mui-input-row" id="div002">
+					<div style="width:20%;float: left;">
+						<label style="width: 100%;float: left;">库位</label>
+					</div>
+					<div style="width: 45%;float: left;">
+						<input id="MBA001" type="text" value="" class="text-color" placeholder="请扫描库位" 
+							style="width: 100%;float: left;" onkeypress="GetStore()" />
+					</div>
+					<div style="width: 35%;float: left;" class="mui-checkbox mui-left">
+						<label style="width: 100%;float: left;">默认</label>
+						<input id="checkdefault" name="checkbox" value="Item1" type="checkbox">
+					</div>
+				</div>
+		</div>
+	<script>
+		$('#info').height($(window).height()- $("#row001").height() - $("#div001").height()- $("#div002").height() - 40);
+	</script>
+	</body>
+
+</html>

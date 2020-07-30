@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+	<!--放入烤箱-->
+
+	<head>
+		<meta charset="UTF-8">
+		<title>放入烤箱</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/app.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<!--<script src="../../lib/base_js/js/app.js"></script>-->
+		<script src="../../lib/base_js/js/common.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<link rel="stylesheet" href="../../css/buttons.css" />
+		<script src="../../js/PCBHongKaoManage_js/PutinOvenHtml.js"></script>
+
+		<style>
+			#txtRegInfo {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<!--
+		 	作者：吴冰荣
+			 时间：2018.09.14
+			 描述：放入烤箱
+		 -->
+		<div class="mui-content">
+			<div id="head1" class="mui-input-group">
+				<div class="mui-input-row" id="txt1">
+					<label>烤箱编码</label>
+					<input id="cbbOvenInfo" type="text" value="" readonly="readonly" class="mui-input-clear text-color" placeholder="请选择烤箱编码" />
+				</div>
+				<div class="mui-input-row" id="txt2">
+					<label>物料条码</label>
+					<input id="txtReelID" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描物料条码" />
+				</div>
+				<div class="mui-input-row" id="txtInfo">
+					<!--style="height: 330px; margin-top: 10px;"-->
+					<div class="link-area">
+						<h4 style="color: #008000;">条码信息</h4>
+					</div>
+					<textarea readonly="readonly" id='txtRegInfo' style="height: 100%;"></textarea>
+				</div>
+			</div>
+			<div class="mui-input-row" id="divBtnStartBake" align="center">
+				<button id="btnStartBake" type="button" style="width: 98%;float:none;height:40px;" class="button green" onclick="btnStartBake_Click()">
+					开始烘烤
+				</button>
+			</div>
+			
+		</div>
+	</body>
+
+</html>

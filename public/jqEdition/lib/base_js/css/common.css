@@ -1,0 +1,71 @@
+.link-area {
+	display: block;
+	text-align: center;
+}
+
+
+/*.mui-scroll-wrapper {
+	margin-top: 35px;
+}*/
+
+.mui-table-view-cell {
+	background-color: white !important;
+}
+
+.mui-table-view-cell.mui-active {
+	background-color: #ddd !important;
+}
+
+li span.mui-icon:before {
+	font-size: 36px !important;
+	width: 40px;
+}
+
+
+
+/* body {
+	margin-top: 15px;
+} */
+
+.tabs li a.tabs-close,
+.tabs-p-tool {
+	height: 20px;
+}
+
+.panel-icon,
+.panel-tool {
+	height: 25px;
+}
+
+.mui-input-group .mui-input-row {
+	height: 32px;
+}
+
+
+/*菜单图片的属性*/
+
+.iconfont-icon {
+	width: 2em;
+	height: 2em;
+	vertical-align: -0.15em;
+	fill: currentColor;
+	overflow: hidden;
+}
+
+
+/*设置输入框的边框*/
+/*.mui-input-row input[type='text'] {
+	/*outline: #E6EEF8 Solid 2px;*/ 
+
+}*/
+
+/*lab背景颜色*/
+/*.mui-input-row label {
+	background-color: #E3E3E3;
+}
+
+
+.mui-checkbox label,
+.mui-radio label {
+	background-color: #FFFFFF;
+}*/

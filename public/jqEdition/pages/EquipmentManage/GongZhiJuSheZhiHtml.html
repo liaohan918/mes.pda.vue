@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>工治具与机型关系设置</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<script type="text/javascript" src="../../js/GongZhiJuManage_js/GongZhiJuSheZhi.js" ></script>
+	</head>
+	<body>
+		<!--
+        	作者：黎锋
+        	时间：2019-08-02
+        	描述：工治具与机型关系设置
+        -->
+		<div id="infos" class="mui-content">
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<div style="width: 100%;float: left;">
+						<label>机型</label>
+						<input id="txtJiXing" type="text" style="width: 65%;float: left;" class="mui-input-clear text-color" placeholder="请选择机型" readonly="readonly">
+					</div>
+				</div>
+				
+				<div class="mui-input-row">
+					<div style="width: 100%;float: left;">
+						<label>钢网条码</label>
+						<input id="txtBarCode" type="text" style="width: 65%;float: left;" class="mui-input-clear text-color" placeholder="请扫描钢网条码">
+					</div>
+				</div>
+				
+				<!--<div class="mui-input-row">
+					<div style="width: 100%;float: left;">
+						<label>库位</label>
+						<input id="txtKuWei" type="text" style="width: 65%;float: left;background-color: #999999;" class="mui-input-clear text-color" readonly="readonly">
+					</div>
+				</div>-->
+				
+				<div class="mui-input-row">
+				    
+					<div class="mui-input-row mui-radio mui-left" style="width: 34%;float: right;">
+						<label>整体</label>
+						<input id="radio_Z" name="radio1" type="radio" class="simple-radio" value="Z">
+					</div>
+					<div class="mui-input-row mui-radio mui-left" style="width: 33%;float: right;">
+						<label>B面</label>
+						<input id="radio_B" name="radio1" type="radio" class="simple-radio" value="B">
+					</div>
+					<div class="mui-input-row mui-radio mui-left" style="width: 33%;float: left;">
+						<label>A面</label>
+						<input id="radio_A" name="radio1" type="radio" class="simple-radio" value="A">
+					</div>
+				</div>	
+				
+				<div class="mui-input-row">
+					<div style="width: 45%;float:right;" class="mui-input-row mui-radio mui-left">
+						<label style="width: 100%;float: l;">关系解绑</label>
+						<input id="checkCancel" name="radio1" value="Del" type="radio" class="simple-radio">
+					</div>
+				</div>	
+			</div>
+
+			<div class="mui-input-row" style="height: 30px; margin-top: 10px;">
+				<div class="link-area">
+					<h4 style="color: #008000;">当前机型钢网列表</h4>
+				</div>
+			</div>
+				<table id="dgINVGZJ" class="easyui-datagrid" fitColumns:false style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="GZJ002" width="80">条码</th>
+							<th field="GZJ008" width="50">版面</th>
+							<th field="MZJ013" width="80">库位</th>
+							<th field="MZJ014" width="60">位置状态</th>
+							<th field="PAA002" width="60">维护人员</th>
+							<th field="GZJ007" width="80">维护时间</th>
+						</tr>
+					</thead>
+				</table>
+				<div class="mui-content-padded" style="float: right; margin-right: 50px;">
+					<button type="button" id="btnOk" style="width: 100px;" class="mui-btn mui-btn-green ">确 认</button>
+				</div>
+		    </div>
+		<script>
+			$('#tabsid').tabs({
+				justified: true,
+				tabHeight: 30,
+				narrow: true,
+				pill: true
+			});
+			
+			//批量设置表格属性
+			$('.easyui-datagrid').datagrid({
+				height: $(window).height() - $("#form").height()-95,
+				sortable: false
+			});
+		</script>
+	</body>
+</html>

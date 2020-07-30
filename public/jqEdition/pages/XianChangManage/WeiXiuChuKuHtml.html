@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>维修出库单</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<script type="text/javascript" src="../../js/XianChangManage_js/WeiXiuChuKuHtml.js" ></script>
+		<style>
+			/* .float_left {
+				width: 40%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 70%;
+				float: right;
+			} */
+		</style>
+	</head>
+
+
+
+	<body>
+		<!--
+        	作者：黎锋
+        	时间：2019-06-15
+        	描述：维修出库单
+        -->
+		<div id="infos" class="mui-content">
+			<div id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<label style="width: 40%;">管制卡/条码</label>
+					<input style="width: 60%;" id="txtGZKHao" type="text" class="mui-input-clear" placeholder="请输入扫描管制卡/条码">
+				</div>
+				<div class="mui-input-row">
+					<label>当前工序</label>
+					<input type="text" style="width: 100px; float: left;padding: 11px 2px; background-color:#777777;" id="txtGongXuID" readonly="true" class="" placeholder="请选工序" >
+					<input type="text" style="width: 100px; float: left;padding: 11px 2px; background-color:#777777;" id="txtGongXuMC" readonly="true" class="" placeholder="工序名称">
+				</div>
+				<div class="mui-input-row">
+					<label>投入工序</label>
+					<input type="text" style="width: 100px; float: left;padding: 11px 2px;" id="txtNextGongXuID" readonly="true" class="" placeholder="请选工序">
+					<input type="text" style="width: 100px;float: left;padding: 11px 2px;" id="txtNextGongXuMC" readonly="true" class="" placeholder="工序名称">
+				</div>
+				<div class="mui-input-row">
+					<label>产线</label>
+					<input id="txtLineID" type="text" class="mui-input-clear" readonly="true" placeholder="请选产线">
+				</div>
+				<div class="mui-input-row">
+					<label>机型</label>
+					<input id="txtJiXingID" type="text" class="mui-input-clear" readonly="true" placeholder="请选机型">
+				</div>
+				<div class="mui-input-row">
+					<label>数量</label>
+					<input id="txtShuLiang" type="number" class="mui-input-clear text-color"
+						onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"  placeholder="请输入数量">
+				</div>
+			</div>
+			<div class="link-area">
+					<h4 style="color: #008000;">维修出库列表</h4>
+			</div>
+				<table id="dgWOMQAI" class="easyui-datagrid" fitColumns:false style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="SongXiuGX" width="60">目标工序</th>
+							<th field="JiXing" width="95">机型</th>
+							<th field="ShuLiang" width="60">数量</th>
+							<th field="TiaoMa" width="160">条码</th>
+						</tr>
+					</thead>
+				</table>
+				
+				<div class="mui-content-padded" style="float: left; margin-left: 50px;">
+					<button type="button" id="btn_clear" style="width: 100px;" class="mui-btn mui-btn-red ">清 除</button>
+				</div>
+				<div class="mui-content-padded" style="float: right; margin-right: 50px;">
+					<button type="button" id="btn_ok" style="width: 100px;" class="mui-btn mui-btn-green ">确 认</button>
+				</div>
+				
+		</div>
+		<script>
+			$('#tabsid').tabs({
+				justified: true,
+				tabHeight: 30,
+				narrow: true,
+				pill: true
+			});
+			
+			//批量设置表格属性
+			$('.easyui-datagrid').datagrid({
+				height: $(window).height() - $("#form").height() - $('#tabsid').height()-100,
+				sortable: false
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>IC上料</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../lib/mui/css/mui.min.css">
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/jquery/js/jquery.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<script type="text/javascript" src="../../js/XianChangManage_js/ICFeedHtml.js"></script>
+
+	</head>
+
+	<body>
+		<!--
+		 	作者：吴冰荣
+			 时间：2018.09.28
+			 描述：IC上料
+		 -->
+		<div id="form" class="mui-input-group mui-content">
+			<div class="mui-input-row">
+				<label style="font-size: 16px;">产线编码</label>
+				<input id="cbbLine" type="text" readonly="true" class="text-color" placeholder="请选择产线编码">
+				<!--list="itemlist">-->
+			</div>
+			<div class="mui-input-row">
+				<label style="font-size: 16px;">指令编码</label>
+				<input id="cbbWO" type="text" readonly="true" class="text-color" placeholder="请选择指令编码">
+				<!--list="itemlist">-->
+			</div>
+			<div class="mui-input-row">
+				<label style="font-size: 16px;">设备编码</label>
+				<input id="cbbDeviceNO" type="text" readonly="true" class="text-color" placeholder="请选择设备编码">
+				<!--list="itemlist">-->
+			</div>
+			<div class="mui-input-row">
+				<h4 align="center" style="color: #008000;">扫描条码查找工单</h4>
+			</div>
+			<div class="mui-input-row">
+				<label style="font-size: 16px;">指令条码</label>
+				<input id="txtICReelID" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描条码" />
+			</div>
+		</div>
+		<div class="mui-content-padded oauth-area">
+			<!--占位-->
+		</div>
+
+		<div id="pnl02" title="IC上料" class="mui-input-group mui-content">
+			<div class="mui-input-row" id="txtInfo">
+				<textarea id="txtRemark" readonly="readonly" style="height: 100%;background-color: #FFE48D"></textarea>
+				<!--style="height: 100%;"-->
+			</div>
+			<div class="mui-input-row " id="FeedICInfo">
+				<label style="font-size: 16px;">物料条码</label>
+				<input id="txtFeedIC" type="text" style="background-color: #2983E5" value="" class="mui-input-clear text-color" placeholder="请扫描物料条码" />
+			</div>
+			<div class="mui-input-row " id="TrayCodeInfo">
+				<label style="font-size: 16px;">托盘位置</label>
+				<input id="txtTrayCode" style="background-color: #2983E5" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描TRAY编码" />
+			</div>
+		</div>
+	</body>
+
+</html>

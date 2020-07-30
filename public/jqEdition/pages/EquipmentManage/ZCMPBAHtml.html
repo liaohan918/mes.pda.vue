@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />	
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/Ajax.js"></script>
+		<script type="text/javascript" src="../../js/EquipmentManage_js/ZCMPBAHtml.js"></script>
+		<style>
+			
+			.tabs-p-tool {
+				height: 18px;
+			}
+			
+			.datagrid-row-selected{
+			    color:fuchsia;
+			}
+			.fixed{ 
+		        position: fixed; 
+		        left: 0px; 
+		        bottom: -20px; 
+		        width: 100%; 
+		        height: 60px; 
+		        /*最顶层*/
+		        z-index: 9999;
+		    }
+		    /*只读颜色*/
+		    #infos .readonly,#tabsid .readonly{
+		    	background-color:gainsboro;
+		    }
+		    /*去掉按钮的内边距*/
+		    .mui-button-row, .mui-input-group{
+		    	padding: 0px;
+		    }		    
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：G98139
+        	时间：2020-03-30
+        -->
+		<div id="infos" class="mui-content">
+			<div class="mui-input-group">
+				<div class="mui-input-row">
+					<label>盘点单号</label>
+					<input id="edtPBA002" type="text" class="mui-input-clear" placeholder="请选择盘点单号">
+				</div>
+				<div class="mui-input-row">			
+					<label>盘点描述</label>
+					<input id="edtPBA005" type="text" class="mui-input-clear readonly" disabled="true">
+				</div>	
+			</div>
+		</div>
+		<div id="tabsid" class="easyui-tabs" style="width:100%; ">
+			<div title="盘点明细" data-options="tools:'#dataGrid1-tools'">
+				<table id='dataGrid1' class="easyui-datagrid" style="height: 100%;" data-options = "fitColumns:false">
+					<thead>
+						<tr>
+							<th data-options="hidden:true,field:'PBB003'">序号</th>		
+							<th field="status" width="50">盘点状态</th>
+							<th field="PBB004" width="75">设备编码</th>
+							<th field="PBB005" width="75">设备名称</th>
+							<th field="PBB006" width="75">型号</th>
+							<th field="PBB019" width="50">位置</th>
+							<th field="PBB027" width="40">状态</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div title="扫描设备">
+				<form id="form">
+					<div class="mui-input-group">
+						<div class="mui-input-row">
+							<label>设备编码</label>
+							<input id="edtPBB004" type="text" class="mui-input-clear" placeholder="请扫描设备编码">
+						</div>
+						<div class="mui-input-row">			
+							<label>设备名称</label>
+							<input id="edtPBB005" type="text" class="mui-input-clear readonly">
+						</div>	
+						<div class="mui-input-row">
+							<label>设备规格</label>
+							<input id="edtPBB006" type="text" class="mui-input-clear readonly">
+						</div>
+						<div class="mui-input-row">			
+							<label>设备状态</label>
+							<input id="edtPBB027" type="text" placeholder="请选择设备状态" class="mui-input-clear">
+						</div>	
+						<div class="mui-input-row" style="display: none;">
+							<label>工序编码</label>
+							<input id="edtPBB018" type="text" placeholder="请选择工序编码" class="mui-input-clear">
+						</div>
+						<div class="mui-input-row">			
+							<label>部门编码</label>
+							<input id="edtPBB016" type="text" placeholder="请选择部门" class="mui-input-clear">	
+						</div>							
+						<div class="mui-input-row">
+							<label>产线编码</label>
+							<input id="edtPBB017" type="text" placeholder="请选择产线" class="mui-input-clear">
+						</div>
+						<div class="mui-input-row">			
+							<label>客户编码</label>
+							<input id="edtPBB015" type="text" placeholder="请选择客户" class="mui-input-clear">
+						</div>	
+						<div class="mui-input-row">
+							<label>放置地点</label>
+							<input id="edtPBB019" type="text" class="mui-input-clear">
+						</div>								
+						<div class="mui-button-row">
+							<div style="width: 50%;float:left;" class="mui-btn mui-btn-primary" id="btnCommit" onclick="commit()">
+								提交							
+							</div>
+							<div style="width: 50%;float:right;" class="mui-btn mui-btn-danger" id="btnCancel" onclick="formReset()">
+								清除
+							</div>
+						</div>										
+					</div>
+				</form>				
+			</div>
+		</div>
+		<!-- 数量标签 -->
+		<div id="dataGrid1-tools">
+			<span id="dataGrid1-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+	</body>
+
+</html>

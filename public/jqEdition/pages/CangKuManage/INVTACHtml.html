@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script src="../../lib/base_js/js/app.js"></script>
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<script type="text/javascript" src="../../js/CangKuManage_js/INVTACHtml.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<style>
+			.mui-card .mui-control-content {
+				padding: 10px;
+			}
+			
+			.app .mui-input-row {
+				padding: 3px;
+				height: 50px !important;
+			}
+			
+			.pad .mui-input-row {
+				padding: 20px;
+				height: 80px !important;
+			}
+			
+			#txtWLBM,
+			#txtCKBM,
+			#CWBM,
+			#txtKHBM,
+			#txtZMSL,
+			#txtMainWLBM,
+			#txtMainCKBM,
+			#MainCWBM,
+			#txtMainTMSL,
+			#txtMainZMSL {
+				background-color: gainsboro;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：黄邦文
+        	时间：2018-09-04
+        	描述：初盘盘点
+        -->
+		<div class="mui-content">
+			<div id="tabsid" class="easyui-tabs" style="width:100%; margin-top: 5px;" tabHeight='30px;' justified=true>
+				<div id="item1" title="盘点信息" data-options="tools:'#dg-tools'">
+					<!--<div id="item1" class="mui-control-content mui-active">-->
+					<div id='infos' class="mui-input-group">
+						<div class="mui-input-row">
+							<label>盘点单号</label>
+							<input type="text" id="txtPDDanHao" readonly="true" class="" placeholder="请选择盘点单号">
+						</div>
+						<div class="mui-input-row">
+							<label>盘点描述</label>
+							<input type="text" id="txtPDMSG" readonly="true" class="" placeholder="">
+						</div>
+						<div class="mui-content-padded oauth-area">
+							<!--占位-->
+
+						</div>
+					</div>
+
+					<div id="tabsid" class="easyui-tabs" style="width:100%; margin-top: 5px;" tabHeight='30px;' justified=true>
+						<div title="盘点明细" data-options="tools:'#pd-tools'">
+							<table id="dg" style="height: 100%;" class="easyui-datagrid" data-options=" rownumbers:true, singleSelect:true, autoRowHeight:false, pagination:false, pageSize:10">
+								<thead>
+									<tr>
+										<th field="NoPanShu" width="50" align="middle">未盘数</th>
+										<th field="WLBM" width="100" align="middle">物料编码</th>
+										<th field="KC" width="50" align="right">库存</th>
+										<th field="YP" width="50" align="middle">已盘</th>
+										<th field="WLMC" width="80" align="middle">物料名称</th>
+										<th field="WLGG" width="100" align="middle">规格</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+
+						<div id="pal02" style="font-size: 17px;" title="库位明细" data-options="tools:'#kw-tools'" onclick="SetInputFoucs('#DAB001')">
+							<table id="dg02" class="easyui-datagrid" data-options=" rownumbers:true, singleSelect:true, autoRowHeight:false, pagination:false, pageSize:10000000">
+
+								<thead>
+									<tr>
+										<th field="DAB003" width="100">库位</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+
+					</div>
+					<!-- 数量标签 -->
+					<div id="pd-tools">
+						<span id="pd-sum" class="mui-badge mui-badge-success">0</span>
+					</div>
+					<div id="kw-tools">
+						<span id="kw-sum" class="mui-badge mui-badge-success">0</span>
+					</div>
+				</div>
+				<div id="item2" title="单个条码" data-options="tools:'#dg-tools'">
+					<div class="mui-input-group">
+						<div class="mui-input-row">
+							<label>条码</label>
+							<input type="text" id="txtBarcode" class=" mui-input-clear" placeholder="请扫描条码">
+						</div>
+						<div class="mui-input-row">
+							<label>物料编码</label>
+							<input type="text" id="txtWLBM" readonly="true" class="">
+						</div>
+						<div class="mui-input-row">
+							<label>客户编码</label>
+							<input type="text" id="txtKHBM" readonly="true" class="">
+						</div>
+						<div class="mui-input-row">
+							<label>帐面数量</label>
+							<input type="text" id="txtZMSL" readonly="true" class="">
+						</div>
+						<div class="mui-input-row">
+							<label>仓库编码</label>
+							<input type="text" id="txtCKBM" readonly="true" class="">
+						</div>
+						<div class="mui-input-row">
+							<label>新储位编码</label>
+							<input type="text" id="txtKWBM" class=" mui-input-clear" placeholder="请扫描新储位">
+						</div>
+						<div class="mui-input-row">
+							<label>盘点数量</label>
+							<input type="number" id="txtPDSL" class=" mui-input-clear" onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" placeholder="请输入盘点数量">
+						</div>
+						<div class="mui-content-padded oauth-area">
+							<!--占位-->
+
+						</div>
+						<div class="mui-content-padded" style="float: left; margin-left: 50px;">
+							<button type="button" id="btn_clear" style="width: 100px;" class="mui-btn mui-btn-red">清 除</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" id="btn_ok" style="width: 100px;" class="mui-btn mui-btn-green">确 认</button>
+						</div>
+					</div>
+					<!--<div id="head2" style="width: 100%;height: 40px; background-color: orange; position: absolute; bottom: 0px;">
+						物料编码：
+					</div>-->
+				</div>
+				<div title="主条码" data-options="tools:'#dg-tools'">
+					<div id="MainMsg" class="mui-input-group">
+						<div class="mui-input-row">
+							<label>主条码</label>
+							<input type="text" id="txtMainBarcode" class=" mui-input-clear" placeholder="请扫描条码">
+						</div>
+						<!--<div class="mui-input-row">
+							<label>物料编码</label>
+							<input type="text" id="txtMainWLBM" readonly="true" class="">
+						</div>-->
+						<!--<div class="mui-input-row">
+							<div style="float: left;width: 40%;">
+								<label style="width: 60%;">仓库编码</label>
+								<input style="width: 40%;" type="text" id="txtMainCKBM" readonly="true" class="">
+							</div>
+							<div style="float: left;width: 60%;">
+								<label style="width: 40%;">储位编码</label>
+								<input style="width: 60%;" type="text" id="txtMainKWBM" readonly="true" class="">
+							</div>
+						</div>-->
+
+						<div class="mui-input-row">
+							<div style="float: left;width: 40%;">
+								<label style="width: 60%;">条码总数</label>
+								<input style="width: 40%;" type="text" id="txtMainTMSL" readonly="true" class="">
+							</div>
+							<div style="float: left;width: 60%;">
+								<label style="width: 40%;">帐面总数</label>
+								<input style="width: 60%;" type="text" id="txtMainZMSL" readonly="true" class="">
+							</div>
+						</div>
+
+					</div>
+					<table id="dgMainTMMX" class="easyui-datagrid" fitColumns:false data-options="  rownumbers:true, singleSelect:true, autoRowHeight:false, pagination:false, pageSize:10">
+						<thead>
+							<tr>
+								<th field="TM" width="110">条码</th>
+								<th field="WLBM" width="55">物料编码</th>
+								<th field="ZMSL" width="70">帐面数量</th>
+								<th field="PDSL" width="70">盘点数量</th>
+								<th field="WLMC" width="55">物料名称</th>
+								<th field="GG" width="55">规格</th>
+							</tr>
+						</thead>
+					</table>
+					<div id="MainMsg" class="mui-input-group">
+						<div class="mui-input-row">
+
+							<div style="float: left;width: 60%;">
+								<label style="width: 40%;">储位编码</label>
+								<input style="width: 60%;" type="text" id="txtMainKWBM"  class="" placeholder="请扫描新库位">
+							</div>
+							<div style="float: left;width: 40%;">
+								<label style="width: 60%;">仓库编码</label>
+								<input style="width: 40%;" type="text" id="txtMainCKBM" readonly="true" class="">
+							</div>
+						</div>
+						<div class="mui-input-row">
+							<label>盘点数量</label>
+							<input type="number" id="txtMainPDSL" class=" mui-input-clear" onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" placeholder="请输入盘点数量">
+						</div>
+					</div>
+					<div class="mui-content-padded oauth-area">
+						<!--占位-->
+					</div>
+					<div id="MainBtn" class="mui-content-padded" style="margin-left: 70px;">
+						<button type="button" id="btn_MainClear" style="width: 100px;" class="mui-btn mui-btn-red">清 除</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" id="btn_MainOK" style="width: 100px;" class="mui-btn mui-btn-green">确 认</button>
+					</div>
+
+				</div>
+			</div>
+	</body>
+
+</html>

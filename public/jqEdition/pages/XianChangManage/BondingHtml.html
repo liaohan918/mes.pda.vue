@@ -1,0 +1,104 @@
+<!--
+	作者：岳志鹏
+	时间：2018-09-10
+	描述：接料
+-->
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>接料</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.poppicker.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<style>
+			#info {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">接料</h1>
+		</header>-->
+		<div class="mui-input-group mui-content">
+			<div id="tabsid" class="easyui-tabs" style="width:100%;" data-options="justified:true,tabHeight:30">
+				<div title="扫描条码" style="font-size: 17px;" style="height: 100%;">
+					
+					<div class="mui-input-row" id='oldBarCode'>
+						<label>旧盘条码</label>
+						<input type="text" id="txtOldBarCode" class="" placeholder="请扫描旧盘条码">
+					</div>
+					<div class="mui-input-row" id='newBarCode'>
+						<label>新盘条码</label>
+						<input type="text" id="txtNewBarCode" class="" placeholder="请扫描新盘条码" readonly="readonly">
+					</div>
+					<div class="mui-input-row" id='barCode'>
+						<label id='position'>左/右条码</label>
+						<input type="text" id="txtBarCode" class="" placeholder="请扫描左/右物料条码" readonly="readonly">
+					</div>
+					<div class="mui-input-row" style="height: 260px; margin-top: 10px;">
+						<textarea readonly="readonly" id='info' style="height: 100%;font-weight:bold;"></textarea>
+					</div>
+					<div class="mui-button-row">
+						<button type="btnLast" class="mui-btn mui-btn-danger" id="btn_Last"> 上一步</button>
+					</div>
+					
+				</div>
+				<div title="接料预警" style="font-size: 17px;">
+					<div class="mui-input-row" id="box">
+						<label>产线编码</label>
+						<input type="text" id="lineNo" readonly="true" class="" placeholder="请选择产线编码">
+					</div>
+					<div class="mui-input-row">
+						<label>指令编码</label>
+						<input type="text" id="workOrder" readonly="true" class="" placeholder="请选择指令编码">
+					</div>
+					
+					<div class="mui-button-row">
+						<table id='dg' class="easyui-datagrid" data-options="rownumbers:true, 
+						singleSelect:true, pagination:true" style="width: 100%;">
+						<thead>
+							<tr>
+								<th field="RTB014">物料编码</th>
+								<th field="RTB010">设备编号</th>
+								<th field="RTB011">飞达位置</th>
+								<th field="RTB012" align="right">已经吸取数量</th>
+								<th field="RTB013" align="right">抛料数</th>
+								<th field="RTB015">RealId</th>
+								<th field="RTB016">最后上料时间</th>
+								<th field="RTB017" align="right">初始数量</th>
+								<th field="RTB018" align="right">当前剩余数量</th>
+								<th field="RTB019" align="right">单板用量</th>
+								<th field="RTB020" align="right">每分钟过板</th>
+								<th field="RTB021" align="right">可用时间(分钟)</th>
+								<th field="RTB022" align="right">材料品名</th>
+								<th field="RTB023" align="right">材料品番</th>
+							</tr>
+						</thead>
+					</table>
+					</div>
+				</div>
+			</div>
+	</body>
+	<script type="text/javascript" src="../../js/XianChangManage_js/Bonding.js"></script>
+
+</html>

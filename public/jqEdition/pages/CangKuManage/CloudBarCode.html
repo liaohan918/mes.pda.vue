@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title> 
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<script type="text/javascript" src="../../lib/base_js/js/PageCommonQuote.js"></script>
+		<link href="../../lib/mui/css/mui.picker.min.css" rel="stylesheet" /> 
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script src="../../lib/mui/js/mui.dtpicker.js"></script>
+		<style>
+			.mui-input-row label {
+				width: 25%;
+				padding: 11px 2px;
+				color: blue;
+			} 
+			 
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 75%;
+			}
+			
+			.mui-input-group .mui-input-row:after {
+				left: 0px;
+			}
+			
+			.mui-switch.mui-active:before {
+				font-size: 18px;
+				content: attr(data-on);
+				left: 1px;
+			}
+			
+			.mui-switch:before {
+				font-size: 18px;
+				content: attr(data-off);
+				right: 5px;
+				color: #000000;
+			}
+			
+			.mui-input-row .mui-switch {
+				margin-right: 0px;
+			}
+			
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+			.m-pic-cover {
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				background-color: rgba(0, 0, 0, .5);
+			}
+			.mui-content .row-title{
+				width: 80px;
+				float: left;
+			}
+			.mui-content .row-content-split{
+				width:calc(54%);  
+				float: left;
+			}
+			.mui-content .row-content{  
+				float: left;  
+			} 
+		</style>
+	</head>
+	<body>
+		<!--
+        	作者：胡丁文
+        	时间： 
+        	描述：云条码同步接收清点
+        -->
+		<div class="mui-content">
+			<div style="padding: 10px 10px;">
+				<div id="item1" class="mui-control-content mui-active">
+					<div id='info2' style="margin-top: 3px;" class="mui-input-group">
+						<div class="mui-input-row  ">
+
+							<div style="width: 50%;float: left; ">
+								<label class="row-title">日期</label>
+								<input class="row-content-split" type="text" name="txtCheckTime" id="txtCheckTime" placeholder="日期" readonly="readonly">
+							</div>
+							<div style="width: 50%;float: left; ">
+								<label class="row-title">单号</label>
+								<input class="row-content-split" type="text" name="txtBillNo" id="txtBillNo" placeholder="请选择到货单号"
+								 readonly="readonly">
+							</div>
+						</div>
+					</div>
+					<div id='info1' class="mui-input-group">
+						<div class="mui-input-row  mui-checkbox mui-tab-label ">
+							<label class="row-title">条码</label>
+							<input type="text" class="row-content" name="txtBarCode" id="txtBarCode" class="text-color" placeholder="扫描录入">
+							<input style="width: 50px;float: right;"  name="checkbox" name="isCancelCode" id="isCancelCode" type="checkbox">
+							<label style="width: 40px;float: right;">取消</label>
+						</div>
+					</div>
+				</div> 
+			<nav class="mui-bar mui-bar-tab">  
+				<a class="mui-tab-item">  
+					<button id="btnSubmit" class=" mui-btn-green" style="float: right; width: 100px; margin-right: 20px; ">同步到MES</button>
+					</div>
+				</a>   
+			</nav>  
+		</div> 
+		<div id="tabs" class="easyui-tabs" style="width:100%;height:1000px;">
+			<div title="物料明细" style="padding:0px;display:none;height="100%"">
+				<table id="gridMaterialList" class="easyui-datagrid" height="100%"> 
+				</table> 
+			</div>
+			<div title="物料列表"  style="overflow:auto;padding:0px;display:none;height="100%"">
+				 <table id="gridBarCodeList" class="easyui-datagrid" style="height: 100%"> 
+				</table>
+			</div> 
+		</div>
+		<script type="text/javascript" src="../../js/CangKuManage_js/CloudBarCode.js"></script>
+	</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>飞达绑定</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/easyui/css/icon.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/easyui/css/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/base_js/css/common.css" />
+
+		<script type="text/javascript" src="../../lib/mui/js/mui.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/jquery/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../lib/base_js/js/app.js "></script>
+		<script type="text/javascript" src="../../lib/base_js/js/common.js "></script>
+		<!--<script type="text/javascript" src="../../lib/base_js/js/PageLoadingTip.js"></script>-->
+		<style>
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：杨俊燃
+        	时间：2018-09-18
+        	描述：飞达绑定
+       -->
+		<div id="form" class="mui-input-group mui-content">
+			<div class="mui-input-row">
+				<label>指令单号</label>
+				<input id="texBillNo" type="text" class="text-color" placeholder="输入单号">
+			</div>
+			<div id="info" class="mui-input-row">
+				<div class="float_right">
+					<label style="width: 40%;">分区</label>
+					<input id="dpartition" type="text" readonly="readonly" style="width: 60%;" placeholder="选择分区">
+				</div>
+				<div class="float_left">
+					<label style="width: 40%;">设备</label>
+					<input id="Equipment" type="text" readonly="readonly" style="width: 60%;" placeholder="选择设备">
+				</div>
+			</div>
+			<div class="mui-input-row">
+				<label>备料单号</label>
+				<input id="prepareBill" type="text" readonly="readonly" style="background-color: #CCCCCC;">
+			</div>
+		</div>
+		<div id="tabsid" data-options="justified: true,tabHeight: 30" class="easyui-tabs" style="width:100%;">
+			<div title="物料信息" data-options="tools:'#p-tools1'">
+				<div class="easyui-layout" style="height:100%;">
+					<div data-options="region:'south',hideCollapsedContent:false,collapsed:true" title="条码明细" style="height: 50%;">
+						<table id="BarcodeMaterial" class="easyui-datagrid" style="height: 100%;">
+							<thead>
+								<tr>
+									<th field="DAH005" width="55">物料条码</th>
+									<th field="CCB018" width="40">替代料</th>
+									<th field="DAG028" width="30">主料</th>
+									<th field="DAH011" width="50">备料数量</th>
+									<th field="DAH012" width="40">备料人</th>
+									<th field="DAH010" width="70">备料时间</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div data-options="region:'center'">
+						<table id="MaterialList" class="easyui-datagrid" style="height: 100%;">
+							<thead>
+								<tr>
+									<!--<th field="DAG003">配料单序号</th>-->
+									<th field="CCB005" width="55">设备编码</th>
+									<th field="CCB006" width="45">分区</th>
+									<th field="CCB007" width="55">站位</th>
+									<th field="CCB010" width="55">物料编码</th>
+									<th field="CCB022" width="55">飞达规格</th>
+									<th field="CCB030" width="45">盘数</th>
+									<th field="DAG041" width="55">备料数量</th>
+									<th field="DAF008" width="55">备料时间</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div title="绑定操作">
+				<div class="mui-input-group" style="font-size:17px;height: 100%;">
+					<div id='divtexMaterial' class="mui-input-row">
+						<label>物料条码</label>
+						<input id="texMaterial"  class="mui-input-clear"type="text" placeholder="输入物料条码">
+					</div>
+					<div id='divtxtFeederID' class="mui-input-row" style="display: none;" >
+						<label> 飞达编码</label>
+						<input id="txtFeederID"  class="mui-input-clear" type="text" placeholder="输入飞达编码">
+					</div>
+					<div class="mui-button-row">
+						<div class="mui-pull-left">
+							<button id="again_code" type="button" class="mui-btn mui-btn-primary mui-icon mui-icon-refresh-filled ">
+		            			重扫条码
+		        			</button>
+							<button id="next_SMTDAG" type="button" class="mui-btn mui-btn-primary mui-icon mui-icon-redo">
+		            			下一个 <span id="tiaoguo" class="mui-badge">0</span>
+		        			</button>
+						</div>
+					</div>
+					<div class="mui-input-row" style="height: 60%;">
+						<textarea id='MaterialInfo' readonly="readonly" style="height: 100%; background-color: #FFE48D; font-weight:bold;"></textarea>
+					</div>
+				</div>
+			</div>
+			<div title="已绑定列表" data-options="tools:'#p-tools2'">
+				<table id="SMTFDAList" class="easyui-datagrid" style="height: 100%;" data-options="toolbar:toolbar">
+					<thead>
+						<tr>
+							<th field="FDA014" width="40">绑定顺序</th>
+							<th field="FDA005" width="50">站位</th>
+							<th field="FDA006" width="55">飞达规格</th>
+							<th field="FDA008" width="55">物料编码</th>
+							<th field="FDA009" width="55">飞达ID</th>
+							<th field="FDA010" width="55">条码</th>
+							<th field="FDA011" width="55">数量</th>
+							<th field="FDA012" width="55">绑定人</th>
+							<th field="FDA013" width="55">绑定时间</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		<div id="p-tools1">
+			<span id="MaterialList-sum" class="mui-badge mui-badge-success ">0</span>
+		</div>
+		<div id="p-tools2">
+			<span id="SMTFDAList-sum" class="mui-badge mui-badge-success ">0</span>
+		</div>
+		<script type="text/javascript" src="../../js/FeiDaManage_js/SMTFDA.js "></script>
+	</body>
+
+</html>

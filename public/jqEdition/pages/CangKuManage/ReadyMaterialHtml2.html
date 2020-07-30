@@ -1,0 +1,373 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script type="text/javascript" src="../../lib/base_js/js/PageCommonQuote.js" ></script>
+		<link href="../../lib/mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../lib/mui/css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<style>
+			.float_left {
+				width: 50%;
+				float: left;
+			}
+			
+			.float_right {
+				width: 50%;
+				float: right;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：2068901091@qq.com
+        	时间：2018-09-04
+        	描述：分区备料
+        -->
+		<div id="infos" class="mui-content">
+			<div class="mui-input-group">
+				<div class="mui-input-row">
+					<label>指令单号</label>
+					<input id="workBill" type="text" class="mui-input-clear" placeholder="输入指令单号">
+				</div>
+			</div>
+			<div id="filtra" class="mui-input-group">
+				<div class="mui-input-row">
+					<div class="float_right">
+						<label style="width: 40%;">分区</label>
+						<input id="dpartition" readonly="readonly" type="text" style="width: 60%;" placeholder="选择分区">
+					</div>
+					<div class="float_left">
+						<label style="width: 40%;">设备</label>
+						<input id="dcode" readonly="readonly" type="text" style="width: 60%;" placeholder="选择设备">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<div class="mui-checkbox mui-left float_right">
+						<label>全部列表</label>
+						<input id="stateType" type="checkbox">
+					</div>
+					<div class="mui-checkbox mui-left float_left">
+						<label>取消备料</label>
+						<input id="quXiao" type="checkbox">
+					</div>
+				</div>
+				<!--
+		        	修改者：庄卓杰
+		        -->
+				<div class="mui-input-row">
+					<div class="mui-checkbox mui-left float_left">
+						<label>首套</label>
+						<input id="shouTao" type="checkbox">
+					</div>
+					<!--
+		        		修改者：庄卓杰 2019年8月4日
+		       		 -->
+					<div class="float_right">
+						<label style="width: 40%;">数量</label>
+						<input id="shouTaoNum" readonly="readonly" type="text" style="width: 60%;background-color: #CCCCCC;"
+							onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" placeholder="首批数量">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>材料条码</label>
+					<input id="tiaoMa" type="text" class="mui-input-clear " placeholder="输入材料条码">
+				</div>
+				<div class="mui-input-row" ><!--style="display:none;"-->
+					<label>备料单号</label>
+					<input id="prepareBill" type="text" readonly="readonly" style="background-color: #CCCCCC;">
+				</div>
+			</div>
+		</div>
+
+		<div id="tabsid" class="easyui-tabs" style="width:100%; margin-top: 3px;">
+			<div title="材料列表" data-options="tools:'#dgWOMDAG-tools'">
+				<table id='dgWOMDAG' class="easyui-datagrid" fitColumns:false style="height: 100%;">
+					<thead>
+						<tr>
+							<th data-options="hidden:true,field:'DAG003'">序号</th>
+							<th field="DAG004" width="80">物料编码</th>
+							<th field="DAG015" width="55">扫描数量</th>
+							<th field="DAG014" width="55">应发数量</th>
+							<th field="Cycount" width="55">差异数量</th>
+							<th field="ZCycount" width="55">组差异数量</th>
+							<th field="DAG037" width="50">设备编号</th>
+							<th field="DAG038" width="40">分区</th>
+							<th field="DAG039" width="50">站位</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div title="库位列表" data-options="tools:'#dgBARDAB-tools'">
+				<table id="dgBARDAB" class="easyui-datagrid" fitColumns:false style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="DAB001" width="107">条码</th>
+							<th field="DAB003" width="88">库位</th>
+							<th field="DAB006" width="55">数量</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div title="已扫描列表" data-options="tools:'#dgWOMDAH-tools'">
+				<table id="dgWOMDAH" class="easyui-datagrid" fitColumns:false style="height: 100%;">
+					<thead>
+						<tr>
+							<th field="DAH005" width="107">条码</th>
+							<th field="DAH006" width="88">物料编码</th>
+							<th field="DAH011" width="55">数量</th>
+							<th field="DAH009" width="55">日期</th>
+							<th field="DAH010" width="55">时间</th>
+							<th field="DAH012" width="55">备料人</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+
+		<!-- 数量标签 -->
+		<div id="dgWOMDAG-tools">
+			<span id="dgWOMDAG-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+		<div id="dgBARDAB-tools">
+			<span id="dgBARDAB-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+		<div id="dgWOMDAH-tools">
+			<span id="dgWOMDAH-sum" class="mui-badge mui-badge-success">0</span>
+		</div>
+
+				<div class="mui-input-row" style="height: 25px; margin-top: 5px;">
+					<span id="info_BARDAB" style="color: #0000FF; font-size: 12px;"></span>
+					<span id="div_BARDAB" hidden="hidden">
+					<a id="next_BARDAB"  class="mui-icon mui-icon-redo mui-pull-right">
+						下一个
+					</a></span>
+				</div>
+		<script src="../../lib/mui/js/mui.picker.min.js"></script>
+		<script src="../../lib/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../../lib/easyui/js/clientPaging.js"></script>
+		<script type="text/javascript" src="../../js/CangKuManage_js/ReadyMaterialHtml.js"></script>
+		<script>
+			//*************************************
+			//初始化设置
+			mui("#workBill")[0].focus(); //指令获得交单
+
+			//*************************************
+			//设备分区选择框事件
+			var shiBeiPicker = new mui.PopPicker({
+				layer: 2
+			});
+			var dpartition = document.getElementById('dpartition');
+			dpartition.addEventListener('tap', function(e) {
+				SetSheBei();
+			});
+			var dcode = document.getElementById('dcode');
+			dcode.addEventListener('tap', function(e) {
+				SetSheBei();
+			});
+			/**
+			 * 设备、分区点选事件
+			 */
+			function SetSheBei() { //设置设备分区
+				var workBill = mui("#workBill")[0].value
+				if(workBill == "") {
+					mui.toast("请输入指令单号！");
+					//					mui("#workBill")[0].focus(); //指令获得交单
+					return;
+				}
+				shiBeiPicker.setData(GetSheBeiData(workBill));
+				shiBeiPicker.show(function(items) {
+					var a = items[0].value;
+					var b = items[1].value;
+					if(dcode.value == a && dpartition.value == b)
+						return;
+					//如果有变更才继续执行
+					next = []; //设备修改的时候把跳过集合清空
+					dcode.value = a ? a : "";
+					dpartition.value = b ? b : "";
+					//选了分区后，默认选择首套
+					if(dcode.value != "" && dpartition.value != ""){
+						$('#shouTao').prop('checked',true);
+						$('#quXiao').prop('checked',false);
+					}else
+						$('#shouTao').prop('checked',false);
+					//修改：庄卓杰 2019年8月4日
+					SetShouTaoNum(mui("#shouTao")[0].checked);
+					//SetDataDAG_DAH();
+			});
+			};
+			
+			/**
+			 * 根据首套判断是否启用首套数量文本框
+			 * 修改着 庄卓杰 2019年8月4日
+			 */
+			function SetShouTaoNum(shouTao){
+				if(shouTao){
+					$("#shouTaoNum").attr("readOnly",false)
+					$("#shouTaoNum").css('background-color','#ffffff');
+					$("#tiaoMa").attr("readOnly",true)
+					$("#tiaoMa").css('background-color','#CCCCCC');
+					$("#shouTaoNum").focus();
+				}
+				else{
+					mui("#shouTaoNum")[0].value='';
+					$("#shouTaoNum").attr("readOnly",true)
+					$("#shouTaoNum").css('background-color','#CCCCCC');
+					$("#tiaoMa").attr("readOnly",false)
+					$("#tiaoMa").css('background-color','#ffffff');
+					SetDataDAG_DAH();
+					//$("#tiaoMa").focus();
+				}
+			}
+			
+			/**
+			 * 获取分区数据
+			 */
+			function GetSheBeiData(workBill) {
+				var data = {
+					workBill: workBill
+				};
+				var responseData =
+					AjaxOperation(data, "获取设备分区", true, "/ReadyMaterial/GetWOMDAF")
+				if(!responseData.state)
+					return;
+				var sheBeiRows = responseData.data.data.sheBeiRows;
+				var fenQuRows = responseData.data.data.fenQuRows;
+				var SheBeiData = [];
+				//固定选择项
+				fixed = {
+					value: '',
+					text: '无',
+					children: [{
+						value: '',
+						text: '无'
+					}]
+				};
+				SheBeiData.push(fixed);
+				mui.each(sheBeiRows, function(index, item) {
+					var text = item.text;
+					var value = item.value;
+					var i = {};
+					i.text = text;
+					i.value = value;
+					i.children = [];
+					mui.each(fenQuRows, function(index, item) {
+						if(value == item.text) {
+							var children = {};
+							children.text = item.value;
+							children.value = item.value;
+							i.children.push(children)
+						}
+					});
+					SheBeiData.push(i);
+				});
+				return SheBeiData;
+			};
+
+			//*************************************
+			//指令回车操作
+			/**
+			 * 指令单号回车事件
+			 */
+			document.getElementById('workBill').addEventListener('keydown', function(e) {
+				if(e.keyCode != 13)
+					return;
+				//根据指令获取：设备编号信息/材料明细信息/已扫描条码信息/材料列表当前行库位列表-默认第一条材料
+				//请求回来dataset：进行回填信息/ 设置下拉框数据
+				$(':input', '#filtra').val("");
+				SetDataDAG_DAH();
+			});
+
+			/**
+			 * 备料完成复选框勾选事件
+			 */
+			document.getElementById('stateType').addEventListener('change', function(e) {
+				var workBill = mui("#workBill")[0].value
+				if(workBill == "") {
+					mui.toast("请输入指令单号！");
+					mui("#workBill")[0].focus(); //指令获得交单
+					return;
+				}
+				$('#dgWOMDAG').datagrid('loadData', GetDatadgWOMDAG());
+				$('#dgWOMDAG').datagrid('selectRow', 0);
+			});
+
+			/**
+			 * 首套复选框勾选事件
+			 * 修改者：庄卓杰
+			 */
+			document.getElementById('shouTao').addEventListener('change', function(e) {
+				var workBill = mui("#workBill")[0].value;
+				var dpartition=mui("#dpartition")[0].value;
+				var dcode=mui("#dcode")[0].value;
+				if(workBill == ""&&$('#shouTao').is(":checked")) {
+					document.getElementById('shouTao').checked=false;
+					playerAudio("NG");
+					mui.toast("请输入指令单号！");
+					mui("#workBill")[0].focus(); //指令获得交单
+					return;
+				}
+				if(dpartition==""||dcode==""){
+					document.getElementById('shouTao').checked=false;
+					playerAudio("NG");
+					mui.toast("请选择设备和分区！");
+					return;
+				}
+				//修改：庄卓杰 2019年8月4日
+				SetShouTaoNum(mui("#shouTao")[0].checked);
+				//SetDataDAG_DAH();
+				//$('#dgWOMDAG').datagrid('loadData', GetDatadgWOMDAG());
+//				$('#dgWOMDAG').datagrid('selectRow', 0);
+			});
+
+			/**
+			 * 首套复选框勾选事件
+			 * 修改者：庄卓杰
+			 * 2019年8月4日
+			 */
+			document.getElementById('shouTaoNum').addEventListener('keydown', function(e) {
+				if(e.keyCode != 13)
+					return;
+				$("#tiaoMa").attr("readOnly",false)
+				$("#tiaoMa").css('background-color','#ffffff');
+				SetDataDAG_DAH();
+				$("#tiaoMa").focus();
+			});
+
+			/**
+			 * 获取材料列表和已扫描列表操作
+			 * @param {表格DOM} e
+			 * @param {表名：WOMDAG,WOMDAH} tbName
+			 * @param {过滤主键} keys
+			 */
+			function GetData(e, tbName, keys) {
+				var data = {
+					tbName: tbName,
+					wuLiaoType: "", //物料类型，主要是区分前加工和分区备料
+					workBill: mui("#workBill")[0].value, //工单单号
+					dcode: mui("#dcode")[0].value, //设备编号
+					dpartition: mui("#dpartition")[0].value, //分区
+					stateType: mui("#stateType")[0].checked, //是否显示已经备料完成的材料
+					/*修改者：庄卓杰*/
+					shouTao: mui("#shouTao")[0].checked, //是否是首套的材料
+					//修改：庄卓杰 2019年8月4日
+					shouTaoNum:mui("#shouTaoNum")[0].value,//首批数量
+					pageSize: e.datagrid('options').pageSize, //页容量
+					pageNumber: e.datagrid('options').pageNumber, //页码
+					keys: keys //分页主键
+				};
+				var dgData = GetDataDAG_DAH(data)
+				if(tbName == 'WOMDAG' && dgData.sumDataNo > 0) {
+					mui("#prepareBill")[0].value = dgData.rows[0].DAG002; //回填备料单单号
+				}
+				return dgData;
+			}
+		</script>
+
+	</body>
+
+</html>

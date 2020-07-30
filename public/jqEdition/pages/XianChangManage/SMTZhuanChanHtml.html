@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<script type="text/javascript" src="../../lib/base_js/js/PageCommonQuote.js"></script>
+		<style>
+		</style>
+	</head>
+
+	<body>
+		<!--
+        	作者：黄邦文
+        	时间：2019-08-01
+        	描述：相同物料不同占位转产处理
+        -->
+		<div class="mui-content">
+			<div style="padding: 0px 10px;">
+				<div id="item1" class="mui-control-content mui-active">
+					<div id='infos' class="mui-input-group">
+						<div class="mui-input-row">
+							<label>上一指令</label>
+							<input type="text" id="txtLastZhiLing" class="mui-input-clear text-color" placeholder="请扫描上一指令号">
+						</div>
+						<div class="mui-input-row">
+							<label>产品编码</label>
+							<input type="text" id="txtCPBM" readonly="readonly" style="background-color: lightgrey;" class="text-color" placeholder="">
+						</div>
+						<div class="mui-input-row">
+							<label>下一指令</label>
+							<input type="text" id="txtNextZhiLing" readonly="readonly" style="background-color: lightgrey;" class="text-color" placeholder="">
+						</div>
+					</div>
+				</div>
+				<div id="tabsid" class="easyui-tabs" style="width:100%; margin-top: 5px;" tabHeight='30px;' justified=true>
+					<div title="待退物料信息" data-options="tools:'#dgBarcode-tools'">
+						<!--<div class="mui-input-row">
+							<label>下料条码</label>
+							<input type="text" id="txtZhiLing" class="mui-input-clear text-color" placeholder="请扫描下料条码">
+						</div>-->
+						<table id="dgDTMX" class="easyui-datagrid" fitColumns:false data-options="  rownumbers:true, singleSelect:true, autoRowHeight:false, pagination:false, pageSize:10">
+							<thead>
+								<tr>									
+									<th field="DAG037" width="60">设备</th>
+									<th field="DAG038" width="30">分区</th>
+									<th field="DAG039" width="60">栈位</th>	
+									<th field="DAH005" width="120">条码</th>
+									<th field="DAG004" width="80">物料编码</th>
+									<th field="DAH026" width="60">数量</th>																	
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div title="待转物料绑定" data-options="tools:'#dgWLMX-tools'">
+						<div class="mui-input-row">
+							<label>物料条码</label>
+							<input type="text" id="txtWLTM" class="mui-input-clear text-color" placeholder="请扫描物料条码">
+						</div>
+						<div class="mui-input-row">
+							<label>飞达条码</label>
+							<input type="text" id="txtFDTM" class="mui-input-clear text-color" placeholder="请扫描飞达条码">
+						</div>
+						<div class="mui-input-row">
+							<label>设备条码</label>
+							<input type="text" id="txtSBTM" class="mui-input-clear text-color" placeholder="请扫描设备条码">
+						</div>
+						<table id="dgDZMX" style="height: 100%;" class="easyui-datagrid" fitColumns:false data-options="  rownumbers:true, singleSelect:true, autoRowHeight:false, pagination:false, pageSize:10">
+							<thead>
+								<tr>
+									<th field="DAG037" width="60">设备</th>
+									<th field="DAG038" width="30">分区</th>
+									<th field="DAG039" width="60">栈位</th>	
+									<th field="DAG004" width="80">物料编码</th>
+									<th field="DAG023" width="60">待发数量</th>	
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/XianChangManage_js/SMTZhuanChan.js"></script>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>库位绑定</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../lib/mui/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../lib/base_js/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../lib/mui/css/mui.picker.min.css" />
+		<style>
+			#info {
+				/*查询信息属性*/
+				background-color: #FFE48D;
+			}
+		</style>
+
+		<script src="../../lib/mui/js/mui.min.js"></script>
+		<script type="text/javascript" src="../../lib/mui/js/mui.picker.min.js"></script>
+	</head>
+	
+		<body>
+		<!--<header id="header" class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">转产退料</h1>
+			</header>-->
+		<div class="mui-content">
+			<form id="form" class="mui-input-group">
+				<div class="mui-input-row">
+					<label>退料单号</label>
+					<input id="DAB001" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描" />
+				</div>
+				<div class="mui-input-row">
+					<label>扫描条码</label>
+					<input id="DAB001" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描条码" />
+				</div>
+				<div class="mui-input-row">
+					<label>实盘数量</label>
+					<input id="DAB001" type="text" value="" class="mui-input-clear text-color" placeholder="请扫描条码" />
+					<button type="button" class="mui-btn mui-btn-outlined">默认</button>
+				</div>
+
+				<div class="mui-input-row" style="height: 350px; margin-top: 10px;">
+					<div class="link-area">
+						<h4>原条码信息</h4>
+					</div>
+					<textarea readonly="readonly" id='info' style="height: 90%;"></textarea>
+				</div>
+
+			
+			</form>
+			
+		</div>
+	</body>
+	
+</html>
